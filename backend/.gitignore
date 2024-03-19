@@ -1,0 +1,18 @@
+# Ignoriraj node_modules direktorij i sve njegove sadržaje
+node_modules/
+
+# Ignoriraj .env datoteke koje sadrže osjetljive informacije (npr. lozinke, tajne ključeve)
+.env
+
+# Ignoriraj generirane datoteke ili direktorije
+dist/
+build/
+coverage/
+
+# Ignoriraj debug ili log datoteke
+*.log
+debug.log
+
+# Ignoriraj privremene datoteke ili direktorije
+.DS_Store
+.vscode/
