@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 require('dotenv').config();
 const userRoutes = require('./routes/userRoutes');
 
@@ -12,13 +12,9 @@ app.use('/api/users', userRoutes);
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_URL = `mongodb+srv://admin:${DB_PASSWORD}@cryptowebapp.xbnscvx.mongodb.net/?retryWrites=true&w=majority&appName=CryptoWebApp`;
 
-const client = new MongoClient(DB_URL);
-
-client.connect()
+mongoose.connect(DB_URL)
     .then(() => {
         console.log('Povezano s MongoDB bazom podataka');
-
-        const db = client.db();
 
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
