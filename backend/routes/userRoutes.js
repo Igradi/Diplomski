@@ -97,9 +97,20 @@ async function deleteUser(req, res) {
     }
 }
 
+async function getAllUsers(req, res) {
+    try {
+        const users = await Users.find({});
+        res.json(users);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
+
 router.post('/register', register);
 router.post('/login', login);
 router.put('/update/:id', updateUser);
 router.delete('/delete/:id', deleteUser);
-
+router.post('/getAllUsers', getAllUsers);
 module.exports = router;
