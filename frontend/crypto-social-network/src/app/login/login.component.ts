@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   onSubmit() {
     const loginObj = {
@@ -22,11 +23,8 @@ export class LoginComponent {
     };
 
     this.http.post('http://localhost:4000/api/users/login', loginObj).subscribe((res: any) => {
-      if (res.result) {
-        alert("Uspješno logovanje");
-      } else {
-        alert(res.message)
-      }
+      localStorage.setItem('token', res.token);
+      this.router.navigate(['/home']);
     });
   }
 }
