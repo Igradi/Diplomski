@@ -15,7 +15,7 @@ export class LoginComponent {
 
   constructor(private http: HttpClient) { }
 
-  onLogin() {
+  onSubmit() {
     const loginObj = {
       email: this.email,
       password: this.password
