@@ -10,29 +10,23 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  loginObj: Login;
+  email: string = '';
+  password: string = '';
 
-  constructor(private http: HttpClient) {
-    this.loginObj = new Login();
-  }
+  constructor(private http: HttpClient) { }
+
   onLogin() {
-    this.http.post('http://localhost:4000/api/users/login', this.loginObj).subscribe((res: any) => {
+    const loginObj = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.http.post('http://localhost:4000/api/users/login', loginObj).subscribe((res: any) => {
       if (res.result) {
-        alert("Uspjesno logovanje");
+        alert("Uspješno logovanje");
       } else {
         alert(res.message)
       }
     });
-  }
-
-}
-
-export class Login {
-
-  email: string;
-  password: string;
-  constructor() {
-    this.email = "";
-    this.password = "";
   }
 }
