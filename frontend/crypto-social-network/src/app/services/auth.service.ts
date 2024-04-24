@@ -14,6 +14,10 @@ export class AuthService {
     return this.http.post<any>('http://localhost:4000/api/users/login', { email, password });
   }
 
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>('http://localhost:4000/api/users/register', { username, email, password });
+  }
+
   saveToken(token: string): void {
     localStorage.setItem('token', token);
   }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -15,17 +16,16 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit() {
-    const registerObj = {
-      username: this.username,
-      email: this.email,
-      password: this.password
-    };
-
-    this.http.post('http://localhost:4000/api/users/register', registerObj).subscribe((res: any) => {
-      this.router.navigate(['/login']);
-    });
+    this.authService.register(this.username, this.email, this.password).subscribe(
+      (res: any) => {
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
