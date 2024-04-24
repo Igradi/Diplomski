@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,17 +15,17 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
   onSubmit() {
-    const loginObj = {
-      email: this.email,
-      password: this.password
-    };
-
-    this.http.post('http://localhost:4000/api/users/login', loginObj).subscribe((res: any) => {
-      localStorage.setItem('token', res.token);
-      this.router.navigate(['/home']);
-    });
+    this.authService.login(this.email, this.password).subscribe(
+      (res: any) => {
+        this.authService.saveToken(res.token);
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
