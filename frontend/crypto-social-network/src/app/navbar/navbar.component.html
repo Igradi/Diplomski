@@ -2,6 +2,9 @@
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <a href="#" class="text-white text-2xl font-semibold mb-4 md:mb-0">CryptoSocialNetwork</a>
         <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+            <li *ngIf="isLoggedIn">
+                <a href="#" class="text-white hover:text-gray-300 mr-10">Hi, {{ username }}</a>
+            </li>
             <li *ngIf="isLoggedIn"><a href="home" class="text-white hover:text-gray-300">Home</a></li>
             <li *ngIf="!isLoggedIn"><a href="login" class="text-white hover:text-gray-300">Login</a></li>
             <li *ngIf="!isLoggedIn"><a href="register" class="text-white hover:text-gray-300">Register</a></li>

@@ -44,7 +44,14 @@ async function login(req, res) {
             return res.status(400).json({ msg: 'Pogrešna lozinka' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const tokenPayload = {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            role: user.role
+        };
+
+        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.json({ msg: 'Korisnik je uspješno prijavljen', token });
     } catch (err) {
@@ -52,6 +59,7 @@ async function login(req, res) {
         res.status(500).send('Greška na serveru');
     }
 }
+
 async function updateUser(req, res) {
     const { id } = req.params;
     const { username, email, password } = req.body;
@@ -107,10 +115,28 @@ async function getAllUsers(req, res) {
     }
 }
 
+async function getUserById(req, res) {
+    const { id } = req.params;
+
+    try {
+        const user = await Users.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ msg: 'Korisnik nije pronađen' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
 
 router.post('/register', register);
 router.post('/login', login);
 router.put('/update/:id', updateUser);
 router.delete('/delete/:id', deleteUser);
 router.post('/getAllUsers', getAllUsers);
+router.get('/getUserById/:id', getUserById);
 module.exports = router;
