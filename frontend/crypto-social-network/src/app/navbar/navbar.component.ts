@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JwtDecodeService } from '../services/jwt-decode.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ export class NavbarComponent {
   isLoggedIn = false;
   username: string | undefined;
 
-  constructor(private jwtDecodeService: JwtDecodeService) { }
+  constructor(private jwtDecodeService: JwtDecodeService, private authService: AuthService) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -27,7 +28,7 @@ export class NavbarComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    this.authService.logout();
     this.isLoggedIn = false;
     this.username = undefined;
   }
