@@ -137,6 +137,6 @@ router.post('/register', register);
 router.post('/login', login);
 router.put('/update/:id', updateUser);
 router.delete('/delete/:id', deleteUser);
-router.post('/getAllUsers', getAllUsers);
+router.get('/getAllUsers', getAllUsers);
 router.get('/getUserById/:id', getUserById);
 module.exports = router;
