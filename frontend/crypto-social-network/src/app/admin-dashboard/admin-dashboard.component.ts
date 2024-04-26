@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,7 +17,7 @@ export class AdminDashboardComponent {
   users: User[] = [];
   newUser: User = { _id: '', username: '', password: '', email: '', role: '' };
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -45,7 +46,7 @@ export class AdminDashboardComponent {
   }
 
   editUser(userId: string): void {
-
+    this.router.navigateByUrl(`/admin-dashboard/${userId}/edit-profile`);
   }
 
   addUser(): void {

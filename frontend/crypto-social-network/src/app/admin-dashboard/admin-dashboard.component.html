@@ -61,20 +61,11 @@
                 <td class="px-6 py-4 whitespace-nowrap">{{ user.role }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <button (click)="deleteUser(user._id)" class="text-red-600 hover:text-red-900 mr-2" title="Delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path
-                                d="M15 5a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h2zM7 7v8h6V7H7zm2 2h2v4H9V9zm4 0h2v4h-2V9z" />
-                        </svg>
+                        <i class="bi bi-trash"></i>
                     </button>
                     <button (click)="editUser(user._id)" class="text-indigo-600 hover:text-indigo-900 mr-2"
                         title="Edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M14.472 2.472a.75.75 0 011.06 1.06L5.56 15.06a.75.75 0 01-1.06-1.06L14.472 2.472zm-1.414-1.414L4.146 13.146a1.5 1.5 0 002.122 2.122l10.912-10.914a1.5 1.5 0 00-2.122-2.122z"
-                                clip-rule="evenodd" />
-                            <path
-                                d="M2.56 15.35a.75.75 0 001.06 0l1.06-1.06a.75.75 0 000-1.06L3.622 10.8l-.88-.88-1.06 1.06a2.25 2.25 0 000 3.182l1.06 1.06zm14.08-12.32a2.25 2.25 0 010 3.182l-8.146 8.146a2.25 2.25 0 01-3.182 0l-1.06-1.06a2.25 2.25 0 010-3.182l8.146-8.146a2.25 2.25 0 013.182 0l1.06 1.06z" />
-                        </svg>
+                        <i class="bi bi-pencil"></i>
                     </button>
                 </td>
             </tr>
