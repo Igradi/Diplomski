@@ -46,7 +46,7 @@ export class AdminDashboardComponent {
   }
 
   editUser(userId: string): void {
-    this.router.navigateByUrl(`/admin-dashboard/${userId}/edit-profile`);
+    this.router.navigateByUrl(`/user-profile/${userId}`);
   }
 
   addUser(): void {
