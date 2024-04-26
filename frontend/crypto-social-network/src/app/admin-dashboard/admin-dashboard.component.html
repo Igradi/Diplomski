@@ -5,25 +5,25 @@
         <div>
             <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
             <input id="username" name="username" type="text" [(ngModel)]="newUser.username"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-8"
                 required>
         </div>
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
             <input id="email" name="email" type="email" [(ngModel)]="newUser.email"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-8"
                 required>
         </div>
         <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
             <input id="password" name="password" type="password" [(ngModel)]="newUser.password"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-8"
                 required>
         </div>
         <div>
             <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
             <select id="role" name="role" [(ngModel)]="newUser.role"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-8"
                 required>
                 <option value="User">User</option>
                 <option value="Admin">Admin</option>
