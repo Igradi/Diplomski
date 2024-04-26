@@ -43,6 +43,11 @@ export class AdminDashboardComponent {
       }
     );
   }
+
+  editUser(userId: string): void {
+
+  }
+
   addUser(): void {
     const { username, email, password, role } = this.newUser;
     if (username && email && password && role) {
