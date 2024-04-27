@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,7 +18,7 @@ export class AdminDashboardComponent {
   users: User[] = [];
   newUser: User = { _id: '', username: '', password: '', email: '', role: '' };
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, private userService: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -38,12 +39,14 @@ export class AdminDashboardComponent {
     this.userService.deleteUser(userId).subscribe(
       () => {
         this.loadUsers();
+        this.toastr.success('User deleted successfully!', 'Success');
       },
       (error) => {
-        console.error('Error deleting user:', error);
+        this.toastr.error('Failed to delete user. Please try again later.', 'Error');
       }
     );
   }
+
 
   editUser(userId: string): void {
     this.router.navigateByUrl(`/user-profile/${userId}`);
@@ -56,13 +59,14 @@ export class AdminDashboardComponent {
         () => {
           this.loadUsers();
           this.newUser = { _id: '', username: '', email: '', password: '', role: '' };
+          this.toastr.success('User added successfully!', 'Success');
         },
         (error) => {
-          console.error('Error adding user:', error);
+          this.toastr.error('Failed to add user. Please try again later.', 'Error');
         }
       );
     } else {
-      console.error('Please provide all required user fields.');
+      this.toastr.error('Please provide all required user fields.', 'Error');
     }
   }
 }
