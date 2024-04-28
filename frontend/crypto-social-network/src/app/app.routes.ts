@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './services/auth.guard';
-import { UserProfileComponent } from './user-profile/user-profile.component'; // Import komponente za prikaz profila korisnika
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
     {
