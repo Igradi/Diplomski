@@ -4,7 +4,7 @@ const Users = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 
 async function register(req, res) {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     try {
         let user = await Users.findOne({ email });
@@ -13,10 +13,13 @@ async function register(req, res) {
             return res.status(400).json({ msg: 'Korisnik već postoji' });
         }
 
+        const userRole = role ? role : 'user';
+
         user = new Users({
             username,
             email,
             password,
+            role: userRole
         });
 
         await user.save();
@@ -27,6 +30,7 @@ async function register(req, res) {
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 async function login(req, res) {
     const { email, password } = req.body;
