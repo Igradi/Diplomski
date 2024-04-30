@@ -66,7 +66,7 @@ async function login(req, res) {
 
 async function updateUser(req, res) {
     const { id } = req.params;
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     try {
         let user = await Users.findById(id);
@@ -77,6 +77,8 @@ async function updateUser(req, res) {
 
         user.username = username || user.username;
         user.email = email || user.email;
+        user.role = role || user.role;
+
         if (password) {
             user.password = password;
         }
@@ -89,6 +91,7 @@ async function updateUser(req, res) {
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 async function deleteUser(req, res) {
     const { id } = req.params;
