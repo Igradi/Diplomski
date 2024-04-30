@@ -31,7 +31,7 @@ export class NavbarComponent {
         this.isLoggedIn = true;
         this.username = decodedToken.username;
         this.userId = decodedToken.id;
-        this.isAdmin = decodedToken.role === 'admin';
+        this.isAdmin = this.authService.isAdmin();
         console.log(decodedToken.role);
         console.log(this.username, this.userId, this.isAdmin);
       }
