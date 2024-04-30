@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JwtDecodeService } from '../services/jwt-decode.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +14,9 @@ import { AuthService } from '../services/auth.service';
 export class NavbarComponent {
   isLoggedIn = false;
   username: string | undefined;
+  userId: string | undefined;
 
-  constructor(private jwtDecodeService: JwtDecodeService, private authService: AuthService) { }
+  constructor(private jwtDecodeService: JwtDecodeService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -23,6 +25,7 @@ export class NavbarComponent {
       if (decodedToken) {
         this.isLoggedIn = true;
         this.username = decodedToken.username;
+        this.userId = decodedToken.id;
       }
     }
   }
@@ -31,5 +34,11 @@ export class NavbarComponent {
     this.authService.logout();
     this.isLoggedIn = false;
     this.username = undefined;
+  }
+
+  goToUserProfile(): void {
+    if (this.userId) {
+      this.router.navigate(['/user-profile', this.userId]);
+    }
   }
 }
