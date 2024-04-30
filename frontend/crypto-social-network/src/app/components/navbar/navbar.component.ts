@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JwtDecodeService } from '../services/jwt-decode.service';
-import { AuthService } from '../services/auth.service';
+import { JwtDecodeService } from '../../services/jwt-decode.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
