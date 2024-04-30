@@ -15,8 +15,13 @@ export class NavbarComponent {
   isLoggedIn = false;
   username: string | undefined;
   userId: string | undefined;
+  isAdmin = false;
 
-  constructor(private jwtDecodeService: JwtDecodeService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private jwtDecodeService: JwtDecodeService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -26,6 +31,9 @@ export class NavbarComponent {
         this.isLoggedIn = true;
         this.username = decodedToken.username;
         this.userId = decodedToken.id;
+        this.isAdmin = decodedToken.role === 'admin';
+        console.log(decodedToken.role);
+        console.log(this.username, this.userId, this.isAdmin);
       }
     }
   }
@@ -34,6 +42,7 @@ export class NavbarComponent {
     this.authService.logout();
     this.isLoggedIn = false;
     this.username = undefined;
+    this.isAdmin = false;
   }
 
   goToUserProfile(): void {

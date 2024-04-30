@@ -8,9 +8,11 @@
             <li *ngIf="isLoggedIn"><a href="home" class="text-white hover:text-gray-300">Home</a></li>
             <li *ngIf="!isLoggedIn"><a href="login" class="text-white hover:text-gray-300">Login</a></li>
             <li *ngIf="!isLoggedIn"><a href="register" class="text-white hover:text-gray-300">Register</a></li>
-            <li *ngIf="isLoggedIn"><a href="admin-dashboard" class="text-white hover:text-gray-300">Admin</a></li>
+            <li *ngIf="isLoggedIn && isAdmin"><a href="admin-dashboard" class="text-white hover:text-gray-300">Admin</a>
+            </li>
             <li *ngIf="isLoggedIn"><a href="login" (click)="logout()" class="text-white hover:text-gray-300">Logout</a>
             </li>
         </ul>
+
     </div>
 </nav>
