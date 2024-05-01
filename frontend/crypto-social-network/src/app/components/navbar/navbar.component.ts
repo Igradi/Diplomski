@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  isLoggedIn = false;
   username: string | undefined;
   userId: string | undefined;
   isAdmin = false;
@@ -23,26 +22,26 @@ export class NavbarComponent {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    const token = localStorage.getItem('token');
+  isUserAuthenticated(): boolean {
+    const token = this.authService.getToken();
     if (token) {
       const decodedToken: any = this.jwtDecodeService.decodeToken(token);
       if (decodedToken) {
-        this.isLoggedIn = true;
         this.username = decodedToken.username;
         this.userId = decodedToken.id;
         this.isAdmin = this.authService.isAdmin();
-        console.log(decodedToken.role);
-        console.log(this.username, this.userId, this.isAdmin);
       }
+      return true;
+    } else {
+      this.username = undefined;
+      this.isAdmin = false;
+      return false;
     }
   }
 
   logout(): void {
     this.authService.logout();
-    this.isLoggedIn = false;
-    this.username = undefined;
-    this.isAdmin = false;
+    this.isUserAuthenticated();
   }
 
   goToUserProfile(): void {
