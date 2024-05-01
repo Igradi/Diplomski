@@ -7,6 +7,8 @@
             </li>
             <li *ngIf="isUserAuthenticated()"><a href="home" class="text-white hover:text-gray-300">Home</a></li>
             <li *ngIf="!isUserAuthenticated()"><a href="login" class="text-white hover:text-gray-300">Login</a></li>
+            <li *ngIf="isUserAuthenticated()"><a href="cryptocurrency-list"
+                    class="text-white hover:text-gray-300">Cryptocurrency list</a></li>
             <li *ngIf="!isUserAuthenticated()"><a href="register" class="text-white hover:text-gray-300">Register</a>
             </li>
             <li *ngIf="isUserAuthenticated() && isAdmin"><a href="admin-dashboard"
