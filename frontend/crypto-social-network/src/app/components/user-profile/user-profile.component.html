@@ -18,7 +18,7 @@
                     <input *ngIf="user" type="email" [(ngModel)]="user.email">
                 </dd>
             </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" *ngIf="isUserAdmin()">
                 <dt class="text-sm font-medium text-gray-500">Role</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
                     <div *ngIf="user">
@@ -29,6 +29,7 @@
                     </div>
                 </dd>
             </div>
+
         </dl>
     </div>
 </div>

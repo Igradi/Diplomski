@@ -5,6 +5,7 @@ import { User } from '../../models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class UserProfileComponent {
   user?: User;
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute, private userService: UserService, private toastr: ToastrService, private authService: AuthService) { }
 
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('id');
@@ -32,6 +33,10 @@ export class UserProfileComponent {
     } else {
       console.error('User ID not found.');
     }
+  }
+
+  isUserAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 
   updateUser(): void {

@@ -9,3 +9,13 @@ html,
 body {
     background-color: #e4f1fe;
 }
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
