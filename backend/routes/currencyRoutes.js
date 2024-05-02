@@ -53,8 +53,9 @@ async function createCurrency(req, res) {
     }
 }
 
-router.get('/:id', getCurrencyById);
 router.get('/getAllCurrencies', getAllCurrencies);
+router.get('/:id', getCurrencyById);
 router.post('/createCurrency', createCurrency);
+
 
 module.exports = router;
