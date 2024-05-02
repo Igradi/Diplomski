@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminDashboardComponent {
   users: User[] = [];
-  newUser: User = { _id: '', username: '', password: '', email: '', role: '' };
+  newUser: User = { _id: '', username: '', password: '', email: '', role: '', favorites: [] };
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router, private toastr: ToastrService) { }
 
@@ -58,7 +58,7 @@ export class AdminDashboardComponent {
       this.userService.addUser(username, email, password, role).subscribe(
         () => {
           this.loadUsers();
-          this.newUser = { _id: '', username: '', email: '', password: '', role: '' };
+          this.newUser = { _id: '', username: '', email: '', password: '', role: '', favorites: [] };
           this.toastr.success('User added successfully!', 'Success');
         },
         (error) => {

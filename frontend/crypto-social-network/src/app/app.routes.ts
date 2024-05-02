@@ -6,6 +6,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
+import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cryptocurrency-list.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,11 @@ export const routes: Routes = [
     {
         path: 'user-profile/:id',
         component: UserProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'cryptocurrency-list',
+        component: CryptocurrencyListComponent,
         canActivate: [AuthGuard]
     }
 ];

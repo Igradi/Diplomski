@@ -1,1 +1,7 @@
-<p>cryptocurrency-list works!</p>
+<div *ngFor="let cryptocurrency of cryptocurrencies" class="cryptocurrency">
+    <h3>{{ cryptocurrency.name }}</h3>
+    <p>Symbol: {{ cryptocurrency.abbreviation }}</p>
+    <button (click)="toggleFavorite(cryptocurrency)">
+
+    </button>
+</div>
