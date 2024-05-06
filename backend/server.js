@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const currencyRoutes = require('./routes/currencyRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes')
+const pollRoutes = require('./routes/pollRoutes');
 
 const app = express();
 const port = 4000;
@@ -16,6 +17,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/currencies', currencyRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/polls', pollRoutes);
 
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_URL = `mongodb+srv://admin:${DB_PASSWORD}@cryptowebapp.xbnscvx.mongodb.net/?retryWrites=true&w=majority&appName=CryptoWebApp`;
