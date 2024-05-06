@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Currency = require('../models/CurrencyModel');
+const User = require('../models/UserModel');
 
 async function getCurrencyById(req, res) {
     const { id } = req.params;
@@ -53,9 +54,41 @@ async function createCurrency(req, res) {
     }
 }
 
+async function favoriteCurrency(req, res) {
+    const { userId, currencyId } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ msg: 'Korisnik nije pronađen' });
+        }
+
+        const currency = await Currency.findById(currencyId);
+        if (!currency) {
+            return res.status(404).json({ msg: 'Valuta nije pronađena' });
+        }
+
+        const index = user.favorites.indexOf(currencyId);
+        if (index !== -1) {
+            user.favorites.splice(index, 1);
+            await user.save();
+            return res.json({ msg: 'Valuta je uklonjena iz favorita korisnika', user });
+        }
+
+        user.favorites.push(currencyId);
+        await user.save();
+
+        res.json({ msg: 'Valuta je uspješno dodana u favorite korisnika', user });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
+
 router.get('/getAllCurrencies', getAllCurrencies);
 router.get('/:id', getCurrencyById);
 router.post('/createCurrency', createCurrency);
-
+router.post('/favoriteCurrency', favoriteCurrency);
 
 module.exports = router;

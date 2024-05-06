@@ -14,7 +14,4 @@ export class CryptocurrencyListService {
         return this.http.get<Cryptocurrency[]>('http://localhost:4000/api/currencies/getAllCurrencies');
     }
 
-    updateCryptocurrency(cryptocurrency: Cryptocurrency): Observable<any> {
-        return this.http.put(`http://localhost:4000/api/currencies/${cryptocurrency._id}`, cryptocurrency);
-    }
 }
