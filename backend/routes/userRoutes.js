@@ -4,25 +4,10 @@ const Users = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 
 async function register(req, res) {
-    const { username, email, password, role } = req.body;
-
     try {
-        let user = await Users.findOne({ email });
+        const newUser = new Users(req.body);
 
-        if (user) {
-            return res.status(400).json({ msg: 'Korisnik već postoji' });
-        }
-
-        const userRole = role ? role : 'user';
-
-        user = new Users({
-            username,
-            email,
-            password,
-            role: userRole
-        });
-
-        await user.save();
+        await newUser.save();
 
         res.json({ msg: 'Korisnik je uspješno registriran' });
     } catch (err) {
