@@ -32,9 +32,8 @@ async function getPostById(req, res) {
 
 async function createPost(req, res) {
     try {
-        const newPostData = { ...req.body }; // Kopiranje svih podataka iz zahtjeva
+        const newPostData = { ...req.body };
 
-        // Kreiranje novog posta s podacima iz zahtjeva
         const newPost = new Post(newPostData);
 
         await newPost.save();
@@ -87,10 +86,10 @@ async function deletePost(req, res) {
     }
 }
 
-router.get('/', getAllPosts);
+router.get('/getAllPosts', getAllPosts);
 router.get('/:id', getPostById);
-router.post('/', createPost);
-router.put('/:id', updatePost);
-router.delete('/delete/:id', deletePost);
+router.post('/createPost', createPost);
+router.put('/updatePost/:id', updatePost);
+router.delete('/deletePost/:id', deletePost);
 
 module.exports = router;
