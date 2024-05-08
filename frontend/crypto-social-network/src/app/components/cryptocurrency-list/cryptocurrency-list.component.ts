@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Cryptocurrency } from '../../models/cryptocurrency.model';
 import { CryptocurrencyListService } from '../../services/cryptocurrency-list.service';
 import { CommonModule } from '@angular/common';
+import { JwtDecodeService } from '../../services/jwt-decode.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cryptocurrency-list',
@@ -13,7 +15,7 @@ import { CommonModule } from '@angular/common';
 export class CryptocurrencyListComponent {
   cryptocurrencies: Cryptocurrency[] = [];
 
-  constructor(private cryptocurrencyService: CryptocurrencyListService) { }
+  constructor(private cryptocurrencyService: CryptocurrencyListService, private jwtDecodeService: JwtDecodeService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getCryptocurrencies();
@@ -31,8 +33,20 @@ export class CryptocurrencyListComponent {
   }
 
   toggleFavorite(cryptocurrency: Cryptocurrency): void {
+    const token = this.authService.getToken() ?? '';
+    const decodedToken = this.jwtDecodeService.decodeToken(token);
+
+    const userId = decodedToken.id;
+
+    this.cryptocurrencyService.toggleFavoriteCryptocurrency(cryptocurrency._id, userId).subscribe(
+      (response) => {
+        this.getCryptocurrencies();
+      },
+      (error) => {
+        console.error('Error toggling favorite cryptocurrency:', error);
+      }
+    );
   }
 
-  isFavorite(cryptocurrency: Cryptocurrency): void {
-  }
+
 }

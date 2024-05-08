@@ -14,4 +14,8 @@ export class CryptocurrencyListService {
         return this.http.get<Cryptocurrency[]>('http://localhost:4000/api/currencies/getAllCurrencies');
     }
 
+    toggleFavoriteCryptocurrency(currencyId: string, userId: string): Observable<any> {
+        return this.http.post<any>('http://localhost:4000/api/currencies/favoriteCurrency', { currencyId, userId });
+    }
+
 }
