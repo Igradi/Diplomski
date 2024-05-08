@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { JwtDecodeService } from '../../services/jwt-decode.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-cryptocurrency-list',
@@ -15,11 +17,32 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CryptocurrencyListComponent {
   cryptocurrencies: Cryptocurrency[] = [];
+  user!: User;
 
-  constructor(private cryptocurrencyService: CryptocurrencyListService, private jwtDecodeService: JwtDecodeService, private authService: AuthService, private toastr: ToastrService) { }
+  constructor(private cryptocurrencyService: CryptocurrencyListService, private jwtDecodeService: JwtDecodeService, private authService: AuthService, private toastr: ToastrService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.getCryptocurrencies();
+    this.getUser();
+  }
+
+  getUser(): void {
+    const token = this.authService.getToken() ?? '';
+    const decodedToken = this.jwtDecodeService.decodeToken(token);
+    const userId = decodedToken.id;
+
+    this.userService.getUserById(userId).subscribe(
+      (data) => {
+        this.user = data;
+      },
+      (error) => {
+        console.error('Error fetching user:', error);
+      }
+    );
+  }
+
+  isFavorite(cryptocurrency: Cryptocurrency): boolean {
+    return this.user?.favorites.includes(cryptocurrency._id);
   }
 
   getCryptocurrencies(): void {
@@ -36,12 +59,11 @@ export class CryptocurrencyListComponent {
   toggleFavorite(cryptocurrency: Cryptocurrency): void {
     const token = this.authService.getToken() ?? '';
     const decodedToken = this.jwtDecodeService.decodeToken(token);
-
     const userId = decodedToken.id;
 
     this.cryptocurrencyService.toggleFavoriteCryptocurrency(cryptocurrency._id, userId).subscribe(
       (response) => {
-        this.getCryptocurrencies();
+        this.user = response.user;
         this.toastr.success(response.msg);
       },
       (error) => {

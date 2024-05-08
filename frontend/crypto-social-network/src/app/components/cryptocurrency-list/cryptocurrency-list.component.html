@@ -15,7 +15,8 @@
                 <dt class="text-sm font-medium text-gray-500">Favorit</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
                     <button class="btn btn-outline-primary" (click)="toggleFavorite(cryptocurrency)">
-                        <i class="bi bi-heart"></i>
+                        <i class="bi"
+                            [ngClass]="{'bi-heart': !isFavorite(cryptocurrency), 'bi-heart-fill': isFavorite(cryptocurrency)}"></i>
                     </button>
                 </dd>
             </div>
