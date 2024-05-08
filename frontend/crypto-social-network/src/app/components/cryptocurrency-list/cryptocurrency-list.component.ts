@@ -4,6 +4,7 @@ import { CryptocurrencyListService } from '../../services/cryptocurrency-list.se
 import { CommonModule } from '@angular/common';
 import { JwtDecodeService } from '../../services/jwt-decode.service';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cryptocurrency-list',
@@ -15,7 +16,7 @@ import { AuthService } from '../../services/auth.service';
 export class CryptocurrencyListComponent {
   cryptocurrencies: Cryptocurrency[] = [];
 
-  constructor(private cryptocurrencyService: CryptocurrencyListService, private jwtDecodeService: JwtDecodeService, private authService: AuthService) { }
+  constructor(private cryptocurrencyService: CryptocurrencyListService, private jwtDecodeService: JwtDecodeService, private authService: AuthService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getCryptocurrencies();
@@ -41,12 +42,13 @@ export class CryptocurrencyListComponent {
     this.cryptocurrencyService.toggleFavoriteCryptocurrency(cryptocurrency._id, userId).subscribe(
       (response) => {
         this.getCryptocurrencies();
+        this.toastr.success(response.msg);
       },
       (error) => {
         console.error('Error toggling favorite cryptocurrency:', error);
+        this.toastr.error('An error occurred.');
       }
     );
   }
-
 
 }
