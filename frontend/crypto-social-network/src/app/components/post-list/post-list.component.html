@@ -1,1 +1,38 @@
-<p>post-list works!</p>
+<div class="max-w-lg mx-auto mt-4">
+    <div class="bg-white border rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 border-b">
+            <h2 class="text-xl font-semibold">Posts</h2>
+        </div>
+        <div class="divide-y">
+            <div *ngFor="let post of posts" class="p-4">
+                <div class="flex items-center mb-2">
+                    <img src="https://via.placeholder.com/40" alt="User Avatar" class="w-8 h-8 rounded-full mr-2">
+                    <span class="font-semibold">{{ post.user }}</span>
+                </div>
+                <p class="text-gray-800">{{ post.content }}</p>
+                <div class="mt-2 flex items-center">
+                    <button class="flex items-center text-gray-500 mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>{{ post.upvotes }}</span>
+                    </button>
+                    <button class="flex items-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path
+                                d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z" />
+                        </svg>
+                        <span>{{ post.downvotes }}</span>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="posts.length === 0" class="p-4 text-center">
+                <p class="text-gray-600">No posts available.</p>
+            </div>
+        </div>
+    </div>
+</div>
