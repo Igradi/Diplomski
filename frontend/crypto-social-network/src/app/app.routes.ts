@@ -7,6 +7,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
 import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cryptocurrency-list.component';
+import { PostListComponent } from './components/post-list/post-list.component'; // Import novu komponentu
 
 export const routes: Routes = [
     {
@@ -40,6 +41,11 @@ export const routes: Routes = [
     {
         path: 'cryptocurrency-list',
         component: CryptocurrencyListComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'home/:cryptoName-posts',
+        component: PostListComponent,
         canActivate: [AuthGuard]
     }
 ];
