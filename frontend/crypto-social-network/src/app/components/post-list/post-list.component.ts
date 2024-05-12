@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Post } from '../../models/post.model';
 import { PostService } from '../../services/post-list.service';
 import { CommonModule } from '@angular/common';
+import { CommentService } from '../../services/comment.service';
 
 @Component({
   selector: 'app-post-list',
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class PostListComponent {
   posts: Post[] = [];
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private commentService: CommentService) { }
 
   ngOnInit(): void {
     this.getAllPosts();
@@ -27,6 +27,41 @@ export class PostListComponent {
       },
       (error) => {
         console.error('Error fetching posts:', error);
+      }
+    );
+  }
+  addComment(postId: string, content: string): void {
+    this.commentService.createComment(postId, content).subscribe(
+      (data) => {
+        console.log('Comment added successfully:', data);
+        this.getAllPosts();
+      },
+      (error) => {
+        console.error('Error adding comment:', error);
+      }
+    );
+  }
+
+  upvotePost(postId: string): void {
+    this.postService.upvotePost(postId).subscribe(
+      (data) => {
+        console.log('Post upvoted successfully:', data);
+        this.getAllPosts();
+      },
+      (error) => {
+        console.error('Error upvoting post:', error);
+      }
+    );
+  }
+
+  downvotePost(postId: string): void {
+    this.postService.downvotePost(postId).subscribe(
+      (data) => {
+        console.log('Post downvoted successfully:', data);
+        this.getAllPosts();
+      },
+      (error) => {
+        console.error('Error downvoting post:', error);
       }
     );
   }

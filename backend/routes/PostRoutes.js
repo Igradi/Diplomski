@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/PostModel');
-
+const Comment = require('../models/CommentModel');
 
 async function getAllPosts(req, res) {
     try {
@@ -33,11 +33,8 @@ async function getPostById(req, res) {
 async function createPost(req, res) {
     try {
         const newPostData = { ...req.body };
-
         const newPost = new Post(newPostData);
-
         await newPost.save();
-
         res.json({ msg: 'Novi post je uspješno kreiran', post: newPost });
     } catch (err) {
         console.error(err.message);
@@ -66,7 +63,6 @@ async function updatePost(req, res) {
     }
 }
 
-
 async function deletePost(req, res) {
     const { id } = req.params;
 
@@ -86,10 +82,64 @@ async function deletePost(req, res) {
     }
 }
 
+async function postComment(req, res) {
+    const { postId } = req.params;
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ msg: 'Post nije pronađen' });
+        }
+        const { content, user } = req.body;
+        const newComment = new Comment({ content, user });
+        post.comments.push(newComment);
+        await post.save();
+        res.json({ msg: 'Komentar dodan uspješno', comment: newComment });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
+async function upvotePost(req, res) {
+    const { postId } = req.params;
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ msg: 'Post nije pronađen' });
+        }
+        post.upvotes += 1;
+        await post.save();
+        res.json({ msg: 'Post upvoted successfully', post });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
+async function downvotePost(req, res) {
+    const { postId } = req.params;
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ msg: 'Post nije pronađen' });
+        }
+        post.downvotes += 1;
+        await post.save();
+        res.json({ msg: 'Post downvoted successfully', post });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
 router.get('/getAllPosts', getAllPosts);
 router.get('/:id', getPostById);
 router.post('/createPost', createPost);
 router.put('/updatePost/:id', updatePost);
 router.delete('/deletePost/:id', deletePost);
+router.post('/:postId/comments', postComment);
+router.put('/:postId/upvote', upvotePost);
+router.put('/:postId/downvote', downvotePost);
+
 
 module.exports = router;
