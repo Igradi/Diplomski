@@ -6,6 +6,8 @@ const postSchema = new mongoose.Schema({
     topic: { type: mongoose.Schema.Types.ObjectId, ref: 'Currencys', required: true },
     upvotes: { type: Number, default: 0 },
     downvotes: { type: Number, default: 0 },
+    upvotedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
+    downvotedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comments' }]
 }, { timestamps: true });
 
