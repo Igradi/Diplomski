@@ -102,12 +102,26 @@ async function postComment(req, res) {
 
 async function upvotePost(req, res) {
     const { postId } = req.params;
+    const { userId } = req.body;
+
     try {
         const post = await Post.findById(postId);
         if (!post) {
             return res.status(404).json({ msg: 'Post nije pronađen' });
         }
+
+        if (post.upvotedBy.includes(userId)) {
+            return res.status(400).json({ msg: 'Već ste upvotali ovaj post' });
+        }
+
+        if (post.downvotedBy.includes(userId)) {
+            post.downvotes -= 1;
+            const index = post.downvotedBy.indexOf(userId);
+            post.downvotedBy.splice(index, 1);
+        }
+
         post.upvotes += 1;
+        post.upvotedBy.push(userId);
         await post.save();
         res.json({ msg: 'Post upvoted successfully', post });
     } catch (err) {
@@ -118,12 +132,26 @@ async function upvotePost(req, res) {
 
 async function downvotePost(req, res) {
     const { postId } = req.params;
+    const { userId } = req.body;
+
     try {
         const post = await Post.findById(postId);
         if (!post) {
             return res.status(404).json({ msg: 'Post nije pronađen' });
         }
+
+        if (post.downvotedBy.includes(userId)) {
+            return res.status(400).json({ msg: 'Već ste downvotali ovaj post' });
+        }
+
+        if (post.upvotedBy.includes(userId)) {
+            post.upvotes -= 1;
+            const index = post.upvotedBy.indexOf(userId);
+            post.upvotedBy.splice(index, 1);
+        }
+
         post.downvotes += 1;
+        post.downvotedBy.push(userId);
         await post.save();
         res.json({ msg: 'Post downvoted successfully', post });
     } catch (err) {

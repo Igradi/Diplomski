@@ -10,4 +10,6 @@ export interface Post {
     comments: string[];
     createdAt: Date;
     updatedAt: Date;
+    upvotedBy?: string[];
+    downvotedBy?: string[];
 }
