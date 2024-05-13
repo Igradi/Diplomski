@@ -1,3 +1,4 @@
+// cryptocurrency-list.component.ts
 import { Component } from '@angular/core';
 import { Cryptocurrency } from '../../models/cryptocurrency.model';
 import { CryptocurrencyListService } from '../../services/cryptocurrency-list.service';
@@ -27,11 +28,7 @@ export class CryptocurrencyListComponent {
   }
 
   getUser(): void {
-    const token = this.authService.getToken() ?? '';
-    const decodedToken = this.jwtDecodeService.decodeToken(token);
-    const userId = decodedToken.id;
-
-    this.userService.getUserById(userId).subscribe(
+    this.userService.getUserByIdFromToken().subscribe(
       (data) => {
         this.user = data;
       },
@@ -57,18 +54,21 @@ export class CryptocurrencyListComponent {
   }
 
   toggleFavorite(cryptocurrency: Cryptocurrency): void {
-    const token = this.authService.getToken() ?? '';
-    const decodedToken = this.jwtDecodeService.decodeToken(token);
-    const userId = decodedToken.id;
-
-    this.cryptocurrencyService.toggleFavoriteCryptocurrency(cryptocurrency._id, userId).subscribe(
-      (response) => {
-        this.user = response.user;
-        this.toastr.success(response.msg);
+    this.userService.getUserByIdFromToken().subscribe(
+      (user) => {
+        this.cryptocurrencyService.toggleFavoriteCryptocurrency(cryptocurrency._id, user._id).subscribe(
+          (response) => {
+            this.user = response.user;
+            this.toastr.success(response.msg);
+          },
+          (error) => {
+            console.error('Error toggling favorite cryptocurrency:', error);
+            this.toastr.error('An error occurred.');
+          }
+        );
       },
       (error) => {
-        console.error('Error toggling favorite cryptocurrency:', error);
-        this.toastr.error('An error occurred.');
+        console.error('Error fetching user:', error);
       }
     );
   }
