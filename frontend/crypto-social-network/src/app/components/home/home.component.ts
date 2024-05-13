@@ -3,11 +3,12 @@ import { Cryptocurrency } from '../../models/cryptocurrency.model';
 import { CryptocurrencyListService } from '../../services/cryptocurrency-list.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { LivePricesComponent } from '../live-prices/live-prices.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LivePricesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
