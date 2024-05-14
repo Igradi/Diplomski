@@ -28,5 +28,8 @@ export class PostService {
         const user = this.userService.getUserIdFromToken();
         return this.http.post<any>('http://localhost:4000/api/posts/createPost', { content, topic, user });
     }
+    deletePost(postId: string): Observable<any> {
+        return this.http.delete<any>(`http://localhost:4000/api/posts/deletePost/${postId}`);
+    }
 
 }
