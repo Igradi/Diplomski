@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostListComponent {
   posts: Post[] = [];
+  newPostContent: string = '';
 
   constructor(private postService: PostService, private commentService: CommentService) { }
 
@@ -69,5 +70,19 @@ export class PostListComponent {
         console.error('Error downvoting post:', error);
       }
     );
+  }
+  createPost(): void {
+    if (this.newPostContent && this.postService.selectedTopic) {
+      this.postService.createPost(this.newPostContent, this.postService.selectedTopic).subscribe(
+        (data) => {
+          console.log('Post created successfully:', data);
+          this.newPostContent = '';
+          this.getAllPosts();
+        },
+        (error) => {
+          console.error('Error creating post:', error);
+        }
+      );
+    }
   }
 }

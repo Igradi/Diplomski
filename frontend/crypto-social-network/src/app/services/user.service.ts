@@ -33,7 +33,7 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/getUserById/${userId}`);
   }
 
-  private getUserIdFromToken(): string | null {
+  getUserIdFromToken(): string | null {
     const token = this.authService.getToken() ?? '';
     const decodedToken = this.jwtDecodeService.decodeToken(token);
     return decodedToken ? decodedToken.id : null;
