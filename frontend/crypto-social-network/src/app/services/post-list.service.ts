@@ -7,6 +7,7 @@ import { Post } from '../models/post.model';
     providedIn: 'root'
 })
 export class PostService {
+    selectedTopic: string = '';
 
     constructor(private http: HttpClient) { }
 
@@ -21,5 +22,4 @@ export class PostService {
     downvotePost(postId: string): Observable<any> {
         return this.http.put<any>(`http://localhost:4000/api/posts/${postId}/downvote`, {});
     }
-
 }

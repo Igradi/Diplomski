@@ -24,7 +24,11 @@ export class PostListComponent {
   getAllPosts(): void {
     this.postService.getAllPosts().subscribe(
       (data: Post[]) => {
-        this.posts = data;
+        if (this.postService.selectedTopic) {
+          this.posts = data.filter(post => post.topic === this.postService.selectedTopic);
+        } else {
+          this.posts = data;
+        }
       },
       (error) => {
         console.error('Error fetching posts:', error);

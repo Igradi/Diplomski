@@ -4,6 +4,7 @@ import { CryptocurrencyListService } from '../../services/cryptocurrency-list.se
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LivePricesComponent } from '../live-prices/live-prices.component';
+import { PostService } from '../../services/post-list.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import { LivePricesComponent } from '../live-prices/live-prices.component';
 export class HomeComponent {
   cryptocurrencies: Cryptocurrency[] = [];
 
-  constructor(private cryptocurrencyService: CryptocurrencyListService, private router: Router) { }
+  constructor(private cryptocurrencyService: CryptocurrencyListService, private router: Router, private postService: PostService) { }
 
   ngOnInit(): void {
     this.getCryptocurrencies();
@@ -34,7 +35,9 @@ export class HomeComponent {
 
   onSelect(cryptocurrency: Cryptocurrency): void {
     console.log('Selected cryptocurrency:', cryptocurrency);
+    this.postService.selectedTopic = cryptocurrency._id;
     this.router.navigate(['/home', cryptocurrency.name.toLowerCase() + '-posts']);
   }
+
 
 }
