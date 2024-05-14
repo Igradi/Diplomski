@@ -1,11 +1,4 @@
-<p *ngIf="bitcoinData">Cijena Bitcoina: {{bitcoinData.rate}} USD</p>
-<p *ngIf="bitcoinData">MarketCap Bitcoina: {{bitcoinData.cap}} USD</p>
-
-<p *ngIf="rippleData">Cijena Ripplea: {{rippleData.rate}} USD</p>
-<p *ngIf="rippleData">MarketCap Ripplea: {{rippleData.cap}} USD</p>
-
-<p *ngIf="ethereumData">Cijena Ethereuma: {{ethereumData.rate}} USD</p>
-<p *ngIf="ethereumData">MarketCap Ethereuma: {{ethereumData.cap}} USD</p>
-
-<p *ngIf="dogecoinData">Cijena Dogecoina: {{dogecoinData.rate}} USD</p>
-<p *ngIf="dogecoinData">MarketCap Dogecoina: {{dogecoinData.cap}} USD</p>
+<div *ngFor="let cryptoData of favoriteCryptosData">
+    <p *ngIf="cryptoData">Cijena {{cryptoData.code}}: {{cryptoData.rate}} USD</p>
+    <p *ngIf="cryptoData">MarketCap {{cryptoData.code}}: {{cryptoData.cap}} USD</p>
+</div>

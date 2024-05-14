@@ -12,25 +12,15 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 
 export class LivePricesComponent {
-  bitcoinData: any;
-  rippleData: any;
-  ethereumData: any;
-  dogecoinData: any;
+  favoriteCryptosData: any[];
 
-  constructor(private livePricesService: LivePricesService) { }
+  constructor(private livePricesService: LivePricesService) {
+    this.favoriteCryptosData = [];
+  }
 
   ngOnInit(): void {
-    this.livePricesService.getBitcoinData().subscribe(data => {
-      this.bitcoinData = data;
-    });
-    this.livePricesService.getRippleData().subscribe(data => {
-      this.rippleData = data;
-    });
-    this.livePricesService.getEthereumData().subscribe(data => {
-      this.ethereumData = data;
-    });
-    this.livePricesService.getDogecoinData().subscribe(data => {
-      this.dogecoinData = data;
+    this.livePricesService.getFavoriteCryptosData().subscribe(data => {
+      this.favoriteCryptosData = data;
     });
   }
 }

@@ -1,29 +1,16 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { UserService } from './user.service';
+import { User } from '../models/user.model';
+import { Cryptocurrency } from '../models/cryptocurrency.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LivePricesService {
-    constructor(private http: HttpClient) { }
-
-    getBitcoinData(): Observable<any> {
-        return this.getCryptoData("BTC");
-    }
-
-    getRippleData(): Observable<any> {
-        return this.getCryptoData("XRP");
-    }
-
-    getEthereumData(): Observable<any> {
-        return this.getCryptoData("ETH");
-    }
-
-    getDogecoinData(): Observable<any> {
-        return this.getCryptoData("DOGE");
-    }
+    constructor(private http: HttpClient, private userService: UserService) { }
 
     private getCryptoData(code: string): Observable<any> {
         const url = "https://api.livecoinwatch.com/coins/single";
@@ -38,5 +25,18 @@ export class LivePricesService {
         };
 
         return this.http.post(url, body, { headers });
+    }
+
+    getFavoriteCryptosData(): Observable<any[]> {
+        return this.userService.getUserByIdFromToken().pipe(
+            switchMap((user: User) => {
+                const requests = user.favorites.map((favoriteId: string) => {
+                    return this.http.get<Cryptocurrency>(`http://localhost:4000/api/currencies/${favoriteId}`).pipe(
+                        switchMap((crypto: Cryptocurrency) => this.getCryptoData(crypto.abbreviation))
+                    );
+                });
+                return forkJoin(requests);
+            })
+        );
     }
 }
