@@ -16,6 +16,14 @@ export class PostService {
         return this.http.get<Post[]>('http://localhost:4000/api/posts/getAllPosts');
     }
 
+    getPostById(postId: string): Observable<Post> {
+        return this.http.get<Post>(`http://localhost:4000/api/posts/${postId}`);
+    }
+
+    updatePost(postId: string, content: string): Observable<any> {
+        return this.http.put<any>(`http://localhost:4000/api/posts/updatePost/${postId}`, { content });
+    }
+
     upvotePost(postId: string): Observable<any> {
         return this.http.put<any>(`http://localhost:4000/api/posts/${postId}/upvote`, {});
     }
@@ -28,6 +36,7 @@ export class PostService {
         const user = this.userService.getUserIdFromToken();
         return this.http.post<any>('http://localhost:4000/api/posts/createPost', { content, topic, user });
     }
+
     deletePost(postId: string): Observable<any> {
         return this.http.delete<any>(`http://localhost:4000/api/posts/deletePost/${postId}`);
     }

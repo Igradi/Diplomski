@@ -1,1 +1,10 @@
-<p>edit-post works!</p>
+<div class="max-w-lg mx-auto mt-4">
+    <div class="bg-white border rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 border-b">
+            <h2 class="text-xl font-semibold">Edit Post</h2>
+            <textarea [(ngModel)]="newPostContent" class="w-full p-2 border rounded"></textarea>
+            <button (click)="updatePost()" class="btn btn-primary mt-2">Update Post</button>
+            <button (click)="cancelEdit()" class="btn btn-secondary mt-2 ml-2">Cancel</button>
+        </div>
+    </div>
+</div>

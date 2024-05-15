@@ -7,7 +7,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
 import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cryptocurrency-list.component';
-import { PostListComponent } from './components/post-list/post-list.component'; // Import novu komponentu
+import { PostListComponent } from './components/post-list/post-list.component';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
 
 export const routes: Routes = [
     {
@@ -46,6 +47,11 @@ export const routes: Routes = [
     {
         path: 'home/:cryptoName-posts',
         component: PostListComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'edit-post/:id',
+        component: EditPostComponent,
         canActivate: [AuthGuard]
     }
 ];
