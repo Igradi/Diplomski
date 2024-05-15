@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../models/post.model';
 import { PostService } from '../../services/post-list.service';
-import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -22,7 +21,6 @@ export class EditPostComponent {
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
-    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +45,7 @@ export class EditPostComponent {
       this.postService.updatePost(this.postId, this.newPostContent).subscribe(
         (data) => {
           console.log('Post updated successfully:', data);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home', this.post?.topic + '-posts']);
         },
         (error) => {
           console.error('Error updating post:', error);
@@ -56,7 +54,9 @@ export class EditPostComponent {
     }
   }
 
+
   cancelEdit(): void {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home', this.post?.topic + '-posts']);
   }
+
 }
