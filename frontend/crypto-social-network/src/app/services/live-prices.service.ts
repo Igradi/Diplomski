@@ -31,7 +31,7 @@ export class LivePricesService {
         return this.userService.getUserByIdFromToken().pipe(
             switchMap((user: User) => {
                 const requests = user.favorites.map((favoriteId: string) => {
-                    return this.http.get<Cryptocurrency>(`http://localhost:4000/api/currencies/${favoriteId}`).pipe(
+                    return this.http.get<Cryptocurrency>(`http://localhost:4000/api/currencies/${favoriteId}`, { headers: this.userService.generateHeaders() }).pipe(
                         switchMap((crypto: Cryptocurrency) => this.getCryptoData(crypto.abbreviation))
                     );
                 });
