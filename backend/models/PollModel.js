@@ -6,7 +6,8 @@ const pollSchema = new mongoose.Schema({
     correctAnswerIndex: { type: Number, required: true },
     totalVotes: { type: Number, default: 0 },
     correctVotes: { type: Number, default: 0 },
-    topic: { type: mongoose.Schema.Types.ObjectId, ref: 'Currencys', required: true }
+    topic: { type: mongoose.Schema.Types.ObjectId, ref: 'Currencys', required: true },
+    answeredBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Polls', pollSchema);
