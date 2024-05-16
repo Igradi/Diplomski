@@ -91,7 +91,8 @@ async function postComment(req, res) {
         }
         const { content, user } = req.body;
         const newComment = new Comment({ content, user });
-        post.comments.push(newComment);
+        await newComment.save();
+        post.comments.push(newComment._id);
         await post.save();
         res.json({ msg: 'Komentar dodan uspješno', comment: newComment });
     } catch (err) {
@@ -99,6 +100,7 @@ async function postComment(req, res) {
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 async function upvotePost(req, res) {
     const { postId } = req.params;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { JwtDecodeService } from './jwt-decode.service';
@@ -13,24 +13,29 @@ export class UserService {
 
   constructor(private http: HttpClient, private jwtDecodeService: JwtDecodeService, private authService: AuthService) { }
 
+  generateHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders().set('Authorization', token || '');
+  }
+
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/getAllUsers`);
+    return this.http.get<User[]>(`${this.apiUrl}/getAllUsers`, { headers: this.generateHeaders() });
   }
 
   addUser(username: string, email: string, password: string, role: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, { username, email, password, role });
+    return this.http.post<any>(`${this.apiUrl}/register`, { username, email, password, role }, { headers: this.generateHeaders() });
   }
 
   deleteUser(userId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/delete/${userId}`);
+    return this.http.delete<any>(`${this.apiUrl}/delete/${userId}`, { headers: this.generateHeaders() });
   }
 
   updateUser(userId: string, newData: Partial<User>): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update/${userId}`, newData);
+    return this.http.put<any>(`${this.apiUrl}/update/${userId}`, newData, { headers: this.generateHeaders() });
   }
 
   getUserById(userId: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/getUserById/${userId}`);
+    return this.http.get<User>(`${this.apiUrl}/getUserById/${userId}`, { headers: this.generateHeaders() });
   }
 
   getUserIdFromToken(): string | null {

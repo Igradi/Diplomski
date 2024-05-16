@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middleware/verifyToken');
 
 async function register(req, res) {
     try {
@@ -127,8 +128,8 @@ async function getUserById(req, res) {
 
 router.post('/register', register);
 router.post('/login', login);
-router.put('/update/:id', updateUser);
-router.delete('/delete/:id', deleteUser);
-router.get('/getAllUsers', getAllUsers);
-router.get('/getUserById/:id', getUserById);
+router.put('/update/:id', verifyToken, updateUser);
+router.delete('/delete/:id', verifyToken, deleteUser);
+router.get('/getAllUsers', verifyToken, getAllUsers);
+router.get('/getUserById/:id', verifyToken, getUserById);
 module.exports = router;
