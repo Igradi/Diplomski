@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Currency = require('../models/CurrencyModel');
 const User = require('../models/UserModel');
+const verifyToken = require('../middleware/verifyToken');
 
 async function getCurrencyById(req, res) {
     const { id } = req.params;
@@ -86,9 +87,9 @@ async function favoriteCurrency(req, res) {
 }
 
 
-router.get('/getAllCurrencies', getAllCurrencies);
-router.get('/:id', getCurrencyById);
-router.post('/createCurrency', createCurrency);
-router.post('/favoriteCurrency', favoriteCurrency);
+router.get('/getAllCurrencies', verifyToken, getAllCurrencies);
+router.get('/:id', verifyToken, getCurrencyById);
+router.post('/createCurrency', verifyToken, createCurrency);
+router.post('/favoriteCurrency', verifyToken, favoriteCurrency);
 
 module.exports = router;

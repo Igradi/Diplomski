@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Comment = require('../models/CommentModel');
+const verifyToken = require('../middleware/verifyToken');
 
 async function getCommentById(req, res) {
     const { id } = req.params;
@@ -74,9 +75,9 @@ async function deleteComment(req, res) {
     }
 }
 
-router.get('/:id', getCommentById);
-router.post('/createComment', createComment);
-router.put('/updateComment/:id', updateComment);
-router.delete('/deleteComment/:id', deleteComment);
+router.get('/:id', verifyToken, getCommentById);
+router.post('/createComment', verifyToken, createComment);
+router.put('/updateComment/:id', verifyToken, updateComment);
+router.delete('/deleteComment/:id', verifyToken, deleteComment);
 
 module.exports = router;

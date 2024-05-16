@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Poll = require('../models/PollModel');
+const verifyToken = require('../middleware/verifyToken');
 
 async function getAllPolls(req, res) {
     try {
@@ -52,9 +53,9 @@ async function deletePoll(req, res) {
     }
 }
 
-router.get('/getAllPolls', getAllPolls);
-router.get('/:id', getPollById);
-router.post('/createPoll', createPoll);
-router.delete('/deletePoll/:id', deletePoll);
+router.get('/getAllPolls', verifyToken, getAllPolls);
+router.get('/:id', verifyToken, getPollById);
+router.post('/createPoll', verifyToken, createPoll);
+router.delete('/deletePoll/:id', verifyToken, deletePoll);
 
 module.exports = router;

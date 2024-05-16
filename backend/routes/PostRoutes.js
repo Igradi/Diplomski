@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/PostModel');
 const Comment = require('../models/CommentModel');
+const verifyToken = require('../middleware/verifyToken');
 
 async function getAllPosts(req, res) {
     try {
@@ -162,14 +163,14 @@ async function downvotePost(req, res) {
     }
 }
 
-router.get('/getAllPosts', getAllPosts);
-router.get('/:id', getPostById);
-router.post('/createPost', createPost);
-router.put('/updatePost/:id', updatePost);
-router.delete('/deletePost/:id', deletePost);
-router.post('/:postId/comments', postComment);
-router.put('/:postId/upvote', upvotePost);
-router.put('/:postId/downvote', downvotePost);
+router.get('/getAllPosts', verifyToken, getAllPosts);
+router.get('/:id', verifyToken, getPostById);
+router.post('/createPost', verifyToken, createPost);
+router.put('/updatePost/:id', verifyToken, updatePost);
+router.delete('/deletePost/:id', verifyToken, deletePost);
+router.post('/:postId/comments', verifyToken, postComment);
+router.put('/:postId/upvote', verifyToken, upvotePost);
+router.put('/:postId/downvote', verifyToken, downvotePost);
 
 
 module.exports = router;
