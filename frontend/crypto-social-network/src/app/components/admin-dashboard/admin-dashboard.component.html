@@ -1,6 +1,10 @@
 <div class="container mx-auto py-6 px-4">
     <h2 class="text-2xl font-semibold mb-4">Admin Dashboard</h2>
 
+    <p class="mb-8">Do you want to create a poll? <a href="/admin-dashboard/create-poll"
+            class="text-indigo-600 hover:underline">Create
+            poll Here!</a></p>
+
     <form class="mb-8 space-y-4" (ngSubmit)="addUser()" #userForm="ngForm">
         <div>
             <label for="username" class="block text-sm font-medium text-gray-700">Username</label>

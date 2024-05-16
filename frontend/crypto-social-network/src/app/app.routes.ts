@@ -9,6 +9,7 @@ import { RoleGuard } from './services/role.guard';
 import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cryptocurrency-list.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
+import { CreatePollComponent } from './components/create-poll/create-poll.component';
 
 export const routes: Routes = [
     {
@@ -53,5 +54,10 @@ export const routes: Routes = [
         path: 'edit-post/:id',
         component: EditPostComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'admin-dashboard/create-poll',
+        component: CreatePollComponent,
+        canActivate: [AuthGuard, RoleGuard]
     }
 ];

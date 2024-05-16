@@ -34,10 +34,8 @@ export class HomeComponent {
   }
 
   onSelect(cryptocurrency: Cryptocurrency): void {
-    console.log('Selected cryptocurrency:', cryptocurrency);
     this.postService.selectedTopic = cryptocurrency._id;
     this.router.navigate(['/home', cryptocurrency.name.toLowerCase() + '-posts']);
   }
-
 
 }
