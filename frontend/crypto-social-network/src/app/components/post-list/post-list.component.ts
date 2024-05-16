@@ -6,6 +6,7 @@ import { CommentService } from '../../services/comment.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -18,7 +19,7 @@ export class PostListComponent {
   posts: Post[] = [];
   newPostContent: string = '';
 
-  constructor(private postService: PostService, private commentService: CommentService, private router: Router, public userService: UserService) { }
+  constructor(private postService: PostService, private commentService: CommentService, private router: Router, public userService: UserService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.getAllPosts();

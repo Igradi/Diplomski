@@ -36,8 +36,9 @@
                     </button>
                     <button *ngIf="post.user === userService.getUserIdFromToken()" (click)="editPost(post._id)"
                         class="btn btn-primary ml-2">Edit</button>
-                    <button *ngIf="post.user === userService.getUserIdFromToken()" (click)="deletePost(post._id)"
-                        class="btn btn-danger ml-2">Delete</button>
+                    <button *ngIf="authService.isAdmin() || post.user === userService.getUserIdFromToken()"
+                        (click)="deletePost(post._id)" class="btn btn-danger ml-2">Delete</button>
+
                 </div>
             </div>
             <div *ngIf="posts.length === 0" class="p-4 text-center">
