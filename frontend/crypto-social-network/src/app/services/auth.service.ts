@@ -24,7 +24,17 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken: any = this.jwtDecodeService.decodeToken(token);
+
+      const tokenExpired = Date.now() >= decodedToken.exp * 1000;
+      if (tokenExpired) {
+        localStorage.removeItem('token');
+        return null;
+      }
+    }
+    return token;
   }
 
   logout(): void {
