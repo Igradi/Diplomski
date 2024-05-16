@@ -19,7 +19,10 @@ export class CreatePollComponent {
   options: string[] = [];
   correctAnswerIndex: number = 0;
 
-  constructor(private cryptocurrencyService: CryptocurrencyListService, private pollService: PollService) { }
+  constructor(
+    private cryptocurrencyService: CryptocurrencyListService,
+    private pollService: PollService
+  ) { }
 
   ngOnInit(): void {
     this.getCryptocurrencies();
@@ -45,7 +48,21 @@ export class CreatePollComponent {
   }
 
   createPoll(): void {
-    // Implement your logic to create a poll
+    const pollData = {
+      question: this.question,
+      options: this.options,
+      correctAnswerIndex: this.correctAnswerIndex,
+      topic: this.selectedCurrencyId
+    };
+
+    this.pollService.createPoll(pollData).subscribe(
+      response => {
+        console.log('Poll created successfully:', response);
+      },
+      error => {
+        console.error('Error creating poll:', error);
+      }
+    );
   }
 
 }
