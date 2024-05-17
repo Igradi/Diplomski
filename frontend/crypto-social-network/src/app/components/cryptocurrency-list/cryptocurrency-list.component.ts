@@ -1,4 +1,3 @@
-// cryptocurrency-list.component.ts
 import { Component } from '@angular/core';
 import { Cryptocurrency } from '../../models/cryptocurrency.model';
 import { CryptocurrencyListService } from '../../services/cryptocurrency-list.service';
