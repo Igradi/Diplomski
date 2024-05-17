@@ -1,7 +1,7 @@
 export interface Post {
     _id: string;
     content: string;
-    user: string;
+    user: { _id: string; username: string };
     topic: string;
     upvotes: number;
     downvotes: number;

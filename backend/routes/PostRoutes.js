@@ -6,13 +6,14 @@ const verifyToken = require('../middleware/verifyToken');
 
 async function getAllPosts(req, res) {
     try {
-        const posts = await Post.find({});
+        const posts = await Post.find({}).populate('user', 'username');
         res.json(posts);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 async function getPostById(req, res) {
     const { id } = req.params;
