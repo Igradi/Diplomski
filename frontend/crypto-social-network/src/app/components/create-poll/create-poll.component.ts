@@ -4,6 +4,8 @@ import { CryptocurrencyListService } from '../../services/cryptocurrency-list.se
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PollService } from '../../services/poll.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-poll',
@@ -16,12 +18,14 @@ export class CreatePollComponent {
   cryptocurrencies: Cryptocurrency[] = [];
   selectedCurrencyId: string = '';
   question: string = '';
-  options: string[] = [];
+  options: { value: string }[] = [];
   correctAnswerIndex: number = 0;
 
   constructor(
     private cryptocurrencyService: CryptocurrencyListService,
-    private pollService: PollService
+    private pollService: PollService,
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +44,7 @@ export class CreatePollComponent {
   }
 
   addOption(): void {
-    this.options.push('');
+    this.options.push({ value: '' });
   }
 
   removeOption(index: number): void {
@@ -50,19 +54,19 @@ export class CreatePollComponent {
   createPoll(): void {
     const pollData = {
       question: this.question,
-      options: this.options,
+      options: this.options.map(option => option.value),
       correctAnswerIndex: this.correctAnswerIndex,
       topic: this.selectedCurrencyId
     };
 
     this.pollService.createPoll(pollData).subscribe(
       response => {
-        console.log('Poll created successfully:', response);
+        this.toastr.success('Anketa je uspješno kreirana!', 'Uspjeh');
+        this.router.navigate(['/admin-dashboard']);
       },
       error => {
-        console.error('Error creating poll:', error);
+        this.toastr.error('Greška pri kreiranju ankete.', 'Greška');
       }
     );
   }
-
 }
