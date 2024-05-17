@@ -20,20 +20,6 @@ async function getCommentById(req, res) {
     }
 }
 
-async function createComment(req, res) {
-    try {
-        const newComment = new Comment(req.body);
-
-        await newComment.save();
-
-        res.json({ msg: 'Novi komentar je uspješno kreiran', comment: newComment });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Greška na serveru');
-    }
-}
-
-
 async function updateComment(req, res) {
     const { id } = req.params;
     const { content } = req.body;
@@ -55,7 +41,6 @@ async function updateComment(req, res) {
     }
 }
 
-
 async function deleteComment(req, res) {
     const { id } = req.params;
 
@@ -75,9 +60,70 @@ async function deleteComment(req, res) {
     }
 }
 
+async function upvoteComment(req, res) {
+    const { commentId } = req.params;
+    const { userId } = req.body;
+
+    try {
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+        }
+
+        if (comment.upvotedBy.includes(userId)) {
+            return res.status(400).json({ msg: 'Već ste upvotali ovaj komentar' });
+        }
+
+        if (comment.downvotedBy.includes(userId)) {
+            comment.downvotes -= 1;
+            const index = comment.downvotedBy.indexOf(userId);
+            comment.downvotedBy.splice(index, 1);
+        }
+
+        comment.upvotes += 1;
+        comment.upvotedBy.push(userId);
+        await comment.save();
+        res.json({ msg: 'Komentar upvoted successfully', comment });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
+async function downvoteComment(req, res) {
+    const { commentId } = req.params;
+    const { userId } = req.body;
+
+    try {
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+        }
+
+        if (comment.downvotedBy.includes(userId)) {
+            return res.status(400).json({ msg: 'Već ste downvotali ovaj komentar' });
+        }
+
+        if (comment.upvotedBy.includes(userId)) {
+            comment.upvotes -= 1;
+            const index = comment.upvotedBy.indexOf(userId);
+            comment.upvotedBy.splice(index, 1);
+        }
+
+        comment.downvotes += 1;
+        comment.downvotedBy.push(userId);
+        await comment.save();
+        res.json({ msg: 'Komentar downvoted successfully', comment });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
 router.get('/:id', verifyToken, getCommentById);
-router.post('/createComment', verifyToken, createComment);
 router.put('/updateComment/:id', verifyToken, updateComment);
 router.delete('/deleteComment/:id', verifyToken, deleteComment);
+router.put('/:commentId/upvote', verifyToken, upvoteComment);
+router.put('/:commentId/downvote', verifyToken, downvoteComment);
 
 module.exports = router;
