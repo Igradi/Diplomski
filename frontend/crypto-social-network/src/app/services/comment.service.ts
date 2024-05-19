@@ -28,4 +28,8 @@ export class CommentService {
     editComment(commentId: string, content: string): Observable<any> {
         return this.http.put<any>(`${this.baseUrl}/updateComment/${commentId}`, { content }, { headers: this.userService.generateHeaders() });
     }
+
+    getCommentById(commentId: string): Observable<Comment> {
+        return this.http.get<Comment>(`${this.baseUrl}/${commentId}`, { headers: this.userService.generateHeaders() });
+    }
 }

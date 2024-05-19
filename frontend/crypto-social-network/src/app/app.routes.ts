@@ -10,6 +10,7 @@ import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cr
 import { PostListComponent } from './components/post-list/post-list.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { CreatePollComponent } from './components/create-poll/create-poll.component';
+import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 
 export const routes: Routes = [
     {
@@ -59,5 +60,10 @@ export const routes: Routes = [
         path: 'admin-dashboard/create-poll',
         component: CreatePollComponent,
         canActivate: [AuthGuard, RoleGuard]
+    },
+    {
+        path: 'edit-comment/:id',
+        component: EditCommentComponent,
+        canActivate: [AuthGuard]
     }
 ];

@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment-list',
@@ -21,7 +22,8 @@ export class CommentListComponent implements OnInit {
   constructor(
     private commentService: CommentService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -58,9 +60,10 @@ export class CommentListComponent implements OnInit {
     }
   }
 
-  editComment(commentId: string, content: string): void {
-    // Implement edit comment logic here
+  editComment(commentId: string): void {
+    this.router.navigate(['/edit-comment', commentId]);
   }
+
 
   deleteComment(commentId: string): void {
     if (this.postId) {
