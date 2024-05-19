@@ -1,0 +1,17 @@
+<div class="comments-section">
+    <div class="add-comment">
+        <textarea [(ngModel)]="newCommentContent" class="w-full p-2 border rounded"
+            placeholder="Add a comment..."></textarea>
+        <button (click)="addComment()" class="btn btn-primary mt-2">Post Comment</button>
+    </div>
+    <div class="comments-list mt-4">
+        <div *ngFor="let comment of comments" class="comment mb-4 p-2 border-b">
+            <div class="flex items-center mb-2">
+                <img src="https://via.placeholder.com/30" alt="User Avatar" class="w-6 h-6 rounded-full mr-2">
+                <span class="font-semibold">{{ comment.user }}</span>
+            </div>
+            <p class="text-gray-800">{{ comment.content }}</p>
+        </div>
+        <div *ngIf="comments.length === 0" class="text-gray-600">No comments yet.</div>
+    </div>
+</div>

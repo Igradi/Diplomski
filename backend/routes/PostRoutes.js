@@ -164,6 +164,27 @@ async function downvotePost(req, res) {
     }
 }
 
+async function getCommentsForPost(req, res) {
+    const { postId } = req.params;
+
+    try {
+        const post = await Post.findById(postId).populate({
+            path: 'comments',
+            populate: { path: 'user', select: 'username' }
+        });
+
+        if (!post) {
+            return res.status(404).json({ msg: 'Post nije pronađen' });
+        }
+
+        res.json(post.comments);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Greška na serveru');
+    }
+}
+
+
 router.get('/getAllPosts', verifyToken, getAllPosts);
 router.get('/:id', verifyToken, getPostById);
 router.post('/createPost', verifyToken, createPost);
@@ -172,6 +193,8 @@ router.delete('/deletePost/:id', verifyToken, deletePost);
 router.post('/:postId/comments', verifyToken, postComment);
 router.put('/:postId/upvote', verifyToken, upvotePost);
 router.put('/:postId/downvote', verifyToken, downvotePost);
+router.get('/:postId/comments', verifyToken, getCommentsForPost);
+
 
 
 module.exports = router;
