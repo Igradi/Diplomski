@@ -8,7 +8,7 @@
         <div *ngFor="let comment of comments" class="comment mb-4 p-2 border-b">
             <div class="flex items-center mb-2">
                 <img src="https://via.placeholder.com/30" alt="User Avatar" class="w-6 h-6 rounded-full mr-2">
-                <span class="font-semibold">{{ comment.user }}</span>
+                <span class="font-semibold">{{ comment.user.username }}</span>
             </div>
             <p class="text-gray-800">{{ comment.content }}</p>
         </div>

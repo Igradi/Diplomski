@@ -1,7 +1,7 @@
 export interface Comment {
     _id: string;
     content: string;
-    user: string;
+    user: { _id: string; username: string };
     upvotes: number;
     downvotes: number;
     createdAt: Date;
