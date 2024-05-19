@@ -8,6 +8,7 @@ import { UserService } from './user.service';
     providedIn: 'root'
 })
 export class CommentService {
+    private baseUrl: string = 'http://localhost:4000/api/comments';
 
     constructor(private http: HttpClient, private userService: UserService) { }
 
@@ -18,5 +19,13 @@ export class CommentService {
 
     getComments(postId: string): Observable<Comment[]> {
         return this.http.get<Comment[]>(`http://localhost:4000/api/posts/${postId}/comments`, { headers: this.userService.generateHeaders() });
+    }
+
+    deleteComment(commentId: string): Observable<any> {
+        return this.http.delete<any>(`${this.baseUrl}/deleteComment/${commentId}`, { headers: this.userService.generateHeaders() });
+    }
+
+    editComment(commentId: string, content: string): Observable<any> {
+        return this.http.put<any>(`${this.baseUrl}/updateComment/${commentId}`, { content }, { headers: this.userService.generateHeaders() });
     }
 }

@@ -9,6 +9,14 @@
             <div class="flex items-center mb-2">
                 <img src="https://via.placeholder.com/30" alt="User Avatar" class="w-6 h-6 rounded-full mr-2">
                 <span class="font-semibold">{{ comment.user.username }}</span>
+                <button *ngIf="canEditComment(comment)" (click)="editComment(comment._id, comment.content)"
+                    class="btn btn-sm btn-primary ml-2">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button *ngIf="canDeleteComment(comment)" (click)="deleteComment(comment._id)"
+                    class="btn btn-sm btn-danger ml-2">
+                    <i class="bi bi-trash"></i>
+                </button>
             </div>
             <p class="text-gray-800">{{ comment.content }}</p>
         </div>

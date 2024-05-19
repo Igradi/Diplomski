@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommentService } from '../../services/comment.service';
 import { Comment } from '../../models/comment.model';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -8,7 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-comment-list',
   standalone: true,
   templateUrl: './comment-list.component.html',
-  styleUrl: './comment-list.component.scss',
+  styleUrls: ['./comment-list.component.scss'],
   imports: [FormsModule, CommonModule],
 })
 export class CommentListComponent implements OnInit {
@@ -16,7 +18,11 @@ export class CommentListComponent implements OnInit {
   comments: Comment[] = [];
   newCommentContent: string = '';
 
-  constructor(private commentService: CommentService) { }
+  constructor(
+    private commentService: CommentService,
+    private userService: UserService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.getCommentsForPost();
@@ -37,7 +43,6 @@ export class CommentListComponent implements OnInit {
     }
   }
 
-
   addComment(): void {
     if (this.postId && this.newCommentContent) {
       this.commentService.createComment(this.postId, this.newCommentContent).subscribe(
@@ -51,5 +56,30 @@ export class CommentListComponent implements OnInit {
         }
       );
     }
+  }
+
+  editComment(commentId: string, content: string): void {
+    // Implement edit comment logic here
+  }
+
+  deleteComment(commentId: string): void {
+    if (this.postId) {
+      this.commentService.deleteComment(commentId).subscribe(
+        () => {
+          this.getCommentsForPost();
+        },
+        (error) => {
+          console.error('Error deleting comment:', error);
+        }
+      );
+    }
+  }
+
+  canEditComment(comment: Comment): boolean {
+    return comment.user._id === this.userService.getUserIdFromToken();
+  }
+
+  canDeleteComment(comment: Comment): boolean {
+    return this.authService.isAdmin() || comment.user._id === this.userService.getUserIdFromToken();
   }
 }
