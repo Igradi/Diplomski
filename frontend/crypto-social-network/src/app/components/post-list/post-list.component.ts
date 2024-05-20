@@ -8,12 +8,11 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
-import { PollListComponent } from '../poll-list/poll-list.component';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, CommentListComponent, PollListComponent],
+  imports: [CommonModule, FormsModule, CommentListComponent],
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.scss'
 })

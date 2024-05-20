@@ -1,69 +1,55 @@
-<div class="max-w-lg mx-auto mt-4">
-    <div class="bg-white border rounded-lg shadow-md overflow-hidden">
-        <div class="p-4 border-b">
-            <h2 class="text-xl font-semibold">Create a new post</h2>
-            <textarea [(ngModel)]="newPostContent" class="w-full p-2 border rounded"></textarea>
-            <button (click)="createPost()" class="btn btn-primary mt-2">Publish Post</button>
-            <button (click)="newPostContent = ''" class="btn btn-secondary mt-2 ml-2">Cancel</button>
-        </div>
-        <div class="p-4 border-b">
-            <h2 class="text-xl font-semibold">Posts</h2>
-            <div>
-                <label for="sort-by">Sort by:</label>
-                <select id="sort-by" [(ngModel)]="sortBy" (change)="changeSort(sortBy)">
-                    <option value="date">By date</option>
-                    <option value="hot">Hot</option>
-                </select>
-            </div>
-        </div>
-        <div class="divide-y">
-            <div *ngFor="let post of posts" class="p-4">
-                <div class="flex items-center mb-2">
-                    <img src="https://via.placeholder.com/40" alt="User Avatar" class="w-8 h-8 rounded-full mr-2">
-                    <span class="font-semibold">{{ post.user.username }}</span>
-                </div>
-                <p class="text-gray-800">{{ post.content }}</p>
-                <p class="text-gray-600 text-sm">Created at: {{ post.createdAt | date:'short' }}</p>
-                <div class="mt-2 flex items-center">
-                    <button (click)="upvotePost(post._id)" class="flex items-center text-gray-500 mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span>{{ post.upvotes }}</span>
-                    </button>
-                    <button (click)="downvotePost(post._id)" class="flex items-center text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z" />
-                        </svg>
-                        <span>{{ post.downvotes }}</span>
-                    </button>
-                    <button *ngIf="post.user._id === userService.getUserIdFromToken()" (click)="editPost(post._id)"
-                        class="btn btn-primary ml-2">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button *ngIf="authService.isAdmin() || post.user._id === userService.getUserIdFromToken()"
-                        (click)="deletePost(post._id)" class="btn btn-danger ml-2">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-                <app-comment-list [postId]="post._id"></app-comment-list>
-            </div>
-            <div *ngIf="posts.length === 0" class="p-4 text-center">
-                <p class="text-gray-600">No posts available.</p>
-            </div>
-        </div>
+<div class="p-4 border-b">
+    <h2 class="text-xl font-semibold">Create a new post</h2>
+    <textarea [(ngModel)]="newPostContent" class="w-full p-2 border rounded"></textarea>
+    <button (click)="createPost()" class="btn btn-primary mt-2">Publish Post</button>
+    <button (click)="newPostContent = ''" class="btn btn-secondary mt-2 ml-2">Cancel</button>
+</div>
+<div class="p-4 border-b">
+    <h2 class="text-xl font-semibold">Posts</h2>
+    <div>
+        <label for="sort-by">Sort by:</label>
+        <select id="sort-by" [(ngModel)]="sortBy" (change)="changeSort(sortBy)">
+            <option value="date">By date</option>
+            <option value="hot">Hot</option>
+        </select>
     </div>
-    <div class="bg-white border rounded-lg shadow-md overflow-hidden mt-4">
-        <div class="p-4 border-b">
-            <h2 class="text-xl font-semibold">Polls</h2>
+</div>
+<div class="divide-y">
+    <div *ngFor="let post of posts" class="p-4">
+        <div class="flex items-center mb-2">
+            <img src="https://via.placeholder.com/40" alt="User Avatar" class="w-8 h-8 rounded-full mr-2">
+            <span class="font-semibold">{{ post.user.username }}</span>
         </div>
-        <div class="p-4">
-            <app-poll-list></app-poll-list>
+        <p class="text-gray-800">{{ post.content }}</p>
+        <p class="text-gray-600 text-sm">Created at: {{ post.createdAt | date:'short' }}</p>
+        <div class="mt-2 flex items-center">
+            <button (click)="upvotePost(post._id)" class="flex items-center text-gray-500 mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>{{ post.upvotes }}</span>
+            </button>
+            <button (click)="downvotePost(post._id)" class="flex items-center text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z" />
+                </svg>
+                <span>{{ post.downvotes }}</span>
+            </button>
+            <button *ngIf="post.user._id === userService.getUserIdFromToken()" (click)="editPost(post._id)"
+                class="btn btn-primary ml-2">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button *ngIf="authService.isAdmin() || post.user._id === userService.getUserIdFromToken()"
+                (click)="deletePost(post._id)" class="btn btn-danger ml-2">
+                <i class="bi bi-trash"></i>
+            </button>
         </div>
+        <app-comment-list [postId]="post._id"></app-comment-list>
+    </div>
+    <div *ngIf="posts.length === 0" class="p-4 text-center">
+        <p class="text-gray-600">No posts available.</p>
     </div>
 </div>

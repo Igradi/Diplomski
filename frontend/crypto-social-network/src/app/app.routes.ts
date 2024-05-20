@@ -7,10 +7,10 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
 import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cryptocurrency-list.component';
-import { PostListComponent } from './components/post-list/post-list.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { CreatePollComponent } from './components/create-poll/create-poll.component';
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
+import { PostsAndPollsComponent } from './components/posts-and-polls/posts-and-polls.component';
 
 export const routes: Routes = [
     {
@@ -48,7 +48,7 @@ export const routes: Routes = [
     },
     {
         path: 'home/:cryptoName-posts',
-        component: PostListComponent,
+        component: PostsAndPollsComponent,
         canActivate: [AuthGuard]
     },
     {
