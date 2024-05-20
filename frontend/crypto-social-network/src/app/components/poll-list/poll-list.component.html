@@ -1,16 +1,17 @@
 <div *ngFor="let poll of polls" class="poll-container">
     <h3>{{ poll.question }}</h3>
-    <div *ngFor="let option of poll.options; let i = index">
-        <label>
-            <input type="radio" name="option{{ poll._id }}" [value]="i" [(ngModel)]="selectedOptions[poll._id]" />
-            {{ option }}
-        </label>
+    <div *ngIf="!poll.answeredBy.includes(userId!)">
+        <div *ngFor="let option of poll.options; let i = index">
+            <label>
+                <input type="radio" name="option{{ poll._id }}" [value]="i" [(ngModel)]="selectedOptions[poll._id]" />
+                {{ option }}
+            </label>
+        </div>
+        <button (click)="submitVote(poll._id, selectedOptions[poll._id])">
+            Submit Vote
+        </button>
     </div>
-    <button (click)="submitVote(poll._id, selectedOptions[poll._id])">
-        Submit Vote
-    </button>
-
-    <div class="poll-results" *ngIf="poll.totalVotes > 0">
+    <div class="poll-results" *ngIf="poll.answeredBy.includes(userId!) || poll.totalVotes > 0">
         <h4>Results:</h4>
         <p>Correct Votes: {{ poll.correctVotes }}</p>
         <p>Total Votes: {{ poll.totalVotes }}</p>

@@ -4,6 +4,7 @@ import { PollService } from '../../services/poll.service';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PostService } from '../../services/post-list.service';
 
 @Component({
   selector: 'app-poll-list',
@@ -16,20 +17,33 @@ export class PollListComponent {
 
   polls: Poll[] = [];
   selectedOptions: { [pollId: string]: number } = {};
+  userId: string | null = null;
 
   constructor(
     private pollService: PollService,
-    private userService: UserService
+    private userService: UserService,
+    private postService: PostService
   ) { }
 
   ngOnInit(): void {
+    this.userId = this.userService.getUserIdFromToken();
     this.getAllPolls();
   }
 
   getAllPolls(): void {
     this.pollService.getAllPolls().subscribe(
       (data: Poll[]) => {
-        this.polls = data;
+        if (this.postService.selectedTopic) {
+          this.polls = data.filter(poll => poll.topic === this.postService.selectedTopic);
+        } else {
+          this.polls = data;
+        }
+
+        this.polls.forEach(poll => {
+          if (poll.answeredBy.includes(this.userId!)) {
+            this.selectedOptions[poll._id] = poll.options.findIndex(option => option === poll.correctAnswerIndex.toString());
+          }
+        });
       },
       (error) => {
         console.error('Error fetching polls:', error);
@@ -38,10 +52,8 @@ export class PollListComponent {
   }
 
   submitVote(pollId: string, selectedOptionIndex: number): void {
-    const userId = this.userService.getUserIdFromToken();
-
-    if (userId) {
-      this.pollService.submitVote(pollId, selectedOptionIndex, userId).subscribe(
+    if (this.userId) {
+      this.pollService.submitVote(pollId, selectedOptionIndex, this.userId).subscribe(
         (data) => {
           console.log('Vote submitted successfully:', data);
           this.getAllPolls();
@@ -49,7 +61,6 @@ export class PollListComponent {
         (error) => {
           console.error('Error submitting vote:', error);
         }
-
       );
     }
   }

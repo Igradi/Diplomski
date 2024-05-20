@@ -41,6 +41,7 @@ export class PostListComponent {
       }
     );
   }
+
   addComment(postId: string, content: string): void {
     this.commentService.createComment(postId, content).subscribe(
       (data) => {
