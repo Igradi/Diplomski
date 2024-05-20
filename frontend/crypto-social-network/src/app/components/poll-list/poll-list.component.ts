@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PostService } from '../../services/post-list.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-poll-list',
@@ -22,7 +23,8 @@ export class PollListComponent {
   constructor(
     private pollService: PollService,
     private userService: UserService,
-    private postService: PostService
+    private postService: PostService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -55,15 +57,16 @@ export class PollListComponent {
     if (this.userId) {
       this.pollService.submitVote(pollId, selectedOptionIndex, this.userId).subscribe(
         (data) => {
-          console.log('Vote submitted successfully:', data);
+          this.toastr.success('Vote submitted successfully', 'Success');
           this.getAllPolls();
         },
         (error) => {
-          console.error('Error submitting vote:', error);
+          this.toastr.error('Failed to submit vote', 'You have already voted.');
         }
       );
     }
   }
+
 
   getPercentage(correctVotes: number, totalVotes: number): number {
     return totalVotes > 0 ? (correctVotes / totalVotes) * 100 : 0;
