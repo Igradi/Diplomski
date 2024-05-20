@@ -8,6 +8,13 @@
         </div>
         <div class="p-4 border-b">
             <h2 class="text-xl font-semibold">Posts</h2>
+            <div>
+                <label for="sort-by">Sort by:</label>
+                <select id="sort-by" [(ngModel)]="sortBy" (change)="changeSort(sortBy)">
+                    <option value="date">By date</option>
+                    <option value="hot">Hot</option>
+                </select>
+            </div>
         </div>
         <div class="divide-y">
             <div *ngFor="let post of posts" class="p-4">
@@ -16,6 +23,7 @@
                     <span class="font-semibold">{{ post.user.username }}</span>
                 </div>
                 <p class="text-gray-800">{{ post.content }}</p>
+                <p class="text-gray-600 text-sm">Created at: {{ post.createdAt | date:'short' }}</p>
                 <div class="mt-2 flex items-center">
                     <button (click)="upvotePost(post._id)" class="flex items-center text-gray-500 mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"

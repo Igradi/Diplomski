@@ -17,9 +17,10 @@ import { PollListComponent } from '../poll-list/poll-list.component';
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.scss'
 })
-export class PostListComponent {
+export class PostListComponent implements OnInit {
   posts: Post[] = [];
   newPostContent: string = '';
+  sortBy: string = 'date';
 
   constructor(private postService: PostService, private commentService: CommentService, private router: Router, public userService: UserService, public authService: AuthService) { }
 
@@ -35,11 +36,25 @@ export class PostListComponent {
         } else {
           this.posts = data;
         }
+        this.sortPosts();
       },
       (error) => {
         console.error('Error fetching posts:', error);
       }
     );
+  }
+
+  sortPosts(): void {
+    if (this.sortBy === 'date') {
+      this.posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (this.sortBy === 'hot') {
+      this.posts.sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
+    }
+  }
+
+  changeSort(sortBy: string): void {
+    this.sortBy = sortBy;
+    this.sortPosts();
   }
 
   addComment(postId: string, content: string): void {
@@ -77,6 +92,7 @@ export class PostListComponent {
       }
     );
   }
+
   createPost(): void {
     if (this.newPostContent && this.postService.selectedTopic) {
       this.postService.createPost(this.newPostContent, this.postService.selectedTopic).subscribe(
@@ -91,6 +107,7 @@ export class PostListComponent {
       );
     }
   }
+
   editPost(postId: string): void {
     this.router.navigate(['/edit-post', postId]);
   }
