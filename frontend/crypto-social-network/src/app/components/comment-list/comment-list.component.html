@@ -7,8 +7,7 @@
     <div class="comments-list mt-4">
         <div *ngFor="let comment of comments" class="comment mb-4 p-2 border-b">
             <div class="flex items-center mb-2">
-                <img src="https://via.placeholder.com/30" alt="User Avatar" class="w-6 h-6 rounded-full mr-2">
-                <span class="font-semibold">{{ comment.user.username }}</span>
+                <span class="font-bold">{{ comment.user.username }}</span>
                 <button *ngIf="canEditComment(comment)" (click)="editComment(comment._id)"
                     class="btn btn-sm btn-primary ml-2">
                     <i class="bi bi-pencil"></i>

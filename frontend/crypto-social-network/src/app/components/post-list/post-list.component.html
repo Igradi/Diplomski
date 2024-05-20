@@ -1,14 +1,14 @@
-<div class="p-4 border-b">
-    <h2 class="text-xl font-semibold">Create a new post</h2>
+<div class="container mx-auto p-4 border-b-2 border-gray-200">
+    <h2 class="text-2xl font-bold">Create a new post</h2>
     <textarea [(ngModel)]="newPostContent" class="w-full p-2 border rounded"></textarea>
-    <button (click)="createPost()" class="btn btn-primary mt-2">Publish Post</button>
-    <button (click)="newPostContent = ''" class="btn btn-secondary mt-2 ml-2">Cancel</button>
+    <button (click)="createPost()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Publish Post</button>
+    <button (click)="newPostContent = ''" class="mt-2 ml-2 px-4 py-2 bg-gray-300 text-black rounded">Cancel</button>
 </div>
-<div class="p-4 border-b">
-    <h2 class="text-xl font-semibold">Posts</h2>
+<div class="container mx-auto p-4 border-b-2 border-gray-200">
+    <h2 class="text-2xl font-bold">Posts</h2>
     <div>
         <label for="sort-by">Sort by:</label>
-        <select id="sort-by" [(ngModel)]="sortBy" (change)="changeSort(sortBy)">
+        <select id="sort-by" [(ngModel)]="sortBy" (change)="changeSort(sortBy)" class="ml-2 border rounded">
             <option value="date">By date</option>
             <option value="hot">Hot</option>
         </select>
@@ -17,8 +17,7 @@
 <div class="divide-y">
     <div *ngFor="let post of posts" class="p-4">
         <div class="flex items-center mb-2">
-            <img src="https://via.placeholder.com/40" alt="User Avatar" class="w-8 h-8 rounded-full mr-2">
-            <span class="font-semibold">{{ post.user.username }}</span>
+            <span class="font-bold text-xl">{{ post.user.username }}</span>
         </div>
         <p class="text-gray-800">{{ post.content }}</p>
         <p class="text-gray-600 text-sm">Created at: {{ post.createdAt | date:'short' }}</p>
