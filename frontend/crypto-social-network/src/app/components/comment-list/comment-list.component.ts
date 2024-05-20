@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./comment-list.component.scss'],
   imports: [FormsModule, CommonModule],
 })
-export class CommentListComponent implements OnInit {
+export class CommentListComponent {
   @Input() postId?: string;
   comments: Comment[] = [];
   newCommentContent: string = '';

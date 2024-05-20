@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './edit-comment.component.html',
   styleUrls: ['./edit-comment.component.scss']
 })
-export class EditCommentComponent implements OnInit {
+export class EditCommentComponent {
   commentId: string = '';
   comment: Comment | undefined;
   newCommentContent: string = '';
