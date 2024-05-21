@@ -21,8 +21,8 @@ export class PostListComponent implements OnInit {
   posts: Post[] = [];
   newPostContent: string = '';
   sortBy: string = 'date';
-  p: number = 1; // Dodaj parametar za trenutnu stranicu
-  itemsPerPage: number = 5; // Dodaj parametar za broj postova po stranici
+  p: number = 1;
+  itemsPerPage: number = 5;
 
   constructor(private postService: PostService, private commentService: CommentService, private router: Router, public userService: UserService, public authService: AuthService) { }
 
