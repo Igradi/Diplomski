@@ -1,5 +1,4 @@
 <div *ngIf="favoriteCryptosData && favoriteCryptosData.length > 0" class="container mx-auto p-4 max-w-screen-lg">
-
     <div class="chart-row">
         <div class="chart-container">
             <h3 class="text-xl font-bold mb-4">Price Chart</h3>
@@ -20,7 +19,7 @@
     <div class="historical-chart-row flex flex-wrap">
         <div *ngFor="let cryptoData of favoriteCryptosData" class="chart-container p-2">
             <h3 class="text-xl font-bold mb-4">{{cryptoData.name}} Historical Price Chart</h3>
-            <canvas baseChart [data]="historyChartData[cryptoData.code]" [options]="historyChartOptions"
+            <canvas baseChart [data]="historyChartData[cryptoData.name]" [options]="historyChartOptions"
                 [type]="'line'"></canvas>
         </div>
     </div>
