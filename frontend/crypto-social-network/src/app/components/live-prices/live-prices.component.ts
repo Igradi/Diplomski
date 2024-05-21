@@ -40,14 +40,11 @@ export class LivePricesComponent {
 
   ngOnInit(): void {
     this.livePricesService.getFavoriteCryptosData().subscribe(data => {
-      console.log('Raw API data:', data);
       this.favoriteCryptosData = data.map(item => item.data);
       this.favoriteCryptosHistory = data.reduce((acc, item) => {
         acc[item.data.name] = item.history.history;
         return acc;
       }, {});
-      console.log('Favorite Cryptos Data:', this.favoriteCryptosData);
-      console.log('Favorite Cryptos History:', this.favoriteCryptosHistory);
       this.updateChartData();
     });
   }
@@ -57,11 +54,6 @@ export class LivePricesComponent {
     const marketCaps = this.favoriteCryptosData.map(crypto => crypto.cap);
     const volumes = this.favoriteCryptosData.map(crypto => crypto.volume);
     const labels = this.favoriteCryptosData.map(crypto => crypto.name);
-
-    console.log('Prices:', prices);
-    console.log('Market Caps:', marketCaps);
-    console.log('Volumes:', volumes);
-    console.log('Labels:', labels);
 
     this.lineChartData = {
       labels: labels,
@@ -89,26 +81,16 @@ export class LivePricesComponent {
     };
 
     this.favoriteCryptosData.forEach(cryptoData => {
-      console.log('Processing crypto data:', cryptoData);
       if (cryptoData.name) {
-        console.log(`Updating historical data for ${cryptoData.name}`);
         this.historyChartData[cryptoData.name] = this.getHistoryChartData(cryptoData.name);
-      } else {
-        console.error('cryptoData.name is undefined:', cryptoData);
       }
     });
-
-    console.log('History Chart Data:', this.historyChartData);
   }
 
   getHistoryChartData(name: string): ChartConfiguration['data'] {
     const historyData = this.favoriteCryptosHistory[name] || [];
     const historyLabels = historyData.map((point: HistoricalDataPoint) => new Date(point.date).toLocaleDateString());
     const historyPrices = historyData.map((point: HistoricalDataPoint) => point.rate);
-
-    console.log(`History Data for ${name}:`, historyData);
-    console.log(`History Labels for ${name}:`, historyLabels);
-    console.log(`History Prices for ${name}:`, historyPrices);
 
     return {
       labels: historyLabels,
