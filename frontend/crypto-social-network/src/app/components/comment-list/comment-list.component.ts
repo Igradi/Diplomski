@@ -79,10 +79,11 @@ export class CommentListComponent {
   }
 
   canEditComment(comment: Comment): boolean {
-    return comment.user._id === this.userService.getUserIdFromToken();
+    return comment.user && comment.user._id === this.userService.getUserIdFromToken();
   }
 
   canDeleteComment(comment: Comment): boolean {
-    return this.authService.isAdmin() || comment.user._id === this.userService.getUserIdFromToken();
+    return this.authService.isAdmin() || (comment.user && comment.user._id === this.userService.getUserIdFromToken());
   }
+
 }
