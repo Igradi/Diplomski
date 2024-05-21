@@ -17,8 +17,8 @@
         </div>
     </div>
 
-    <div class="historical-chart-row">
-        <div *ngFor="let cryptoData of favoriteCryptosData" class="chart-container">
+    <div class="historical-chart-row flex flex-wrap">
+        <div *ngFor="let cryptoData of favoriteCryptosData" class="chart-container p-2">
             <h3 class="text-xl font-bold mb-4">{{cryptoData.name}} Historical Price Chart</h3>
             <canvas baseChart [data]="historyChartData[cryptoData.code]" [options]="historyChartOptions"
                 [type]="'line'"></canvas>
