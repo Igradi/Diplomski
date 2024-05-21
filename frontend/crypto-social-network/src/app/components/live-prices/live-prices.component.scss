@@ -1,0 +1,20 @@
+.container {
+    max-width: 100%;
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 10px;
+}
+
+.chart-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.crypto-info {
+    margin-bottom: 20px;
+}

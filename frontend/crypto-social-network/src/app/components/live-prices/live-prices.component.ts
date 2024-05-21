@@ -11,9 +11,8 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, BaseChartDirective],
   templateUrl: './live-prices.component.html',
-  styleUrl: './live-prices.component.scss'
+  styleUrls: ['./live-prices.component.scss']
 })
-
 export class LivePricesComponent {
   favoriteCryptosData: any[];
 
