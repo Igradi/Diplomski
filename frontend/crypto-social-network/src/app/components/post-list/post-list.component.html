@@ -15,7 +15,7 @@
     </div>
 </div>
 <div class="divide-y">
-    <div *ngFor="let post of posts" class="p-4">
+    <div *ngFor="let post of posts | paginate: { itemsPerPage: 5, currentPage: p }" class="p-4">
         <div class="flex items-center mb-2">
             <span class="font-bold text-xl">{{ post.user.username }}</span>
         </div>
@@ -23,18 +23,11 @@
         <p class="text-gray-600 text-sm">Created at: {{ post.createdAt | date:'short' }}</p>
         <div class="mt-2 flex items-center">
             <button (click)="upvotePost(post._id)" class="flex items-center text-gray-500 mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z"
-                        clip-rule="evenodd" />
-                </svg>
+                <i class="bi bi-arrow-up mr-1"></i>
                 <span>{{ post.upvotes }}</span>
             </button>
             <button (click)="downvotePost(post._id)" class="flex items-center text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                        d="M10 2a1 1 0 0 1 1 1v12.77l2.61-2.68a1 1 0 1 1 1.42 1.42l-4.9 5a1 0 0 1-1.42 0l-4.9-5a1 1 0 1 1 1.42-1.42L9 15.77V3a1 1 0 0 1 1-1z" />
-                </svg>
+                <i class="bi bi-arrow-down mr-1"></i>
                 <span>{{ post.downvotes }}</span>
             </button>
             <button *ngIf="post.user._id === userService.getUserIdFromToken()" (click)="editPost(post._id)"
@@ -51,4 +44,7 @@
     <div *ngIf="posts.length === 0" class="p-4 text-center">
         <p class="text-gray-600">No posts available.</p>
     </div>
+</div>
+<div class="pagination-container mt-4">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>

@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, CommentListComponent],
+  imports: [CommonModule, FormsModule, CommentListComponent, NgxPaginationModule],
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.scss'
 })
@@ -20,6 +21,8 @@ export class PostListComponent implements OnInit {
   posts: Post[] = [];
   newPostContent: string = '';
   sortBy: string = 'date';
+  p: number = 1; // Dodaj parametar za trenutnu stranicu
+  itemsPerPage: number = 5; // Dodaj parametar za broj postova po stranici
 
   constructor(private postService: PostService, private commentService: CommentService, private router: Router, public userService: UserService, public authService: AuthService) { }
 
