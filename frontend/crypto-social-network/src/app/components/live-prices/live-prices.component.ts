@@ -14,7 +14,7 @@ Chart.register(...registerables);
   styleUrls: ['./live-prices.component.scss']
 })
 export class LivePricesComponent {
-  favoriteCryptosData: any[];
+  favoriteCryptosData: any[] = [];
 
   public lineChartData: ChartConfiguration['data'] | undefined;
   public barChartData: ChartConfiguration['data'] | undefined;
@@ -30,9 +30,7 @@ export class LivePricesComponent {
     responsive: true,
   };
 
-  constructor(private livePricesService: LivePricesService) {
-    this.favoriteCryptosData = [];
-  }
+  constructor(private livePricesService: LivePricesService) { }
 
   ngOnInit(): void {
     this.livePricesService.getFavoriteCryptosData().subscribe(data => {
