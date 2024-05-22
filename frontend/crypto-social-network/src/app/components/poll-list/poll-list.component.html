@@ -5,9 +5,11 @@
             <h3 class="text-xl font-semibold">{{ poll.title }}</h3>
             <small class="text-gray-500">Created at: {{ poll.createdAt | date:'short' }}</small>
         </div>
+
         <div *ngIf="!poll.showQuestions">
-            <a class="text-blue-500 underline" (click)="toggleQuestions(poll)">See more...</a>
+            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">See questions...</a>
         </div>
+
         <div *ngIf="poll.showQuestions">
             <div *ngFor="let question of poll.questions; let qIndex = index" class="mb-4">
                 <div class="mb-2">
@@ -21,22 +23,30 @@
                     </label>
                 </div>
             </div>
-            <a class="text-blue-500 underline" (click)="toggleQuestions(poll)">See less...</a>
+            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">Hide questions...</a>
         </div>
+
         <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" (click)="submitVotes(poll._id)">Submit
             Vote</button>
 
         <div class="text-gray-600 mt-4" *ngIf="hasQuestionsWithVotes(poll)">
-            <h4 class="font-semibold">Results:</h4>
-            <div *ngFor="let question of poll.questions; let qIndex = index">
-                <p><strong>{{ question.question }}</strong></p>
-                <p>Correct Votes: {{ question.correctVotes }}</p>
-                <p>Total Votes: {{ question.totalVotes }}</p>
-                <p>Correct Answer: {{ question.options[question.correctAnswerIndex] }}</p>
-                <p>
-                    Percentage of Correct Votes:
-                    {{ getPercentage(question.correctVotes, question.totalVotes) | number: '1.0-2' }}%
-                </p>
+            <div *ngIf="!poll.showResults">
+                <a class="text-blue-500 underline cursor-pointer" (click)="toggleResults(poll)">See results...</a>
+            </div>
+
+            <div *ngIf="poll.showResults">
+                <h4 class="font-semibold">Results:</h4>
+                <div *ngFor="let question of poll.questions; let qIndex = index">
+                    <p><strong>{{ question.question }}</strong></p>
+                    <p>Correct Votes: {{ question.correctVotes }}</p>
+                    <p>Total Votes: {{ question.totalVotes }}</p>
+                    <p>Correct Answer: {{ question.options[question.correctAnswerIndex] }}</p>
+                    <p>
+                        Percentage of Correct Votes:
+                        {{ getPercentage(question.correctVotes, question.totalVotes) | number: '1.0-2' }}%
+                    </p>
+                </div>
+                <a class="text-blue-500 underline cursor-pointer" (click)="toggleResults(poll)">Hide results...</a>
             </div>
         </div>
     </div>

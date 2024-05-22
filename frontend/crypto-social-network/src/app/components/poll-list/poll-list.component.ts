@@ -91,5 +91,4 @@ export class PollListComponent {
   toggleResults(poll: Poll): void {
     poll.showResults = !poll.showResults;
   }
-
 }
