@@ -5,6 +5,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, Chart, registerables } from 'chart.js';
 import { HistoricalDataPoint } from '../../models/historicalDataPoint.model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LoaderService } from '../../services/loader.service';
 
 Chart.register(...registerables);
 
@@ -18,7 +19,6 @@ Chart.register(...registerables);
 export class LivePricesComponent {
   favoriteCryptosData: any[] = [];
   favoriteCryptosHistory: { [key: string]: HistoricalDataPoint[] } = {};
-  isLoading = true;
 
   public lineChartData: ChartConfiguration['data'] | undefined;
   public barChartData: ChartConfiguration['data'] | undefined;
@@ -38,9 +38,13 @@ export class LivePricesComponent {
     responsive: true,
   };
 
-  constructor(private livePricesService: LivePricesService) { }
+  constructor(
+    private livePricesService: LivePricesService,
+    public loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.livePricesService.getFavoriteCryptosData().subscribe(
       data => {
         this.favoriteCryptosData = data.map(item => item.data);
@@ -49,11 +53,11 @@ export class LivePricesComponent {
           return acc;
         }, {});
         this.updateChartData();
-        this.isLoading = false;
+        this.loaderService.hide();
       },
       error => {
         console.error('Error fetching data:', error);
-        this.isLoading = false;
+        this.loaderService.hide();
       }
     );
   }
