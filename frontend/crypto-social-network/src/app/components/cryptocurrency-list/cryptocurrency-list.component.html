@@ -1,25 +1,25 @@
 <h2 class="text-2xl font-semibold mb-4">Cryptocurrency List</h2>
 
-<div class="bg-white shadow overflow-hidden sm:rounded-lg">
-    <div class="px-8 py-10 sm:px-6">
+<div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+    <div class="px-4 py-5 sm:px-6">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Cryptocurrency Information</h3>
     </div>
     <div class="border-t border-gray-200">
-        <dl>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
             <div *ngFor="let cryptocurrency of cryptocurrencies; let i = index"
-                class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium text-gray-500">Name</dt>
-                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ cryptocurrency.name }}</dd>
-                <dt class="text-sm font-medium text-gray-500">Symbol</dt>
-                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ cryptocurrency.abbreviation }}</dd>
-                <dt class="text-sm font-medium text-gray-500">Favorite</dt>
-                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                class="bg-gray-50 p-4 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Name</div>
+                <div class="mt-1 text-sm text-gray-900">{{ cryptocurrency.name }}</div>
+                <div class="text-sm font-medium text-gray-500">Symbol</div>
+                <div class="mt-1 text-sm text-gray-900">{{ cryptocurrency.abbreviation }}</div>
+                <div class="text-sm font-medium text-gray-500">Favorite</div>
+                <div class="mt-1 text-sm text-gray-900">
                     <button class="btn btn-outline-primary" (click)="toggleFavorite(cryptocurrency)">
                         <i class="bi"
                             [ngClass]="{'bi-heart': !isFavorite(cryptocurrency), 'bi-heart-fill': isFavorite(cryptocurrency)}"></i>
                     </button>
-                </dd>
+                </div>
             </div>
-        </dl>
+        </div>
     </div>
 </div>
