@@ -14,4 +14,6 @@ export interface Poll {
     topic: string;
     createdAt: Date;
     updatedAt: Date;
+    showQuestions?: boolean;
+    showResults?: boolean;
 }

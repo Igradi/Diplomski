@@ -84,4 +84,12 @@ export class PollListComponent {
     return poll.questions.some(q => q.totalVotes > 0);
   }
 
+  toggleQuestions(poll: Poll): void {
+    poll.showQuestions = !poll.showQuestions;
+  }
+
+  toggleResults(poll: Poll): void {
+    poll.showResults = !poll.showResults;
+  }
+
 }
