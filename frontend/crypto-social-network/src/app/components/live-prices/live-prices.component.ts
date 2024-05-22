@@ -4,19 +4,21 @@ import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, Chart, registerables } from 'chart.js';
 import { HistoricalDataPoint } from '../../models/historicalDataPoint.model';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-live-prices',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, MatProgressBarModule],
   templateUrl: './live-prices.component.html',
   styleUrls: ['./live-prices.component.scss']
 })
 export class LivePricesComponent {
   favoriteCryptosData: any[] = [];
   favoriteCryptosHistory: { [key: string]: HistoricalDataPoint[] } = {};
+  isLoading = true;
 
   public lineChartData: ChartConfiguration['data'] | undefined;
   public barChartData: ChartConfiguration['data'] | undefined;
@@ -39,14 +41,21 @@ export class LivePricesComponent {
   constructor(private livePricesService: LivePricesService) { }
 
   ngOnInit(): void {
-    this.livePricesService.getFavoriteCryptosData().subscribe(data => {
-      this.favoriteCryptosData = data.map(item => item.data);
-      this.favoriteCryptosHistory = data.reduce((acc, item) => {
-        acc[item.data.name] = item.history.history;
-        return acc;
-      }, {});
-      this.updateChartData();
-    });
+    this.livePricesService.getFavoriteCryptosData().subscribe(
+      data => {
+        this.favoriteCryptosData = data.map(item => item.data);
+        this.favoriteCryptosHistory = data.reduce((acc, item) => {
+          acc[item.data.name] = item.history.history;
+          return acc;
+        }, {});
+        this.updateChartData();
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Error fetching data:', error);
+        this.isLoading = false;
+      }
+    );
   }
 
   updateChartData(): void {
