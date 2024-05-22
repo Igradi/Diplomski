@@ -16,6 +16,8 @@
                                         class="nav-link text-white hover:text-gray-300">Cryptocurrency list</a></li>
                         <li *ngIf="!isUserAuthenticated()" [routerLinkActive]="['active']"><a routerLink="/register"
                                         class="nav-link text-white hover:text-gray-300">Register</a></li>
+                        <li *ngIf="!isUserAuthenticated()" [routerLinkActive]="['active']"><a routerLink="/welcome"
+                                        class="nav-link text-white hover:text-gray-300">Welcome</a></li>
                         <li *ngIf="isUserAuthenticated() && isAdmin" [routerLinkActive]="['active']"><a
                                         routerLink="/admin-dashboard"
                                         class="nav-link text-white hover:text-gray-300">Admin</a></li>

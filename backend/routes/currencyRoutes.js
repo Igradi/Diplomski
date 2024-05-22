@@ -87,8 +87,8 @@ async function favoriteCurrency(req, res) {
 }
 
 
-router.get('/getAllCurrencies', verifyToken, getAllCurrencies);
-router.get('/:id', verifyToken, getCurrencyById);
+router.get('/getAllCurrencies', getAllCurrencies);
+router.get('/:id', getCurrencyById);
 router.post('/createCurrency', verifyToken, createCurrency);
 router.post('/favoriteCurrency', verifyToken, favoriteCurrency);
 

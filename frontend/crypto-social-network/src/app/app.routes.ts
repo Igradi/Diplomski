@@ -11,6 +11,7 @@ import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { CreatePollComponent } from './components/create-poll/create-poll.component';
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 import { PostsAndPollsComponent } from './components/posts-and-polls/posts-and-polls.component';
+import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 
 export const routes: Routes = [
     {
@@ -65,5 +66,9 @@ export const routes: Routes = [
         path: 'edit-comment/:id',
         component: EditCommentComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'welcome',
+        component: GuestHomeComponent,
     }
 ];

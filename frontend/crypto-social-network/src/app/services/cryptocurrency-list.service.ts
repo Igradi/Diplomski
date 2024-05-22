@@ -12,7 +12,7 @@ export class CryptocurrencyListService {
     constructor(private http: HttpClient, private userService: UserService) { }
 
     getAllCryptocurrencies(): Observable<Cryptocurrency[]> {
-        return this.http.get<Cryptocurrency[]>('http://localhost:4000/api/currencies/getAllCurrencies', { headers: this.userService.generateHeaders() });
+        return this.http.get<Cryptocurrency[]>('http://localhost:4000/api/currencies/getAllCurrencies');
     }
 
     toggleFavoriteCryptocurrency(currencyId: string, userId: string): Observable<any> {
