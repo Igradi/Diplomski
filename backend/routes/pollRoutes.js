@@ -61,26 +61,34 @@ async function votePoll(req, res) {
         const poll = await Poll.findById(id);
 
         if (!poll) {
+            console.error('Poll not found');
             return res.status(404).json({ message: 'Poll not found' });
+        }
+
+        if (poll.answeredBy.includes(userId)) {
+            console.error('User has already voted');
+            return res.status(400).json({ message: 'User has already voted' });
         }
 
         votes.forEach(({ questionIndex, selectedOptionIndex }) => {
             const question = poll.questions[questionIndex];
-            if (!question.answeredBy.includes(userId)) {
-                question.answeredBy.push(userId);
-                question.totalVotes += 1;
-                if (selectedOptionIndex === question.correctAnswerIndex) {
-                    question.correctVotes += 1;
-                }
+
+
+            question.totalVotes += 1;
+            if (selectedOptionIndex === question.correctAnswerIndex) {
+                question.correctVotes += 1;
             }
         });
+
+        poll.answeredBy.push(userId);
 
         await poll.save();
         res.status(200).json({ message: 'Votes submitted successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Error submitting votes', error });
+        res.status(500).json({ message: 'Error submitting votes', error: error.message });
     }
 }
+
 
 
 router.get('/getAllPolls', verifyToken, getAllPolls);

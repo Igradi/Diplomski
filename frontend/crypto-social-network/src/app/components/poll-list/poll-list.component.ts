@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
 import { UserService } from '../../services/user.service';
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './poll-list.component.html',
   styleUrls: ['./poll-list.component.scss']
 })
-export class PollListComponent {
+export class PollListComponent implements OnInit {
 
   polls: Poll[] = [];
   selectedOptions: { [pollId: string]: { [questionIndex: number]: number } } = {};
@@ -44,7 +44,7 @@ export class PollListComponent {
         this.polls.forEach(poll => {
           this.selectedOptions[poll._id] = {};
           poll.questions.forEach((question, questionIndex) => {
-            if (question.answeredBy.includes(this.userId!)) {
+            if (poll.answeredBy.includes(this.userId!)) {
               this.selectedOptions[poll._id][questionIndex] = question.options.findIndex(option => option === question.correctAnswerIndex.toString());
             }
           });
@@ -61,7 +61,6 @@ export class PollListComponent {
       const votes = Object.keys(this.selectedOptions[pollId]).map(questionIndex => ({
         questionIndex: parseInt(questionIndex, 10),
         selectedOptionIndex: this.selectedOptions[pollId][parseInt(questionIndex, 10)]
-
       }));
 
       this.pollService.submitVotes(pollId, votes, this.userId).subscribe(
@@ -90,5 +89,9 @@ export class PollListComponent {
 
   toggleResults(poll: Poll): void {
     poll.showResults = !poll.showResults;
+  }
+
+  isUserAnswered(poll: Poll): boolean {
+    return poll.answeredBy.includes(this.userId!);
   }
 }

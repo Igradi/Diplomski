@@ -4,7 +4,6 @@ export interface Question {
     correctAnswerIndex: number;
     totalVotes: number;
     correctVotes: number;
-    answeredBy: string[];
 }
 
 export interface Poll {
@@ -16,4 +15,5 @@ export interface Poll {
     updatedAt: Date;
     showQuestions?: boolean;
     showResults?: boolean;
+    answeredBy: string[];
 }
