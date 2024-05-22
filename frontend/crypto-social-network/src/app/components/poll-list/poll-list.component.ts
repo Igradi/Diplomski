@@ -12,12 +12,12 @@ import { ToastrService } from 'ngx-toastr';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './poll-list.component.html',
-  styleUrl: './poll-list.component.scss'
+  styleUrls: ['./poll-list.component.scss']
 })
 export class PollListComponent {
 
   polls: Poll[] = [];
-  selectedOptions: { [pollId: string]: number } = {};
+  selectedOptions: { [pollId: string]: { [questionIndex: number]: number } } = {};
   userId: string | null = null;
 
   constructor(
@@ -42,9 +42,12 @@ export class PollListComponent {
         }
 
         this.polls.forEach(poll => {
-          if (poll.answeredBy.includes(this.userId!)) {
-            this.selectedOptions[poll._id] = poll.options.findIndex(option => option === poll.correctAnswerIndex.toString());
-          }
+          this.selectedOptions[poll._id] = {};
+          poll.questions.forEach((question, questionIndex) => {
+            if (question.answeredBy.includes(this.userId!)) {
+              this.selectedOptions[poll._id][questionIndex] = question.options.findIndex(option => option === question.correctAnswerIndex.toString());
+            }
+          });
         });
       },
       (error) => {
@@ -53,22 +56,32 @@ export class PollListComponent {
     );
   }
 
-  submitVote(pollId: string, selectedOptionIndex: number): void {
+  submitVotes(pollId: string): void {
     if (this.userId) {
-      this.pollService.submitVote(pollId, selectedOptionIndex, this.userId).subscribe(
+      const votes = Object.keys(this.selectedOptions[pollId]).map(questionIndex => ({
+        questionIndex: parseInt(questionIndex, 10),
+        selectedOptionIndex: this.selectedOptions[pollId][parseInt(questionIndex, 10)]
+
+      }));
+
+      this.pollService.submitVotes(pollId, votes, this.userId).subscribe(
         (data) => {
-          this.toastr.success('Vote submitted successfully', 'Success');
+          this.toastr.success('Votes submitted successfully', 'Success');
           this.getAllPolls();
         },
         (error) => {
-          this.toastr.error('Failed to submit vote', 'You have already voted.');
+          this.toastr.error('Failed to submit votes', 'You have already voted.');
         }
       );
     }
   }
 
-
   getPercentage(correctVotes: number, totalVotes: number): number {
     return totalVotes > 0 ? (correctVotes / totalVotes) * 100 : 0;
   }
+
+  hasQuestionsWithVotes(poll: Poll): boolean {
+    return poll.questions.some(q => q.totalVotes > 0);
+  }
+
 }

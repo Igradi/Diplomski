@@ -31,7 +31,7 @@ async function createPoll(req, res) {
     try {
         const newPoll = new Poll(req.body);
         await newPoll.save();
-        res.json({ msg: 'Nova anketa je uspješno kreirana', poll: newPoll });
+        res.json({ msg: 'Novi kviz je uspješno kreiran', poll: newPoll });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Greška na serveru');
@@ -55,31 +55,33 @@ async function deletePoll(req, res) {
 
 async function votePoll(req, res) {
     const { id } = req.params;
-    const { selectedOptionIndex, userId } = req.body;
+    const { votes, userId } = req.body;
 
     try {
         const poll = await Poll.findById(id);
+
         if (!poll) {
-            return res.status(404).json({ msg: 'Anketa nije pronađena' });
+            return res.status(404).json({ message: 'Poll not found' });
         }
 
-        if (poll.answeredBy.includes(userId)) {
-            return res.status(400).json({ msg: 'Već ste odgovorili na ovu anketu' });
-        }
+        votes.forEach(({ questionIndex, selectedOptionIndex }) => {
+            const question = poll.questions[questionIndex];
+            if (!question.answeredBy.includes(userId)) {
+                question.answeredBy.push(userId);
+                question.totalVotes += 1;
+                if (selectedOptionIndex === question.correctAnswerIndex) {
+                    question.correctVotes += 1;
+                }
+            }
+        });
 
-        poll.totalVotes += 1;
-        if (selectedOptionIndex === poll.correctAnswerIndex) {
-            poll.correctVotes += 1;
-        }
-        poll.answeredBy.push(userId);
         await poll.save();
-
-        res.json({ msg: 'Glas je uspješno podnesen', poll });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(200).json({ message: 'Votes submitted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error submitting votes', error });
     }
 }
+
 
 router.get('/getAllPolls', verifyToken, getAllPolls);
 router.get('/:id', verifyToken, getPollById);

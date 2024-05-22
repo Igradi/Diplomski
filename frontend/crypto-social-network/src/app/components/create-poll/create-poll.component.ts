@@ -12,14 +12,13 @@ import { ToastrService } from 'ngx-toastr';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './create-poll.component.html',
-  styleUrl: './create-poll.component.scss'
+  styleUrls: ['./create-poll.component.scss']
 })
 export class CreatePollComponent {
   cryptocurrencies: Cryptocurrency[] = [];
   selectedCurrencyId: string = '';
-  question: string = '';
-  options: { value: string }[] = [];
-  correctAnswerIndex: number = 0;
+  title: string = '';
+  questions: { question: string, options: { value: string }[], correctAnswerIndex: number }[] = [];
 
   constructor(
     private cryptocurrencyService: CryptocurrencyListService,
@@ -30,6 +29,7 @@ export class CreatePollComponent {
 
   ngOnInit(): void {
     this.getCryptocurrencies();
+    this.addQuestion();
   }
 
   getCryptocurrencies(): void {
@@ -43,29 +43,40 @@ export class CreatePollComponent {
     );
   }
 
-  addOption(): void {
-    this.options.push({ value: '' });
+  addQuestion(): void {
+    this.questions.push({
+      question: '',
+      options: [{ value: '' }, { value: '' }], // Dva prazna polja za opcije po defaultu
+      correctAnswerIndex: 0
+    });
   }
 
-  removeOption(index: number): void {
-    this.options.splice(index, 1);
+  addOption(questionIndex: number): void {
+    this.questions[questionIndex].options.push({ value: '' });
+  }
+
+  removeOption(questionIndex: number, optionIndex: number): void {
+    this.questions[questionIndex].options.splice(optionIndex, 1);
   }
 
   createPoll(): void {
     const pollData = {
-      question: this.question,
-      options: this.options.map(option => option.value),
-      correctAnswerIndex: this.correctAnswerIndex,
+      title: this.title,
+      questions: this.questions.map(q => ({
+        question: q.question,
+        options: q.options.map(option => option.value),
+        correctAnswerIndex: q.correctAnswerIndex
+      })),
       topic: this.selectedCurrencyId
     };
 
     this.pollService.createPoll(pollData).subscribe(
       response => {
-        this.toastr.success('Anketa je uspješno kreirana!', 'Uspjeh');
+        this.toastr.success('Kviz je uspješno kreiran!', 'Uspjeh');
         this.router.navigate(['/admin-dashboard']);
       },
       error => {
-        this.toastr.error('Greška pri kreiranju ankete.', 'Greška');
+        this.toastr.error('Greška pri kreiranju kviza.', 'Greška');
       }
     );
   }

@@ -28,7 +28,7 @@ export class PollService {
         return this.http.delete<any>(`${this.baseUrl}/deletePoll/${pollId}`, { headers: this.userService.generateHeaders() });
     }
 
-    submitVote(pollId: string, selectedOptionIndex: number, userId: string): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}/votePoll/${pollId}`, { selectedOptionIndex, userId }, { headers: this.userService.generateHeaders() });
+    submitVotes(pollId: string, votes: { questionIndex: number, selectedOptionIndex: number }[], userId: string): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}/votePoll/${pollId}`, { votes, userId }, { headers: this.userService.generateHeaders() });
     }
 }
