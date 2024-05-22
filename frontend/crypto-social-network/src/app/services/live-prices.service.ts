@@ -10,29 +10,26 @@ import { Cryptocurrency } from '../models/cryptocurrency.model';
     providedIn: 'root'
 })
 export class LivePricesService {
+    private apiUrl = 'https://api.livecoinwatch.com/coins/single';
+    private apiHistoryUrl = 'https://api.livecoinwatch.com/coins/single/history';
+    private apiKey = 'e35856aa-bf0e-48bd-aa72-28922f418e2e';
+    private headers = {
+        'content-type': 'application/json',
+        'x-api-key': this.apiKey
+    };
+
     constructor(private http: HttpClient, private userService: UserService) { }
 
     private getCryptoData(code: string): Observable<any> {
-        const url = "https://api.livecoinwatch.com/coins/single";
-        const headers = {
-            'content-type': 'application/json',
-            'x-api-key': 'e35856aa-bf0e-48bd-aa72-28922f418e2e'
-        };
         const body = {
             currency: "USD",
             code: code,
             meta: true
         };
-
-        return this.http.post(url, body, { headers });
+        return this.http.post(this.apiUrl, body, { headers: this.headers });
     }
 
     private getCryptoHistory(code: string): Observable<any> {
-        const url = "https://api.livecoinwatch.com/coins/single/history";
-        const headers = {
-            'content-type': 'application/json',
-            'x-api-key': 'e35856aa-bf0e-48bd-aa72-28922f418e2e'
-        };
         const body = {
             currency: "USD",
             code: code,
@@ -40,8 +37,7 @@ export class LivePricesService {
             end: Date.now(),
             meta: true
         };
-
-        return this.http.post(url, body, { headers });
+        return this.http.post(this.apiHistoryUrl, body, { headers: this.headers });
     }
 
     getFavoriteCryptosData(): Observable<any[]> {
@@ -54,6 +50,20 @@ export class LivePricesService {
                             history: this.getCryptoHistory(crypto.abbreviation)
                         }))
                     );
+                });
+                return forkJoin(requests);
+            })
+        );
+    }
+
+    getAllCryptosData(): Observable<any[]> {
+        return this.http.get<Cryptocurrency[]>('http://localhost:4000/api/currencies/getAllCurrencies').pipe(
+            switchMap((cryptos: Cryptocurrency[]) => {
+                const requests = cryptos.map((crypto: Cryptocurrency) => {
+                    return forkJoin({
+                        data: this.getCryptoData(crypto.abbreviation),
+                        history: this.getCryptoHistory(crypto.abbreviation)
+                    });
                 });
                 return forkJoin(requests);
             })

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LivePricesService } from '../../services/live-prices.service';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, Chart, registerables } from 'chart.js';
@@ -40,12 +41,35 @@ export class LivePricesComponent {
 
   constructor(
     private livePricesService: LivePricesService,
+    private authService: AuthService,
     public loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
     this.loaderService.show();
-    this.livePricesService.getFavoriteCryptosData().subscribe(
+    if (this.authService.getToken()) {
+      this.livePricesService.getFavoriteCryptosData().subscribe(
+        data => {
+          this.favoriteCryptosData = data.map(item => item.data);
+          this.favoriteCryptosHistory = data.reduce((acc, item) => {
+            acc[item.data.name] = item.history.history;
+            return acc;
+          }, {});
+          this.updateChartData();
+          this.loaderService.hide();
+        },
+        error => {
+          console.error('Error fetching data:', error);
+          this.loaderService.hide();
+        }
+      );
+    } else {
+      this.getAllCryptosData();
+    }
+  }
+
+  getAllCryptosData(): void {
+    this.livePricesService.getAllCryptosData().subscribe(
       data => {
         this.favoriteCryptosData = data.map(item => item.data);
         this.favoriteCryptosHistory = data.reduce((acc, item) => {
