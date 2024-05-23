@@ -12,6 +12,7 @@ import { CreatePollComponent } from './components/create-poll/create-poll.compon
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 import { PostsAndPollsComponent } from './components/posts-and-polls/posts-and-polls.component';
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
+import { AddCryptocurrencyComponent } from './components/add-cryptocurrency/add-cryptocurrency.component';
 
 export const routes: Routes = [
     {
@@ -70,5 +71,10 @@ export const routes: Routes = [
     {
         path: 'welcome',
         component: GuestHomeComponent,
+    },
+    {
+        path: 'admin-dashboard/add-cryptocurrency',
+        component: AddCryptocurrencyComponent,
+        canActivate: [AuthGuard, RoleGuard]
     }
 ];
