@@ -46,7 +46,7 @@ export class CreatePollComponent {
   addQuestion(): void {
     this.questions.push({
       question: '',
-      options: [{ value: '' }, { value: '' }], // Dva prazna polja za opcije po defaultu
+      options: [{ value: '' }, { value: '' }],
       correctAnswerIndex: 0
     });
   }
@@ -57,6 +57,10 @@ export class CreatePollComponent {
 
   removeOption(questionIndex: number, optionIndex: number): void {
     this.questions[questionIndex].options.splice(optionIndex, 1);
+  }
+
+  removeQuestion(index: number) {
+    this.questions.splice(index, 1);
   }
 
   createPoll(): void {

@@ -20,6 +20,10 @@
         <input type="text" [(ngModel)]="question.question"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-8 mb-2">
 
+        <button type="button" (click)="removeQuestion(i)" class="mb-2 bg-red-500 text-white px-2 py-1 rounded-md">
+            Remove Question
+        </button>
+
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Options</label>
             <div *ngFor="let option of question.options; let j = index" class="flex mb-2">
