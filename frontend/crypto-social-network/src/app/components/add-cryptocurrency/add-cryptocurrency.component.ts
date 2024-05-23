@@ -4,6 +4,7 @@ import { CryptocurrencyListService } from '../../services/cryptocurrency-list.se
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-cryptocurrency',
@@ -15,7 +16,12 @@ import { FormsModule } from '@angular/forms';
 export class AddCryptocurrencyComponent {
   currencyForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private currencyService: CryptocurrencyListService, private toastr: ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private currencyService: CryptocurrencyListService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
     this.currencyForm = this.fb.group({
       name: ['', Validators.required],
       abbreviation: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(5)]]
@@ -26,6 +32,7 @@ export class AddCryptocurrencyComponent {
     if (this.currencyForm.valid) {
       this.currencyService.createCurrency(this.currencyForm.value).subscribe(response => {
         this.toastr.success('Currency added successfully!', 'Success');
+        this.router.navigate(['/admin-dashboard']);
       }, error => {
         this.toastr.error('Failed to add currency. Please try again later.', 'Error');
       });
