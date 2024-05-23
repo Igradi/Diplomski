@@ -7,6 +7,8 @@ import { ChartConfiguration, Chart, registerables } from 'chart.js';
 import { HistoricalDataPoint } from '../../models/historicalDataPoint.model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoaderService } from '../../services/loader.service';
+import { finalize } from 'rxjs/operators';
+
 
 Chart.register(...registerables);
 
@@ -48,7 +50,9 @@ export class LivePricesComponent {
   ngOnInit(): void {
     this.loaderService.show();
     if (this.authService.getToken()) {
-      this.livePricesService.getFavoriteCryptosData().subscribe(
+      this.livePricesService.getFavoriteCryptosData().pipe(
+        finalize(() => this.loaderService.hide())
+      ).subscribe(
         data => {
           this.favoriteCryptosData = data.map(item => item.data);
           this.favoriteCryptosHistory = data.reduce((acc, item) => {
@@ -56,11 +60,9 @@ export class LivePricesComponent {
             return acc;
           }, {});
           this.updateChartData();
-          this.loaderService.hide();
         },
         error => {
           console.error('Error fetching data:', error);
-          this.loaderService.hide();
         }
       );
     } else {
@@ -69,7 +71,9 @@ export class LivePricesComponent {
   }
 
   getAllCryptosData(): void {
-    this.livePricesService.getAllCryptosData().subscribe(
+    this.livePricesService.getAllCryptosData().pipe(
+      finalize(() => this.loaderService.hide())
+    ).subscribe(
       data => {
         this.favoriteCryptosData = data.map(item => item.data);
         this.favoriteCryptosHistory = data.reduce((acc, item) => {
@@ -77,11 +81,9 @@ export class LivePricesComponent {
           return acc;
         }, {});
         this.updateChartData();
-        this.loaderService.hide();
       },
       error => {
         console.error('Error fetching data:', error);
-        this.loaderService.hide();
       }
     );
   }
