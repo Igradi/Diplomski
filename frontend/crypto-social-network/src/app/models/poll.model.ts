@@ -10,7 +10,11 @@ export interface Poll {
     _id: string;
     title: string;
     questions: Question[];
-    topic: string;
+    topic: {
+        _id: string;
+        name: string;
+        abbreviation: string;
+    };
     createdAt: Date;
     updatedAt: Date;
     showQuestions?: boolean;

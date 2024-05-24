@@ -13,6 +13,7 @@ import { EditCommentComponent } from './components/edit-comment/edit-comment.com
 import { PostsAndPollsComponent } from './components/posts-and-polls/posts-and-polls.component';
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AddCryptocurrencyComponent } from './components/add-cryptocurrency/add-cryptocurrency.component';
+import { ManagePollsComponent } from './manage-polls/manage-polls.component';
 
 export const routes: Routes = [
     {
@@ -75,6 +76,11 @@ export const routes: Routes = [
     {
         path: 'admin-dashboard/add-cryptocurrency',
         component: AddCryptocurrencyComponent,
+        canActivate: [AuthGuard, RoleGuard]
+    },
+    {
+        path: 'admin-dashboard/manage-polls',
+        component: ManagePollsComponent,
         canActivate: [AuthGuard, RoleGuard]
     }
 ];

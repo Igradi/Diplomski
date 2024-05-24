@@ -5,13 +5,14 @@ const verifyToken = require('../middleware/verifyToken');
 
 async function getAllPolls(req, res) {
     try {
-        const polls = await Poll.find({});
+        const polls = await Poll.find({}).populate('topic', 'name abbreviation');
         res.json(polls);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 async function getPollById(req, res) {
     const { id } = req.params;

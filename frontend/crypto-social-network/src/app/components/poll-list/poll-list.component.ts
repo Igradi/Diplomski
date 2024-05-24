@@ -36,7 +36,7 @@ export class PollListComponent implements OnInit {
     this.pollService.getAllPolls().subscribe(
       (data: Poll[]) => {
         if (this.postService.selectedTopic) {
-          this.polls = data.filter(poll => poll.topic === this.postService.selectedTopic);
+          this.polls = data.filter(poll => poll.topic._id === this.postService.selectedTopic);
         } else {
           this.polls = data;
         }
