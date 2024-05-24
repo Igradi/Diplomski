@@ -49,6 +49,10 @@
                     </div>
                     <a class="text-blue-500 underline cursor-pointer" (click)="toggleResults(poll)">Hide results...</a>
                 </div>
+
+                <button *ngIf="isUserAnswered(poll)" (click)="viewAnalytics(poll._id)"
+                    class="text-blue-500 underline cursor-pointer">View detailed
+                    analytics</button>
             </div>
         </div>
     </div>

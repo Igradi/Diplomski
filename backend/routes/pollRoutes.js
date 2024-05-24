@@ -17,7 +17,7 @@ async function getAllPolls(req, res) {
 async function getPollById(req, res) {
     const { id } = req.params;
     try {
-        const poll = await Poll.findById(id);
+        const poll = await Poll.findById(id).populate('topic');
         if (!poll) {
             return res.status(404).json({ msg: 'Anketa nije pronađena' });
         }
@@ -74,8 +74,9 @@ async function votePoll(req, res) {
         votes.forEach(({ questionIndex, selectedOptionIndex }) => {
             const question = poll.questions[questionIndex];
 
-
             question.totalVotes += 1;
+            question.optionVotes[selectedOptionIndex] = (question.optionVotes[selectedOptionIndex] || 0) + 1;
+
             if (selectedOptionIndex === question.correctAnswerIndex) {
                 question.correctVotes += 1;
             }
@@ -86,6 +87,7 @@ async function votePoll(req, res) {
         await poll.save();
         res.status(200).json({ message: 'Votes submitted successfully' });
     } catch (error) {
+        console.error('Error submitting votes:', error.message);
         res.status(500).json({ message: 'Error submitting votes', error: error.message });
     }
 }

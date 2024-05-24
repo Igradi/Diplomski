@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
 import { UserService } from '../../services/user.service';
@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PostService } from '../../services/post-list.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-poll-list',
@@ -14,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './poll-list.component.html',
   styleUrls: ['./poll-list.component.scss']
 })
-export class PollListComponent implements OnInit {
+export class PollListComponent {
 
   polls: Poll[] = [];
   selectedOptions: { [pollId: string]: { [questionIndex: number]: number } } = {};
@@ -24,7 +25,8 @@ export class PollListComponent implements OnInit {
     private pollService: PollService,
     private userService: UserService,
     private postService: PostService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -93,5 +95,9 @@ export class PollListComponent implements OnInit {
 
   isUserAnswered(poll: Poll): boolean {
     return poll.answeredBy.includes(this.userId!);
+  }
+
+  viewAnalytics(pollId: string): void {
+    this.router.navigate(['/poll-analytics', pollId]);
   }
 }

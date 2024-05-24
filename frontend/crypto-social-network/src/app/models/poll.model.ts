@@ -4,6 +4,7 @@ export interface Question {
     correctAnswerIndex: number;
     totalVotes: number;
     correctVotes: number;
+    optionVotes: number[];
 }
 
 export interface Poll {

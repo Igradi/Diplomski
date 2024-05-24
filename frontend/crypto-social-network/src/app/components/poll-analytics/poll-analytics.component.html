@@ -1,0 +1,24 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<div *ngIf="pollData" class="container mx-auto p-4 max-w-screen-lg">
+    <div class="poll-info mb-4">
+        <h2 class="text-2xl font-bold">{{pollData.title}}</h2>
+        <p class="text-lg">Topic: {{pollData.topic.name}} ({{pollData.topic.abbreviation}})</p>
+    </div>
+
+    <div *ngFor="let question of pollData.questions" class="question-container mb-8">
+        <h3 class="text-xl font-bold mb-4">{{question.question}}</h3>
+        <div class="chart-container mb-4">
+            <canvas baseChart [data]="questionChartData[question.question]" [options]="chartOptions"
+                [type]="'pie'"></canvas>
+        </div>
+        <div class="votes-info">
+            <p>Total Votes: {{question.totalVotes}}</p>
+            <p>Correct Votes: {{question.correctVotes}}</p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!pollData && !loading" class="container mx-auto p-4 max-w-screen-lg">
+    <h2 class="text-2xl font-bold mb-4">No poll data available.</h2>
+</div>

@@ -14,6 +14,7 @@ import { PostsAndPollsComponent } from './components/posts-and-polls/posts-and-p
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AddCryptocurrencyComponent } from './components/add-cryptocurrency/add-cryptocurrency.component';
 import { ManagePollsComponent } from './manage-polls/manage-polls.component';
+import { PollAnalyticsComponent } from './components/poll-analytics/poll-analytics.component';
 
 export const routes: Routes = [
     {
@@ -82,5 +83,10 @@ export const routes: Routes = [
         path: 'admin-dashboard/manage-polls',
         component: ManagePollsComponent,
         canActivate: [AuthGuard, RoleGuard]
+    },
+    {
+        path: 'poll-analytics/:id',
+        component: PollAnalyticsComponent,
+        canActivate: [AuthGuard]
     }
 ];

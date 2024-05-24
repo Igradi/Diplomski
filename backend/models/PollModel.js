@@ -5,7 +5,8 @@ const questionSchema = new mongoose.Schema({
     options: [{ type: String, required: true }],
     correctAnswerIndex: { type: Number, required: true },
     totalVotes: { type: Number, default: 0 },
-    correctVotes: { type: Number, default: 0 }
+    correctVotes: { type: Number, default: 0 },
+    optionVotes: [{ type: Number, default: 0 }]
 });
 
 const pollSchema = new mongoose.Schema({
