@@ -10,83 +10,28 @@ import { CryptocurrencyListComponent } from './components/cryptocurrency-list/cr
 import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { CreatePollComponent } from './components/create-poll/create-poll.component';
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
-import { PostsAndPollsComponent } from './components/posts-and-polls/posts-and-polls.component';
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AddCryptocurrencyComponent } from './components/add-cryptocurrency/add-cryptocurrency.component';
 import { ManagePollsComponent } from './manage-polls/manage-polls.component';
 import { PollAnalyticsComponent } from './components/poll-analytics/poll-analytics.component';
+import { PostListComponent } from './components/post-list/post-list.component';
+import { PollListComponent } from './components/poll-list/poll-list.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
-    },
-    {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-    },
-    {
-        path: 'register',
-        component: RegisterComponent,
-    },
-    {
-        path: 'admin-dashboard',
-        component: AdminDashboardComponent,
-        canActivate: [AuthGuard, RoleGuard]
-    },
-    {
-        path: 'user-profile/:id',
-        component: UserProfileComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'cryptocurrency-list',
-        component: CryptocurrencyListComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'home/:cryptoName-posts',
-        component: PostsAndPollsComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'edit-post/:id',
-        component: EditPostComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'admin-dashboard/create-poll',
-        component: CreatePollComponent,
-        canActivate: [AuthGuard, RoleGuard]
-    },
-    {
-        path: 'edit-comment/:id',
-        component: EditCommentComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'welcome',
-        component: GuestHomeComponent,
-    },
-    {
-        path: 'admin-dashboard/add-cryptocurrency',
-        component: AddCryptocurrencyComponent,
-        canActivate: [AuthGuard, RoleGuard]
-    },
-    {
-        path: 'admin-dashboard/manage-polls',
-        component: ManagePollsComponent,
-        canActivate: [AuthGuard, RoleGuard]
-    },
-    {
-        path: 'poll-analytics/:id',
-        component: PollAnalyticsComponent,
-        canActivate: [AuthGuard]
-    }
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, RoleGuard] },
+    { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
+    { path: 'cryptocurrency-list', component: CryptocurrencyListComponent, canActivate: [AuthGuard] },
+    { path: 'posts/:cryptoName', component: PostListComponent, canActivate: [AuthGuard] },
+    { path: 'polls/:cryptoName', component: PollListComponent, canActivate: [AuthGuard] },
+    { path: 'edit-post/:id', component: EditPostComponent, canActivate: [AuthGuard] },
+    { path: 'admin-dashboard/create-poll', component: CreatePollComponent, canActivate: [AuthGuard, RoleGuard] },
+    { path: 'edit-comment/:id', component: EditCommentComponent, canActivate: [AuthGuard] },
+    { path: 'welcome', component: GuestHomeComponent },
+    { path: 'admin-dashboard/add-cryptocurrency', component: AddCryptocurrencyComponent, canActivate: [AuthGuard, RoleGuard] },
+    { path: 'admin-dashboard/manage-polls', component: ManagePollsComponent, canActivate: [AuthGuard, RoleGuard] },
+    { path: 'poll-analytics/:id', component: PollAnalyticsComponent, canActivate: [AuthGuard] }
 ];

@@ -33,9 +33,13 @@ export class HomeComponent {
     );
   }
 
-  onSelect(cryptocurrency: Cryptocurrency): void {
+  onSelectPosts(cryptocurrency: Cryptocurrency): void {
     this.postService.selectedTopic = cryptocurrency._id;
-    this.router.navigate(['/home', cryptocurrency.name.toLowerCase() + '-posts']);
+    this.router.navigate(['/posts', cryptocurrency.name.toLowerCase()]);
   }
 
+  onSelectPolls(cryptocurrency: Cryptocurrency): void {
+    this.postService.selectedTopic = cryptocurrency._id;
+    this.router.navigate(['/polls', cryptocurrency.name.toLowerCase()]);
+  }
 }

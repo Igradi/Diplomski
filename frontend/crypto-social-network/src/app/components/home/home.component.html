@@ -11,9 +11,13 @@
             <li *ngFor="let cryptocurrency of cryptocurrencies"
                 class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <div class="text-sm font-medium text-gray-500">{{ cryptocurrency.name }}</div>
-                <button (click)="onSelect(cryptocurrency)"
+                <button (click)="onSelectPosts(cryptocurrency)"
                     class="btn btn-outline-primary flex justify-center items-center">
-                    Select
+                    Select Posts
+                </button>
+                <button (click)="onSelectPolls(cryptocurrency)"
+                    class="btn btn-outline-primary flex justify-center items-center">
+                    Select Polls
                 </button>
             </li>
         </ul>
