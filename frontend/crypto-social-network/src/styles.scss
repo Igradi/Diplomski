@@ -38,7 +38,10 @@ $crypto-social-network-theme: mat.define-light-theme((color: (primary: $crypto-s
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 html,
 body {
   background-color: #e4f1fe;
+
 }
