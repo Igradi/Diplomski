@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { PostService } from '../../services/post-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-poll-list',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxPaginationModule],
   templateUrl: './poll-list.component.html',
   styleUrls: ['./poll-list.component.scss']
 })
@@ -20,6 +21,8 @@ export class PollListComponent {
   polls: Poll[] = [];
   selectedOptions: { [pollId: string]: { [questionIndex: number]: number } } = {};
   userId: string | null = null;
+  p: number = 1;
+  itemsPerPage: number = 5;
 
   constructor(
     private pollService: PollService,

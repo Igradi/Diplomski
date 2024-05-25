@@ -1,7 +1,8 @@
 <div
     class="container mx-auto p-4 border-b-2 border-gray-200 mt-4 lg:w-[1024px] border rounded-lg shadow-md overflow-hidden bg-green-50">
     <h1 class="text-4xl font-bold mb-4">Submit new Polls</h1>
-    <div *ngFor="let poll of polls" class="mb-4 p-4 border rounded-lg shadow-lg bg-white">
+    <div *ngFor="let poll of polls | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"
+        class="mb-4 p-4 border rounded-lg shadow-lg bg-white">
         <div class="mb-2">
             <h3 class="text-xl font-semibold">{{ poll.title }}</h3>
             <small class="text-gray-500">Created at: {{ poll.createdAt | date:'short' }}</small>
@@ -52,9 +53,12 @@
                 </div>
 
                 <button *ngIf="isUserAnswered(poll)" (click)="viewAnalytics(poll._id)"
-                    class="text-blue-500 underline cursor-pointer">View detailed
-                    analytics</button>
+                    class="text-blue-500 underline cursor-pointer">View detailed analytics</button>
             </div>
         </div>
+    </div>
+
+    <div class="pagination-container mt-4 max-w-screen-lg mx-auto">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
 </div>
