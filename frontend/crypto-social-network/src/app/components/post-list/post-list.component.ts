@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Post } from '../../models/post.model';
 import { PostService } from '../../services/post-list.service';
 import { CommonModule } from '@angular/common';
@@ -9,22 +9,30 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
   imports: [CommonModule, FormsModule, CommentListComponent, NgxPaginationModule],
   templateUrl: './post-list.component.html',
-  styleUrl: './post-list.component.scss'
+  styleUrls: ['./post-list.component.scss']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent {
   posts: Post[] = [];
   newPostContent: string = '';
   sortBy: string = 'date';
   p: number = 1;
   itemsPerPage: number = 5;
 
-  constructor(private postService: PostService, private commentService: CommentService, private router: Router, public userService: UserService, public authService: AuthService) { }
+  constructor(
+    private postService: PostService,
+    private commentService: CommentService,
+    private router: Router,
+    public userService: UserService,
+    public authService: AuthService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.getAllPosts();
@@ -100,6 +108,7 @@ export class PostListComponent implements OnInit {
       this.postService.createPost(this.newPostContent, this.postService.selectedTopic).subscribe(
         (data) => {
           console.log('Post created successfully:', data);
+          this.toastr.success('Post created successfully!');
           this.newPostContent = '';
           this.getAllPosts();
         },
