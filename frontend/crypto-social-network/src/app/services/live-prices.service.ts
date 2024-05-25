@@ -69,4 +69,11 @@ export class LivePricesService {
             })
         );
     }
+
+    getCryptoByAbbreviation(abbreviation: string): Observable<any> {
+        return forkJoin({
+            data: this.getCryptoData(abbreviation),
+            history: this.getCryptoHistory(abbreviation)
+        });
+    }
 }

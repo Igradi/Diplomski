@@ -8,20 +8,21 @@ import { HistoricalDataPoint } from '../../models/historicalDataPoint.model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoaderService } from '../../services/loader.service';
 import { finalize } from 'rxjs/operators';
-
+import { FormsModule } from '@angular/forms';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-live-prices',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, MatProgressBarModule],
+  imports: [CommonModule, BaseChartDirective, MatProgressBarModule, FormsModule],
   templateUrl: './live-prices.component.html',
   styleUrls: ['./live-prices.component.scss']
 })
 export class LivePricesComponent {
   favoriteCryptosData: any[] = [];
   favoriteCryptosHistory: { [key: string]: HistoricalDataPoint[] } = {};
+  searchQuery: string = '';
 
   public lineChartData: ChartConfiguration['data'] | undefined;
   public barChartData: ChartConfiguration['data'] | undefined;
@@ -86,6 +87,26 @@ export class LivePricesComponent {
         console.error('Error fetching data:', error);
       }
     );
+  }
+
+  searchCurrency(): void {
+    if (this.searchQuery.trim()) {
+      this.loaderService.show();
+      this.livePricesService.getCryptoByAbbreviation(this.searchQuery.trim().toUpperCase()).pipe(
+        finalize(() => this.loaderService.hide())
+      ).subscribe(
+        data => {
+          this.favoriteCryptosData = [data.data];
+          this.favoriteCryptosHistory = {
+            [data.data.name]: data.history.history
+          };
+          this.updateChartData();
+        },
+        error => {
+          console.error('Error fetching data:', error);
+        }
+      );
+    }
   }
 
   updateChartData(): void {
