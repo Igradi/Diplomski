@@ -9,7 +9,7 @@
         </div>
 
         <div *ngIf="!poll.showQuestions">
-            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">See more...</a>
+            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">Expand Questions...</a>
         </div>
 
         <div *ngIf="poll.showQuestions">
@@ -25,7 +25,7 @@
                     </label>
                 </div>
             </div>
-            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">See less...</a>
+            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">Hide Questions...</a>
         </div>
 
         <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" (click)="submitVotes(poll._id)">Submit
