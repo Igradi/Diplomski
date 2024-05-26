@@ -12,6 +12,44 @@
         </div>
     </div>
 
+    <div class="filter-container mb-4 text-center">
+        <h2 class="text-lg font-bold mb-2">Filter Cryptocurrencies</h2>
+
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">Market Cap Range (USD):</label>
+            <div class="flex justify-center items-center">
+                <input [(ngModel)]="minMarketCap" type="number" placeholder="Min Market Cap"
+                    class="filter-input p-2 border rounded mr-2">
+                <input [(ngModel)]="maxMarketCap" type="number" placeholder="Max Market Cap"
+                    class="filter-input p-2 border rounded">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">Price Range (USD):</label>
+            <div class="flex justify-center items-center">
+                <input [(ngModel)]="minPrice" type="number" placeholder="Min Price"
+                    class="filter-input p-2 border rounded mr-2">
+                <input [(ngModel)]="maxPrice" type="number" placeholder="Max Price"
+                    class="filter-input p-2 border rounded">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">Volume Range (USD):</label>
+            <div class="flex justify-center items-center">
+                <input [(ngModel)]="minVolume" type="number" placeholder="Min Volume"
+                    class="filter-input p-2 border rounded mr-2">
+                <input [(ngModel)]="maxVolume" type="number" placeholder="Max Volume"
+                    class="filter-input p-2 border rounded">
+            </div>
+        </div>
+
+        <button (click)="filterCurrencies()" class="filter-button bg-green-500 text-white p-2 rounded">
+            Filter Currency
+        </button>
+    </div>
+
     <div *ngIf="favoriteCryptosData && favoriteCryptosData.length > 0">
         <div class="chart-row">
             <div class="chart-container">

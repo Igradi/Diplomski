@@ -24,6 +24,13 @@ export class LivePricesComponent {
   favoriteCryptosHistory: { [key: string]: HistoricalDataPoint[] } = {};
   searchQuery: string = '';
 
+  minMarketCap: number = 0;
+  maxMarketCap: number = 1000000000;
+  minPrice: number = 0;
+  maxPrice: number = 100000;
+  minVolume: number = 0;
+  maxVolume: number = 100000000;
+
   public lineChartData: ChartConfiguration['data'] | undefined;
   public barChartData: ChartConfiguration['data'] | undefined;
   public pieChartData: ChartConfiguration['data'] | undefined;
@@ -55,7 +62,10 @@ export class LivePricesComponent {
         finalize(() => this.loaderService.hide())
       ).subscribe(
         data => {
-          this.favoriteCryptosData = data.map(item => item.data);
+          this.favoriteCryptosData = data.map(item => {
+            const crypto = item.data;
+            return crypto;
+          });
           this.favoriteCryptosHistory = data.reduce((acc, item) => {
             acc[item.data.name] = item.history.history;
             return acc;
@@ -76,7 +86,10 @@ export class LivePricesComponent {
       finalize(() => this.loaderService.hide())
     ).subscribe(
       data => {
-        this.favoriteCryptosData = data.map(item => item.data);
+        this.favoriteCryptosData = data.map(item => {
+          const crypto = item.data;
+          return crypto;
+        });
         this.favoriteCryptosHistory = data.reduce((acc, item) => {
           acc[item.data.name] = item.history.history;
           return acc;
@@ -109,7 +122,25 @@ export class LivePricesComponent {
     }
   }
 
+  filterCurrencies(): void {
+    const filteredData = this.favoriteCryptosData.filter(crypto => {
+      return crypto.cap >= this.minMarketCap && crypto.cap <= this.maxMarketCap &&
+        crypto.rate >= this.minPrice && crypto.rate <= this.maxPrice &&
+        crypto.volume >= this.minVolume && crypto.volume <= this.maxVolume;
+    });
+
+
+    this.favoriteCryptosData = filteredData;
+
+    this.updateChartData();
+  }
+
   updateChartData(): void {
+    if (this.favoriteCryptosData.length === 0) {
+      console.warn('No favorite cryptocurrencies data available to update charts.');
+      return;
+    }
+
     const prices = this.favoriteCryptosData.map(crypto => crypto.rate);
     const marketCaps = this.favoriteCryptosData.map(crypto => crypto.cap);
     const volumes = this.favoriteCryptosData.map(crypto => crypto.volume);
