@@ -4,6 +4,7 @@ import { Post } from '../../models/post.model';
 import { PostService } from '../../services/post-list.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-post',
@@ -21,6 +22,7 @@ export class EditPostComponent {
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -44,9 +46,11 @@ export class EditPostComponent {
     if (this.newPostContent) {
       this.postService.updatePost(this.postId, this.newPostContent).subscribe(
         (data) => {
+          this.toastr.success('Post updated successfully!');
           this.router.navigate(['/posts', this.post?.topic]);
         },
         (error) => {
+          this.toastr.error('Error updating post!');
         }
       );
     }

@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-comment-list',
@@ -25,7 +26,8 @@ export class CommentListComponent {
     private commentService: CommentService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -52,12 +54,12 @@ export class CommentListComponent {
     if (this.postId && this.newCommentContent) {
       this.commentService.createComment(this.postId, this.newCommentContent).subscribe(
         (data) => {
-          console.log('Comment added successfully:', data);
+          this.toastr.success('Comment added successfully!', 'Success');
           this.newCommentContent = '';
           this.getCommentsForPost();
         },
         (error) => {
-          console.error('Error adding comment:', error);
+          this.toastr.error('Error adding comment!', 'Error');
         }
       );
     }

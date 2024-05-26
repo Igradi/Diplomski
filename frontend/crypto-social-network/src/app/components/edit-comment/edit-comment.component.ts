@@ -4,6 +4,7 @@ import { Comment } from '../../models/comment.model';
 import { CommentService } from '../../services/comment.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-comment',
@@ -21,6 +22,7 @@ export class EditCommentComponent {
     private route: ActivatedRoute,
     private router: Router,
     private commentService: CommentService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -44,11 +46,11 @@ export class EditCommentComponent {
     if (this.newCommentContent) {
       this.commentService.editComment(this.commentId, this.newCommentContent).subscribe(
         (data) => {
-          console.log('Comment updated successfully:', data);
+          this.toastr.success('Comment updated successfully!', 'Success');
           this.router.navigate(['/home']);
         },
         (error) => {
-          console.error('Error updating comment:', error);
+          this.toastr.error('Error updating comment!', 'Error');
         }
       );
     }
