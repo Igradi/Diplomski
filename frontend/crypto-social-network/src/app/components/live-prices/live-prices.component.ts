@@ -20,6 +20,8 @@ Chart.register(...registerables);
   styleUrls: ['./live-prices.component.scss']
 })
 export class LivePricesComponent {
+  showCharts: boolean = false;
+  showFilters: boolean = false;
   favoriteCryptosData: any[] = [];
   favoriteCryptosHistory: { [key: string]: HistoricalDataPoint[] } = {};
   searchQuery: string = '';
@@ -113,6 +115,7 @@ export class LivePricesComponent {
           this.favoriteCryptosHistory = {
             [data.data.name]: data.history.history
           };
+          this.showCharts = true;
           this.updateChartData();
         },
         error => {
@@ -129,9 +132,7 @@ export class LivePricesComponent {
         crypto.volume >= this.minVolume && crypto.volume <= this.maxVolume;
     });
 
-
     this.favoriteCryptosData = filteredData;
-
     this.updateChartData();
   }
 
@@ -189,5 +190,13 @@ export class LivePricesComponent {
         { data: historyPrices, label: `${name} Historical Price (USD)`, borderColor: '#3e95cd', fill: false }
       ]
     };
+  }
+
+  toggleChartsView(): void {
+    this.showCharts = !this.showCharts;
+  }
+
+  toggleFilterExpansion(): void {
+    this.showFilters = !this.showFilters;
   }
 }

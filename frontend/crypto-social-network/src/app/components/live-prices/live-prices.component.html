@@ -12,7 +12,16 @@
         </div>
     </div>
 
-    <div class="filter-container mb-4 text-center">
+    <div class="flex justify-center mb-4">
+        <button (click)="toggleFilterExpansion()" class="bg-green-500 text-white p-2 rounded mr-2">
+            {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
+        </button>
+        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-2 rounded">
+            {{ showCharts ? 'Hide Live Charts' : 'View Live Charts' }}
+        </button>
+    </div>
+
+    <div *ngIf="showFilters" class="filter-container mb-4 text-center">
         <h2 class="text-lg font-bold mb-2">Filter Cryptocurrencies</h2>
 
         <div class="mb-4">
@@ -50,7 +59,7 @@
         </button>
     </div>
 
-    <div *ngIf="favoriteCryptosData && favoriteCryptosData.length > 0">
+    <div *ngIf="showCharts && favoriteCryptosData && favoriteCryptosData.length > 0">
         <div class="chart-row">
             <div class="chart-container">
                 <h3 class="text-lg font-bold mb-4">Price Chart</h3>
