@@ -16,6 +16,7 @@ import { ManagePollsComponent } from './manage-polls/manage-polls.component';
 import { PollAnalyticsComponent } from './components/poll-analytics/poll-analytics.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PollListComponent } from './components/poll-list/poll-list.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -33,5 +34,6 @@ export const routes: Routes = [
     { path: 'welcome', component: GuestHomeComponent },
     { path: 'admin-dashboard/add-cryptocurrency', component: AddCryptocurrencyComponent, canActivate: [AuthGuard, RoleGuard] },
     { path: 'admin-dashboard/manage-polls', component: ManagePollsComponent, canActivate: [AuthGuard, RoleGuard] },
-    { path: 'poll-analytics/:id', component: PollAnalyticsComponent, canActivate: [AuthGuard] }
+    { path: 'poll-analytics/:id', component: PollAnalyticsComponent, canActivate: [AuthGuard] },
+    { path: 'post-details/:id', component: PostDetailsComponent, canActivate: [AuthGuard] },
 ];

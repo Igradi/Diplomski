@@ -44,19 +44,15 @@ export class EditPostComponent {
     if (this.newPostContent) {
       this.postService.updatePost(this.postId, this.newPostContent).subscribe(
         (data) => {
-          console.log('Post updated successfully:', data);
-          this.router.navigate(['/home', this.post?.topic + '-posts']);
+          this.router.navigate(['/posts', this.post?.topic]);
         },
         (error) => {
-          console.error('Error updating post:', error);
         }
       );
     }
   }
 
-
   cancelEdit(): void {
-    this.router.navigate(['/home', this.post?.topic + '-posts']);
+    this.router.navigate(['/posts', this.post?.topic]);
   }
-
 }

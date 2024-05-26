@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommentService } from '../../services/comment.service';
 import { Comment } from '../../models/comment.model';
 import { UserService } from '../../services/user.service';
@@ -16,7 +16,9 @@ import { Router } from '@angular/router';
 })
 export class CommentListComponent {
   @Input() postId?: string;
+  @Input() showAllComments: boolean = false;
   comments: Comment[] = [];
+  limitedComments: Comment[] = [];
   newCommentContent: string = '';
 
   constructor(
@@ -35,6 +37,7 @@ export class CommentListComponent {
       this.commentService.getComments(this.postId).subscribe(
         (data: Comment[]) => {
           this.comments = data;
+          this.limitedComments = this.showAllComments ? this.comments : this.comments.slice(0, 5);
         },
         (error) => {
           console.error('Error fetching comments:', error);
@@ -64,7 +67,6 @@ export class CommentListComponent {
     this.router.navigate(['/edit-comment', commentId]);
   }
 
-
   deleteComment(commentId: string): void {
     if (this.postId) {
       this.commentService.deleteComment(commentId).subscribe(
@@ -86,4 +88,7 @@ export class CommentListComponent {
     return this.authService.isAdmin() || (comment.user && comment.user._id === this.userService.getUserIdFromToken());
   }
 
+  viewAllComments(): void {
+    this.router.navigate(['/post-details', this.postId]);
+  }
 }

@@ -19,7 +19,7 @@ async function getPostById(req, res) {
     const { id } = req.params;
 
     try {
-        const post = await Post.findById(id);
+        const post = await Post.findById(id).populate('user', 'username');
 
         if (!post) {
             return res.status(404).json({ msg: 'Post nije pronađen' });
