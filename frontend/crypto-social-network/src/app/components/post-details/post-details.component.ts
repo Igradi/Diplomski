@@ -45,27 +45,15 @@ export class PostDetailsComponent {
   }
 
   upvotePost(postId: string): void {
-    this.postService.upvotePost(postId).subscribe(
-      (data) => {
-        console.log('Post upvoted successfully:', data);
-        this.getPost(postId);
-      },
-      (error) => {
-        console.error('Error upvoting post:', error);
-      }
-    );
+    this.postService.upvotePost(postId).subscribe(() => {
+      this.getPost(postId);
+    });
   }
 
   downvotePost(postId: string): void {
-    this.postService.downvotePost(postId).subscribe(
-      (data) => {
-        console.log('Post downvoted successfully:', data);
-        this.getPost(postId);
-      },
-      (error) => {
-        console.error('Error downvoting post:', error);
-      }
-    );
+    this.postService.downvotePost(postId).subscribe(() => {
+      this.getPost(postId);
+    });
   }
 
   editPost(postId: string): void {

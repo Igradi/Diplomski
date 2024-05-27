@@ -70,7 +70,6 @@ export class PostListComponent {
   addComment(postId: string, content: string): void {
     this.commentService.createComment(postId, content).subscribe(
       (data) => {
-        console.log('Comment added successfully:', data);
         this.getAllPosts();
       },
       (error) => {
@@ -80,34 +79,21 @@ export class PostListComponent {
   }
 
   upvotePost(postId: string): void {
-    this.postService.upvotePost(postId).subscribe(
-      (data) => {
-        console.log('Post upvoted successfully:', data);
-        this.getAllPosts();
-      },
-      (error) => {
-        console.error('Error upvoting post:', error);
-      }
-    );
+    this.postService.upvotePost(postId).subscribe(() => {
+      this.getAllPosts();
+    });
   }
 
   downvotePost(postId: string): void {
-    this.postService.downvotePost(postId).subscribe(
-      (data) => {
-        console.log('Post downvoted successfully:', data);
-        this.getAllPosts();
-      },
-      (error) => {
-        console.error('Error downvoting post:', error);
-      }
-    );
+    this.postService.downvotePost(postId).subscribe(() => {
+      this.getAllPosts();
+    });
   }
 
   createPost(): void {
     if (this.newPostContent && this.postService.selectedTopic) {
       this.postService.createPost(this.newPostContent, this.postService.selectedTopic).subscribe(
         (data) => {
-          console.log('Post created successfully:', data);
           this.toastr.success('Post created successfully!');
           this.newPostContent = '';
           this.getAllPosts();
@@ -124,14 +110,8 @@ export class PostListComponent {
   }
 
   deletePost(postId: string): void {
-    this.postService.deletePost(postId).subscribe(
-      (data) => {
-        console.log('Post deleted successfully:', data);
-        this.getAllPosts();
-      },
-      (error) => {
-        console.error('Error deleting post:', error);
-      }
-    );
+    this.postService.deletePost(postId).subscribe(() => {
+      this.getAllPosts();
+    });
   }
 }

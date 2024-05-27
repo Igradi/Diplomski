@@ -115,17 +115,19 @@ async function upvotePost(req, res) {
         }
 
         if (post.upvotedBy.includes(userId)) {
-            return res.status(400).json({ msg: 'Već ste upvotali ovaj post' });
+            post.upvotes -= 1;
+            const index = post.upvotedBy.indexOf(userId);
+            post.upvotedBy.splice(index, 1);
+        } else {
+            if (post.downvotedBy.includes(userId)) {
+                post.downvotes -= 1;
+                const index = post.downvotedBy.indexOf(userId);
+                post.downvotedBy.splice(index, 1);
+            }
+            post.upvotes += 1;
+            post.upvotedBy.push(userId);
         }
 
-        if (post.downvotedBy.includes(userId)) {
-            post.downvotes -= 1;
-            const index = post.downvotedBy.indexOf(userId);
-            post.downvotedBy.splice(index, 1);
-        }
-
-        post.upvotes += 1;
-        post.upvotedBy.push(userId);
         await post.save();
         res.json({ msg: 'Post upvoted successfully', post });
     } catch (err) {
@@ -145,17 +147,19 @@ async function downvotePost(req, res) {
         }
 
         if (post.downvotedBy.includes(userId)) {
-            return res.status(400).json({ msg: 'Već ste downvotali ovaj post' });
+            post.downvotes -= 1;
+            const index = post.downvotedBy.indexOf(userId);
+            post.downvotedBy.splice(index, 1);
+        } else {
+            if (post.upvotedBy.includes(userId)) {
+                post.upvotes -= 1;
+                const index = post.upvotedBy.indexOf(userId);
+                post.upvotedBy.splice(index, 1);
+            }
+            post.downvotes += 1;
+            post.downvotedBy.push(userId);
         }
 
-        if (post.upvotedBy.includes(userId)) {
-            post.upvotes -= 1;
-            const index = post.upvotedBy.indexOf(userId);
-            post.upvotedBy.splice(index, 1);
-        }
-
-        post.downvotes += 1;
-        post.downvotedBy.push(userId);
         await post.save();
         res.json({ msg: 'Post downvoted successfully', post });
     } catch (err) {
