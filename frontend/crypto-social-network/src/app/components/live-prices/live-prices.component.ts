@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LivePricesService } from '../../services/live-prices.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -17,7 +17,8 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, BaseChartDirective, MatProgressBarModule, FormsModule],
   templateUrl: './live-prices.component.html',
-  styleUrls: ['./live-prices.component.scss']
+  styleUrls: ['./live-prices.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LivePricesComponent {
   showCharts: boolean = false;

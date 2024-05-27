@@ -77,12 +77,19 @@
             </div>
         </div>
 
-        <div class="historical-chart-row flex flex-wrap">
-            <div *ngFor="let cryptoData of favoriteCryptosData" class="chart-container p-2">
-                <h3 class="text-lg font-bold mb-4">{{cryptoData.name}} Historical Price Chart</h3>
-                <canvas baseChart [data]="historyChartData[cryptoData.name]" [options]="historyChartOptions"
-                    [type]="'line'"></canvas>
-            </div>
+        <div class="historical-chart-row mt-8 max-w-6xl mx-auto">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Price Charts</h3>
+            <swiper-container slides-per-view="3" space-between="30" pagination="true" navigation="true">
+                <ng-container *ngFor="let cryptoData of favoriteCryptosData">
+                    <swiper-slide>
+                        <div class="p-4 border rounded-lg shadow-lg bg-white text-center mb-2">
+                            <h3 class="text-lg font-bold mb-4">{{cryptoData.name}} Historical Price Chart</h3>
+                            <canvas baseChart [data]="historyChartData[cryptoData.name]" [options]="historyChartOptions"
+                                [type]="'line'"></canvas>
+                        </div>
+                    </swiper-slide>
+                </ng-container>
+            </swiper-container>
         </div>
     </div>
 
