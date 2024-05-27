@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Cryptocurrency } from '../../models/cryptocurrency.model';
 import { CryptocurrencyListService } from '../../services/cryptocurrency-list.service';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,8 @@ import { User } from '../../models/user.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './cryptocurrency-list.component.html',
-  styleUrl: './cryptocurrency-list.component.scss'
+  styleUrl: './cryptocurrency-list.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CryptocurrencyListComponent {
   cryptocurrencies: Cryptocurrency[] = [];

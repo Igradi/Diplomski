@@ -6,58 +6,65 @@
         <div class="flex items-center justify-center">
             <input [(ngModel)]="searchQuery" type="text" placeholder="Enter currency abbreviation (e.g., BTC)"
                 class="search-input p-2 border rounded">
-            <button (click)="searchCurrency()" class="search-button bg-blue-500 text-white p-2 rounded ml-2">
+            <button (click)="searchCurrency()" class="search-button bg-blue-500 text-white p-1 rounded ml-2">
                 <i class="bi bi-search"></i>
             </button>
         </div>
     </div>
 
     <div class="flex justify-center mb-4">
-        <button (click)="toggleFilterExpansion()" class="bg-green-500 text-white p-2 rounded mr-2">
+        <button (click)="toggleFilterExpansion()" class="bg-blue-500 text-white p-1 rounded mr-2">
             {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
         </button>
-        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-2 rounded">
+        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-1 rounded">
             {{ showCharts ? 'Hide Live Charts' : 'View Live Charts' }}
         </button>
     </div>
 
     <div *ngIf="showFilters" class="filter-container mb-4 text-center">
-        <h2 class="text-lg font-bold mb-2">Filter Cryptocurrencies</h2>
+        <h2 class="text-lg font-bold mb-4">Filter Cryptocurrencies</h2>
 
-        <div class="mb-4">
-            <label class="block text-sm font-bold mb-2">Market Cap Range (USD):</label>
-            <div class="flex justify-center items-center">
-                <input [(ngModel)]="minMarketCap" type="number" placeholder="Min Market Cap"
-                    class="filter-input p-2 border rounded mr-2">
-                <input [(ngModel)]="maxMarketCap" type="number" placeholder="Max Market Cap"
-                    class="filter-input p-2 border rounded">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="border rounded-lg p-4">
+                <h3 class="text-sm font-bold mb-2">Market Cap Range (USD)</h3>
+                <div class="flex justify-between items-center">
+                    <input [(ngModel)]="minMarketCap" type="number" placeholder="Min"
+                        class="filter-input p-2 border rounded">
+                    <span>-</span>
+                    <input [(ngModel)]="maxMarketCap" type="number" placeholder="Max"
+                        class="filter-input p-2 border rounded">
+                </div>
+            </div>
+
+            <div class="border rounded-lg p-4">
+                <h3 class="text-sm font-bold mb-2">Price Range (USD)</h3>
+                <div class="flex justify-between items-center">
+                    <input [(ngModel)]="minPrice" type="number" placeholder="Min"
+                        class="filter-input p-2 border rounded">
+                    <span>-</span>
+                    <input [(ngModel)]="maxPrice" type="number" placeholder="Max"
+                        class="filter-input p-2 border rounded">
+                </div>
+            </div>
+
+            <div class="border rounded-lg p-4">
+                <h3 class="text-sm font-bold mb-2">Volume Range (USD)</h3>
+                <div class="flex justify-between items-center">
+                    <input [(ngModel)]="minVolume" type="number" placeholder="Min"
+                        class="filter-input p-2 border rounded">
+                    <span>-</span>
+                    <input [(ngModel)]="maxVolume" type="number" placeholder="Max"
+                        class="filter-input p-2 border rounded">
+                </div>
             </div>
         </div>
 
-        <div class="mb-4">
-            <label class="block text-sm font-bold mb-2">Price Range (USD):</label>
-            <div class="flex justify-center items-center">
-                <input [(ngModel)]="minPrice" type="number" placeholder="Min Price"
-                    class="filter-input p-2 border rounded mr-2">
-                <input [(ngModel)]="maxPrice" type="number" placeholder="Max Price"
-                    class="filter-input p-2 border rounded">
-            </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="block text-sm font-bold mb-2">Volume Range (USD):</label>
-            <div class="flex justify-center items-center">
-                <input [(ngModel)]="minVolume" type="number" placeholder="Min Volume"
-                    class="filter-input p-2 border rounded mr-2">
-                <input [(ngModel)]="maxVolume" type="number" placeholder="Max Volume"
-                    class="filter-input p-2 border rounded">
-            </div>
-        </div>
-
-        <button (click)="filterCurrencies()" class="filter-button bg-green-500 text-white p-2 rounded">
+        <button (click)="filterCurrencies()"
+            class="filter-button bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
             Filter Currency
         </button>
     </div>
+
 
     <div *ngIf="showCharts && favoriteCryptosData && favoriteCryptosData.length > 0">
         <div class="chart-row">
