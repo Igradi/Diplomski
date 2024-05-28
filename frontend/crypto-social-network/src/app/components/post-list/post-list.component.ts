@@ -10,13 +10,15 @@ import { AuthService } from '../../services/auth.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrService } from 'ngx-toastr';
+import { fadeInOut } from '../../services/animations';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
   imports: [CommonModule, FormsModule, CommentListComponent, NgxPaginationModule],
   templateUrl: './post-list.component.html',
-  styleUrls: ['./post-list.component.scss']
+  styleUrls: ['./post-list.component.scss'],
+  animations: [fadeInOut]
 })
 export class PostListComponent {
   posts: Post[] = [];

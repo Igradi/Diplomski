@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { fadeInOut } from '../../services/animations';
 
 @Component({
   selector: 'app-comment-list',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.scss'],
   imports: [FormsModule, CommonModule],
+  animations: [fadeInOut],
 })
 export class CommentListComponent {
   @Input() postId?: string;
