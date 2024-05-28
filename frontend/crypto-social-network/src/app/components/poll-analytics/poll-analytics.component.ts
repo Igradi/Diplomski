@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PollService } from '../../services/poll.service';
 import { Poll } from '../../models/poll.model';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,8 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, BaseChartDirective, MatProgressBarModule],
   templateUrl: './poll-analytics.component.html',
-  styleUrl: './poll-analytics.component.scss'
+  styleUrl: './poll-analytics.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PollAnalyticsComponent {
   pollData: Poll | undefined;

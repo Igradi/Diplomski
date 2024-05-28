@@ -6,17 +6,23 @@
         <p class="text-lg">Topic: {{pollData.topic.name}} ({{pollData.topic.abbreviation}})</p>
     </div>
 
-    <div *ngFor="let question of pollData.questions" class="question-container mb-8">
-        <h3 class="text-xl font-bold mb-4">{{question.question}}</h3>
-        <div class="chart-container mb-4">
-            <canvas baseChart [data]="questionChartData[question.question]" [options]="chartOptions"
-                [type]="'pie'"></canvas>
-        </div>
-        <div class="votes-info">
-            <p>Total Votes: {{question.totalVotes}}</p>
-            <p>Correct Votes: {{question.correctVotes}}</p>
-        </div>
-    </div>
+    <swiper-container [navigation]="true" [pagination]="{ clickable: true }" slides-per-view="1" space-between="10">
+        <ng-container *ngFor="let question of pollData.questions">
+            <swiper-slide>
+                <div class="question-container p-4 border rounded-lg shadow-lg bg-white mb-8">
+                    <h3 class="text-xl font-bold mb-4">{{question.question}}</h3>
+                    <div class="chart-container mb-4">
+                        <canvas baseChart [data]="questionChartData[question.question]" [options]="chartOptions"
+                            [type]="'pie'"></canvas>
+                    </div>
+                    <div class="votes-info">
+                        <p>Total Votes: {{question.totalVotes}}</p>
+                        <p>Correct Votes: {{question.correctVotes}}</p>
+                    </div>
+                </div>
+            </swiper-slide>
+        </ng-container>
+    </swiper-container>
 </div>
 
 <div *ngIf="!pollData && !loading" class="container mx-auto p-4 max-w-screen-lg">

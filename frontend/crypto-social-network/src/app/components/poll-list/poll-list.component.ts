@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
 import { UserService } from '../../services/user.service';
@@ -17,6 +17,7 @@ import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
   templateUrl: './poll-list.component.html',
   styleUrls: ['./poll-list.component.scss'],
   animations: [fadeInOut, fadeIn, fadeOut],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PollListComponent {
 
