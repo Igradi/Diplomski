@@ -124,4 +124,13 @@ export class PostListComponent {
       showOptions: post._id === postId ? !post.showOptions : false
     }));
   }
+
+  canDeletePost(post: Post): boolean {
+    return this.authService.isAdmin() || (post.user && post.user._id === this.userService.getUserIdFromToken());
+  }
+
+  canEditPost(post: Post): boolean {
+    return post.user && post.user._id === this.userService.getUserIdFromToken();
+  }
 }
+

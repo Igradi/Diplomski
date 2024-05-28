@@ -27,30 +27,26 @@
     <div *ngFor="let post of posts | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"
         class="p-6 border rounded-3xl mb-8 bg-white shadow-2xl m-4 relative">
         <div class="flex items-center mb-2 justify-between">
-            <span class="font-bold text-xl">
-                {{ post.user ? post.user.username : 'Deleted User' }}
-            </span>
-            <div class="relative">
+            <span class="font-bold text-xl">{{ post.user ? post.user.username : 'Deleted User' }}</span>
+            <div class="relative" *ngIf="canEditPost(post) || canDeletePost(post)">
                 <i class="bi bi-three-dots cursor-pointer" (click)="toggleOptions(post._id)"></i>
                 <div *ngIf="post.showOptions"
                     class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-10">
-                    <button *ngIf="post.user && post.user._id === userService.getUserIdFromToken()"
-                        (click)="editPost(post._id)"
-                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-around">Edit
-                        Post
-                        <i class="bi bi-pencil mr-2"></i>
+                    <button *ngIf="canEditPost(post)" (click)="editPost(post._id)"
+                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between">
+                        Edit Post <i class="bi bi-pencil"></i>
                     </button>
-                    <button
-                        *ngIf="authService.isAdmin() || (post.user && post.user._id === userService.getUserIdFromToken())"
-                        (click)="deletePost(post._id)"
-                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-around"> Delete Post
-                        <i class="bi bi-trash mr-2"></i>
+                    <button *ngIf="canDeletePost(post)" (click)="deletePost(post._id)"
+                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between">
+                        Delete Post <i class="bi bi-trash"></i>
                     </button>
                 </div>
             </div>
         </div>
         <p class="text-gray-800 break-words mb-2">{{ post.content }}</p>
         <p class="text-gray-600 text-sm mb-2">Created at: {{ post.createdAt | date:'short' }}</p>
+        <p class="text-gray-600 text-sm mb-2" *ngIf="post.createdAt !== post.updatedAt">Last updated at: {{
+            post.updatedAt | date:'short' }}</p>
         <div class="mt-2 flex items-center">
             <button (click)="upvotePost(post._id)"
                 [ngClass]="{'text-blue-500': post.upvotedBy?.includes(userService.getUserIdFromToken() || ''), 'text-gray-500': !(post.upvotedBy?.includes(userService.getUserIdFromToken() || ''))}"
