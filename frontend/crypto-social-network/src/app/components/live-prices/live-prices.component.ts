@@ -9,6 +9,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoaderService } from '../../services/loader.service';
 import { finalize } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
+import { fadeInOut } from '../../services/animations';
 
 Chart.register(...registerables);
 
@@ -18,7 +19,8 @@ Chart.register(...registerables);
   imports: [CommonModule, BaseChartDirective, MatProgressBarModule, FormsModule],
   templateUrl: './live-prices.component.html',
   styleUrls: ['./live-prices.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  animations: [fadeInOut]
 })
 export class LivePricesComponent {
   showCharts: boolean = false;

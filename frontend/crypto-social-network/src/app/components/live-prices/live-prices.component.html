@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="(loaderService.isLoading$ | async)" mode="indeterminate"></mat-progress-bar>
 
 <div class="container mx-auto p-4 max-w-screen-lg mb-7">
-    <div class="search-container mb-4 text-center">
+    <div class="search-container mb-4 text-center" [@fadeInOut]>
         <h2 class="text-lg font-bold mb-2">Search any cryptocurrency by their abbreviation</h2>
         <div class="flex items-center justify-center">
             <input [(ngModel)]="searchQuery" type="text" placeholder="Enter currency abbreviation (e.g., BTC)"
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="flex justify-center mb-4">
+    <div class="flex justify-center mb-4" [@fadeInOut]>
         <button (click)="toggleFilterExpansion()" class="bg-blue-500 text-white p-1 rounded mr-2">
             {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
         </button>
@@ -21,9 +21,8 @@
         </button>
     </div>
 
-    <div *ngIf="showFilters" class="filter-container mb-4 text-center">
+    <div *ngIf="showFilters" class="filter-container mb-4 text-center" [@fadeInOut]>
         <h2 class="text-lg font-bold mb-4">Filter Cryptocurrencies</h2>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div class="border rounded-lg p-4">
                 <h3 class="text-sm font-bold mb-2">Market Cap Range (USD)</h3>
@@ -60,25 +59,27 @@
         </div>
 
         <button (click)="filterCurrencies()"
-            class="filter-button bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+            class="filter-button bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-4">
             Filter Currency
         </button>
     </div>
 
-
-    <div *ngIf="showCharts && favoriteCryptosData && favoriteCryptosData.length > 0">
-        <div class="chart-row">
-            <div class="chart-container">
+    <div *ngIf="showCharts && favoriteCryptosData && favoriteCryptosData.length > 0" [@fadeInOut]>
+        <div class="chart-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col">
                 <h3 class="text-lg font-bold mb-4">Price Chart</h3>
                 <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
             </div>
 
-            <div class="chart-container">
+            <div
+                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col">
                 <h3 class="text-lg font-bold mb-4">Market Cap Chart</h3>
                 <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
             </div>
 
-            <div class="chart-container">
+            <div
+                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col">
                 <h3 class="text-lg font-bold mb-4">Volume Chart</h3>
                 <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
             </div>
@@ -100,7 +101,7 @@
         </div>
     </div>
 
-    <div *ngIf="!favoriteCryptosData || favoriteCryptosData.length === 0">
+    <div *ngIf="!favoriteCryptosData || favoriteCryptosData.length === 0" [@fadeInOut]>
         <h2 class="text-2xl font-bold mb-4">Add some favorite cryptocurrencies to get more data...</h2>
     </div>
 </div>
