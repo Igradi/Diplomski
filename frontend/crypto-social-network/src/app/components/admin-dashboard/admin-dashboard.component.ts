@@ -6,17 +6,22 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxPaginationModule],
   templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.scss'
+  styleUrl: './admin-dashboard.component.scss',
+  animations: [fadeInOut, fadeIn, fadeOut]
 })
 export class AdminDashboardComponent {
   users: User[] = [];
   newUser: User = { _id: '', username: '', password: '', email: '', role: '', favorites: [] };
+  p: number = 1;
+  itemsPerPage: number = 10;
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router, private toastr: ToastrService) { }
 

@@ -10,4 +10,5 @@ export interface Post {
     updatedAt: Date;
     upvotedBy?: string[];
     downvotedBy?: string[];
+    showOptions?: boolean;
 }

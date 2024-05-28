@@ -9,7 +9,7 @@
         </div>
 
         <div *ngIf="!poll.showQuestions" [@fadeInOut]>
-            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">Expand Questions...</a>
+            <a class="text-blue-500 cursor-pointer" (click)="toggleQuestions(poll)">Expand Questions...</a>
         </div>
 
         <div *ngIf="poll.showQuestions" [@fadeInOut]>
@@ -34,7 +34,7 @@
                     </swiper-slide>
                 </ng-container>
             </swiper-container>
-            <a class="text-blue-500 underline cursor-pointer" (click)="toggleQuestions(poll)">Hide Questions...</a>
+            <a class="text-blue-500 cursor-pointer" (click)="toggleQuestions(poll)">Hide Questions...</a>
         </div>
 
         <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-all duration-300"
@@ -43,7 +43,7 @@
         <div class="text-gray-600 mt-4" *ngIf="hasQuestionsWithVotes(poll)" [@fadeInOut]>
             <div *ngIf="isUserAnswered(poll)">
                 <div *ngIf="!poll.showResults" [@fadeInOut]>
-                    <a class="text-blue-500 underline cursor-pointer" (click)="toggleResults(poll)">See results...</a>
+                    <a class="text-blue-500  cursor-pointer" (click)="toggleResults(poll)">See results...</a>
                 </div>
 
                 <div *ngIf="poll.showResults" [@fadeInOut]>
@@ -69,11 +69,11 @@
                                 }}%</span>
                         </div>
                     </div>
-                    <a class="text-blue-500 underline cursor-pointer" (click)="toggleResults(poll)">Hide results...</a>
+                    <a class="text-blue-500 cursor-pointer" (click)="toggleResults(poll)">Hide results...</a>
                 </div>
 
                 <button *ngIf="isUserAnswered(poll)" (click)="viewAnalytics(poll._id)"
-                    class="mt-2 text-blue-500 underline cursor-pointer hover:text-blue-700 transition-all duration-300">View
+                    class="mt-2 text-blue-500 cursor-pointer hover:text-blue-700 transition-all duration-300">View
                     detailed analytics</button>
             </div>
         </div>

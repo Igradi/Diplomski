@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ChartConfiguration, Chart, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
 Chart.register(...registerables);
 
@@ -24,21 +25,24 @@ export class PollAnalyticsComponent {
   };
   loading: boolean = false;
 
-  constructor(private pollService: PollService) { }
+  constructor(private pollService: PollService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.pollService.getPollById('66511b32b07b06958b686219').subscribe(
-      data => {
-        this.pollData = data;
-        this.updateChartData();
-        this.loading = false;
-      },
-      error => {
-        console.error('Error fetching poll data:', error);
-        this.loading = false;
-      }
-    );
+    const pollId = this.route.snapshot.paramMap.get('id');
+    if (pollId) {
+      this.pollService.getPollById(pollId).subscribe(
+        data => {
+          this.pollData = data;
+          this.updateChartData();
+          this.loading = false;
+        },
+        error => {
+          console.error('Error fetching poll data:', error);
+          this.loading = false;
+        }
+      );
+    }
   }
 
   updateChartData(): void {

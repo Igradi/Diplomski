@@ -48,6 +48,7 @@ export class PostListComponent {
         } else {
           this.posts = data;
         }
+        this.posts.forEach(post => post.showOptions = false);
         this.sortPosts();
       },
       (error) => {
@@ -115,5 +116,12 @@ export class PostListComponent {
     this.postService.deletePost(postId).subscribe(() => {
       this.getAllPosts();
     });
+  }
+
+  toggleOptions(postId: string): void {
+    this.posts = this.posts.map(post => ({
+      ...post,
+      showOptions: post._id === postId ? !post.showOptions : false
+    }));
   }
 }

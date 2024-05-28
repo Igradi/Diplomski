@@ -45,5 +45,25 @@ $crypto-social-network-theme: mat.define-light-theme((color: (primary: $crypto-s
 html,
 body {
   background-color: #e4f1fe;
+  font-family: 'Inter', sans-serif;
 
+}
+
+.bi-three-dots {
+  font-size: 1.25rem;
+  color: #6b7280;
+}
+
+.bi-pencil,
+.bi-trash {
+  font-size: 1.25rem;
+}
+
+button:hover .bi-pencil,
+button:hover .bi-trash {
+  color: #3b82f6;
+}
+
+button:hover .bi-trash {
+  color: #ef4444;
 }

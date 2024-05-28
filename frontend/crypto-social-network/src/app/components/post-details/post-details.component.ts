@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommentListComponent } from '../comment-list/comment-list.component';
+import { fadeIn, fadeInOut, fadeOut } from '../../services/animations';
 
 @Component({
   selector: 'app-post-details',
@@ -14,6 +15,7 @@ import { CommentListComponent } from '../comment-list/comment-list.component';
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
   imports: [CommonModule, FormsModule, CommentListComponent],
+  animations: [fadeIn, fadeInOut, fadeOut],
 })
 export class PostDetailsComponent {
   post?: Post;
@@ -77,5 +79,11 @@ export class PostDetailsComponent {
 
   canDeletePost(post: Post): boolean {
     return this.authService.isAdmin() || (post.user && post.user._id === this.userService.getUserIdFromToken());
+  }
+
+  toggleOptions(postId: string): void {
+    if (this.post) {
+      this.post.showOptions = !this.post.showOptions;
+    }
   }
 }
