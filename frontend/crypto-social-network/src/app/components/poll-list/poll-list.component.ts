@@ -8,7 +8,7 @@ import { PostService } from '../../services/post-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { fadeInOut } from '../../services/animations';
+import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
 
 @Component({
   selector: 'app-poll-list',
@@ -16,7 +16,7 @@ import { fadeInOut } from '../../services/animations';
   imports: [FormsModule, CommonModule, NgxPaginationModule],
   templateUrl: './poll-list.component.html',
   styleUrls: ['./poll-list.component.scss'],
-  animations: [fadeInOut],
+  animations: [fadeInOut, fadeIn, fadeOut],
 })
 export class PollListComponent {
 
