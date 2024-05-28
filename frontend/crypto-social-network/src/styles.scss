@@ -33,10 +33,12 @@ $crypto-social-network-theme: mat.define-light-theme((color: (primary: $crypto-s
 
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../node_modules/animate.css/animate.min.css";
 @import 'ngx-toastr/toastr';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
