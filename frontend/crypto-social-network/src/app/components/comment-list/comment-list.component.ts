@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { fadeInOut } from '../../services/animations';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comment-list',
@@ -72,16 +73,27 @@ export class CommentListComponent {
   }
 
   deleteComment(commentId: string): void {
-    if (this.postId) {
-      this.commentService.deleteComment(commentId).subscribe(
-        () => {
-          this.getCommentsForPost();
-        },
-        (error) => {
-          console.error('Error deleting comment:', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this comment?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed && this.postId) {
+        this.commentService.deleteComment(commentId).subscribe(
+          () => {
+            this.getCommentsForPost();
+            Swal.fire('Deleted!', 'Your comment has been deleted.', 'success');
+          },
+          (error) => {
+            Swal.fire('Error!', 'There was an error deleting your comment.', 'error');
+          }
+        );
+      }
+    });
   }
 
   canEditComment(comment: Comment): boolean {

@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommentListComponent } from '../comment-list/comment-list.component';
 import { fadeIn, fadeInOut, fadeOut } from '../../services/animations';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post-details',
@@ -63,14 +64,27 @@ export class PostDetailsComponent {
   }
 
   deletePost(postId: string): void {
-    this.postService.deletePost(postId).subscribe(
-      () => {
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Error deleting post:', error);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this post?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.deletePost(postId).subscribe(
+          () => {
+            this.router.navigate(['/home']);
+            Swal.fire('Deleted!', 'Your post has been deleted.', 'success');
+          },
+          (error) => {
+            Swal.fire('Error!', 'There was an error deleting your post.', 'error');
+          }
+        );
       }
-    );
+    });
   }
 
   canEditPost(post: Post): boolean {

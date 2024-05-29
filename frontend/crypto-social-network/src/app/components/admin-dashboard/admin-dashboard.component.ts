@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -41,15 +42,29 @@ export class AdminDashboardComponent {
   }
 
   deleteUser(userId: string): void {
-    this.userService.deleteUser(userId).subscribe(
-      () => {
-        this.loadUsers();
-        this.toastr.success('User deleted successfully!', 'Success');
-      },
-      (error) => {
-        this.toastr.error('Failed to delete user. Please try again later.', 'Error');
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(userId).subscribe(
+          () => {
+            this.loadUsers();
+            this.toastr.success('User deleted successfully!', 'Success');
+            Swal.fire('Deleted!', 'The user has been deleted.', 'success');
+          },
+          (error) => {
+            this.toastr.error('Failed to delete user. Please try again later.', 'Error');
+            Swal.fire('Error!', 'There was an error deleting the user.', 'error');
+          }
+        );
       }
-    );
+    });
   }
 
 

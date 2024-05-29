@@ -11,6 +11,7 @@ import { CommentListComponent } from '../comment-list/comment-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrService } from 'ngx-toastr';
 import { fadeInOut } from '../../services/animations';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post-list',
@@ -113,8 +114,23 @@ export class PostListComponent {
   }
 
   deletePost(postId: string): void {
-    this.postService.deletePost(postId).subscribe(() => {
-      this.getAllPosts();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this post?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.deletePost(postId).subscribe(() => {
+          this.getAllPosts();
+          Swal.fire('Deleted!', 'Your post has been deleted.', 'success');
+        }, (error) => {
+          Swal.fire('Error!', 'There was an error deleting your post.', 'error');
+        });
+      }
     });
   }
 
