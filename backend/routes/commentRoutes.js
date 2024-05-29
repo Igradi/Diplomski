@@ -122,7 +122,7 @@ async function downvoteComment(req, res) {
 
 router.get('/:id', verifyToken, getCommentById);
 router.put('/updateComment/:id', verifyToken, updateComment);
-router.delete('deleteComment/:id', verifyToken, deleteComment);
+router.delete('/deleteComment/:id', verifyToken, deleteComment);
 router.put('/:commentId/upvote', verifyToken, upvoteComment);
 router.put('/:commentId/downvote', verifyToken, downvoteComment);
 
