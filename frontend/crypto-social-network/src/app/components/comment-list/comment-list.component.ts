@@ -45,11 +45,8 @@ export class CommentListComponent {
           this.limitedComments = this.showAllComments ? this.comments : this.comments.slice(0, 5);
         },
         (error) => {
-          console.error('Error fetching comments:', error);
         }
       );
-    } else {
-      console.error('Post ID is undefined');
     }
   }
 
@@ -102,6 +99,15 @@ export class CommentListComponent {
 
   canDeleteComment(comment: Comment): boolean {
     return this.authService.isAdmin() || (comment.user && comment.user._id === this.userService.getUserIdFromToken());
+  }
+
+  toggleCommentOptions(commentId: string): void {
+    this.comments.forEach(comment => {
+      if (comment._id === commentId)
+        comment.showOptions = !comment.showOptions;
+      else
+        comment.showOptions = false;
+    });
   }
 
   viewAllComments(): void {

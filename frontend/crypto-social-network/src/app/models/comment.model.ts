@@ -6,4 +6,5 @@ export interface Comment {
     downvotes: number;
     createdAt: Date;
     updatedAt: Date;
+    showOptions?: boolean;
 }
