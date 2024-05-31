@@ -12,7 +12,7 @@ import { CreatePollComponent } from './components/create-poll/create-poll.compon
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AddCryptocurrencyComponent } from './components/add-cryptocurrency/add-cryptocurrency.component';
-import { ManagePollsComponent } from './manage-polls/manage-polls.component';
+import { ManagePollsComponent } from './components/manage-polls/manage-polls.component';
 import { PollAnalyticsComponent } from './components/poll-analytics/poll-analytics.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PollListComponent } from './components/poll-list/poll-list.component';
