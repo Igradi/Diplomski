@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { deleteCommentsForPost } = require('../middleware/deleteCommentsWithPosts');
 
 const postSchema = new mongoose.Schema({
     content: { type: String, required: true },
@@ -10,5 +11,7 @@ const postSchema = new mongoose.Schema({
     downvotedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comments' }]
 }, { timestamps: true });
+
+postSchema.pre('deleteOne', { document: false, query: true }, deleteCommentsForPost);
 
 module.exports = mongoose.model('Posts', postSchema);
