@@ -4,17 +4,20 @@ import { ToastrService } from 'ngx-toastr';
 import { PollService } from '../services/poll.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-manage-polls',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule],
   templateUrl: './manage-polls.component.html',
   styleUrl: './manage-polls.component.scss'
 })
 export class ManagePollsComponent {
 
   polls: any[] = [];
+  p: number = 1;
+  itemsPerPage: number = 10;
 
   constructor(private pollService: PollService, private toastr: ToastrService) { }
 

@@ -20,7 +20,8 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                <tr *ngFor="let poll of polls" class="hover:bg-gray-50">
+                <tr *ngFor="let poll of polls | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"
+                    class="hover:bg-gray-50">
                     <td class="px-6 py-4 whitespace-nowrap">{{ poll.title }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ poll.topic.name }} ({{ poll.topic.abbreviation }})</td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -32,6 +33,10 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="pagination-container mt-4 max-w-screen-lg mx-auto">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
 
     <div *ngIf="polls.length === 0" class="text-center text-gray-500 mt-4">
