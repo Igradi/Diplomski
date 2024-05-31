@@ -22,4 +22,9 @@ export class CryptocurrencyListService {
     createCurrency(currency: { name: string; abbreviation: string }): Observable<any> {
         return this.http.post<any>('http://localhost:4000/api/currencies/createCurrency', currency, { headers: this.userService.generateHeaders() });
     }
+
+    deleteCurrency(currencyId: string): Observable<any> {
+        return this.http.delete<any>(`http://localhost:4000/api/currencies/${currencyId}`, { headers: this.userService.generateHeaders() });
+    }
+
 }

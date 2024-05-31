@@ -86,10 +86,31 @@ async function favoriteCurrency(req, res) {
     }
 }
 
+async function deleteCurrency(req, res) {
+    const { id } = req.params;
+
+    try {
+        const currency = await Currency.findById(id);
+
+        if (!currency) {
+            return res.status(404).json({ msg: 'Currency not found' });
+        }
+
+        await Currency.deleteOne({ _id: id });
+
+        res.json({ msg: 'Currency deleted successfully' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+}
+
+
 
 router.get('/getAllCurrencies', getAllCurrencies);
 router.get('/:id', getCurrencyById);
 router.post('/createCurrency', verifyToken, createCurrency);
 router.post('/favoriteCurrency', verifyToken, favoriteCurrency);
+router.delete('/:id', verifyToken, deleteCurrency);
 
 module.exports = router;
