@@ -4,16 +4,18 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div class="p-6 bg-white rounded-lg shadow-md">
             <p class="text-lg font-medium mb-4">Do you want to create a poll?</p>
-            <a href="/admin-dashboard/create-poll" class="text-indigo-600 hover:underline">Create poll Here!</a>
+            <a href="/admin-dashboard/create-poll" class="text-indigo-600 hover:underline">Create poll Here! <i
+                    class="bi bi-plus-circle-fill"></i></a>
         </div>
         <div class="p-6 bg-white rounded-lg shadow-md">
             <p class="text-lg font-medium mb-4">Do you want to delete a poll?</p>
-            <a href="/admin-dashboard/manage-polls" class="text-indigo-600 hover:underline">Manage polls here!</a>
+            <a href="/admin-dashboard/manage-polls" class="text-indigo-600 hover:underline">Manage polls here! <i
+                    class="bi bi-trash"></i></a>
         </div>
         <div class="p-6 bg-white rounded-lg shadow-md">
             <p class="text-lg font-medium mb-4">Do you want to manage cryptocurrencies?</p>
             <a href="/admin-dashboard/add-cryptocurrency" class="text-indigo-600 hover:underline">Add Cryptocurrency
-                Here!</a>
+                Here! <i class="bi bi-graph-up"></i></a>
         </div>
     </div>
 
@@ -50,7 +52,7 @@
             <button type="submit"
                 class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 [disabled]="!userForm.form.valid">
-                <i class="bi bi-person-add"></i> Add User
+                <i class="bi bi-person-plus"></i> Add User
             </button>
         </form>
     </div>
