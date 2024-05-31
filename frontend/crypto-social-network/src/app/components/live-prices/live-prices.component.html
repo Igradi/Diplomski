@@ -13,11 +13,13 @@
     </div>
 
     <div class="flex justify-center mb-4" [@fadeInOut]>
-        <button (click)="toggleFilterExpansion()" class="bg-blue-500 text-white p-1 rounded mr-2">
+        <button (click)="toggleFilterExpansion()" class="bg-blue-500 text-white p-2 rounded mr-2">
             {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
+            <i class="bi bi-funnel"></i>
         </button>
-        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-1 rounded">
+        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-2 rounded">
             {{ showCharts ? 'Hide Live Charts' : 'View Live Charts' }}
+            <i class="bi bi-bar-chart-line"></i>
         </button>
     </div>
 
@@ -61,6 +63,7 @@
         <button (click)="filterCurrencies()"
             class="filter-button bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-4">
             Filter Currency
+            <i class="bi bi-funnel"></i>
         </button>
     </div>
 

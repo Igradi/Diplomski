@@ -13,8 +13,7 @@
         </div>
 
         <div *ngIf="poll.showQuestions" [@fadeInOut]>
-            <swiper-container [navigation]="true" [pagination]="{ clickable: true }" slides-per-view="1"
-                space-between="10">
+            <swiper-container [pagination]="{ clickable: true }" slides-per-view="1" space-between="10">
                 <ng-container *ngFor="let question of poll.questions; let qIndex = index">
                     <swiper-slide>
                         <div class="mb-4 p-4 border rounded-lg bg-gray-100 flex flex-col justify-center items-center">

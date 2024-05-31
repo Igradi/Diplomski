@@ -5,10 +5,13 @@
             class="w-full p-4 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"
             placeholder="What's on your mind?"></textarea>
         <div class="flex justify-end mt-2">
-            <button (click)="createPost()"
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">Publish Post</button>
+            <button (click)="createPost()" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
+                Publish Post <i class="bi bi-arrow-right"></i>
+            </button>
             <button (click)="newPostContent = ''"
-                class="ml-2 px-4 py-2 bg-gray-300 text-black rounded-lg shadow hover:bg-gray-400">Cancel</button>
+                class="ml-2 px-4 py-2 bg-gray-300 text-black rounded-lg shadow hover:bg-gray-400">
+                Cancel <i class="bi bi-x"></i>
+            </button>
         </div>
     </div>
 
