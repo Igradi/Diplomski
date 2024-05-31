@@ -1,15 +1,15 @@
 <app-live-prices></app-live-prices>
 
 <div class="container max-w-4xl mx-auto mt-8 p-6 text-center">
-    <h2 class="text-3xl font-semibold mb-6">Choose which cryptocurrency you want to post on</h2>
+    <h2 class="text-3xl font-semibold mb-6">Choose a Cryptocurrency</h2>
 
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <div class="px-8 py-6 bg-indigo-600 text-white">
             <h3 class="text-lg font-medium leading-6">Cryptocurrencies</h3>
         </div>
-        <div class="border-t border-gray-200 p-6">
+        <div class="border-t border-gray-200 px-6">
             <ul class="divide-y divide-gray-200">
-                <li *ngFor="let cryptocurrency of cryptocurrencies" class="py-5 flex items-center justify-between">
+                <li *ngFor="let cryptocurrency of cryptocurrencies" class="py-4 flex items-center justify-between">
                     <div class="text-lg font-medium text-gray-900">{{ cryptocurrency.name }}</div>
                     <div class="flex space-x-4">
                         <button (click)="onSelectPosts(cryptocurrency)"
