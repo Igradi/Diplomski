@@ -57,29 +57,30 @@
         </form>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-2xl font-semibold mb-4">Manage Users</h3>
+    <div class="bg-white rounded-lg shadow-md pb-6">
+        <h3 class="text-2xl font-semibold mb-4 px-8 py-6 bg-indigo-600 text-white">Manage Users</h3>
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Username
+                        <i class="bi bi-person"></i> Username
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Email
+                        <i class="bi bi-envelope"></i> Email
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Role
+                        <i class="bi bi-shield-lock"></i> Role
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
+                        <i class="bi bi-gear"></i> Actions
                     </th>
                 </tr>
             </thead>
+
             <tbody class="bg-white divide-y divide-gray-200">
                 <tr *ngFor="let user of users | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" [@fadeInOut]>
                     <td class="px-6 py-4 whitespace-nowrap">{{ user.username }}</td>
