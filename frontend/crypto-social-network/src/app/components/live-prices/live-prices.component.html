@@ -97,6 +97,33 @@
                             <h3 class="text-lg font-bold mb-4">{{cryptoData.name}} Historical Price Chart</h3>
                             <canvas baseChart [data]="historyChartData[cryptoData.name]" [options]="historyChartOptions"
                                 [type]="'line'"></canvas>
+                            <div class="mt-4 flex items-center">
+                                <h4 class="text-md font-semibold">Change:</h4>
+                                <p class="text-sm">
+                                    1 Hour: <span
+                                        [ngClass]="{'text-green-500': cryptoData.delta.hour > 1, 'text-red-500': cryptoData.delta.hour <= 1}">
+                                        {{ (cryptoData.delta.hour - 1) * 100 | number: '1.2-2' }}%
+                                    </span>
+                                </p>
+                                <p class="text-sm">
+                                    24 Hours: <span
+                                        [ngClass]="{'text-green-500': cryptoData.delta.day > 1, 'text-red-500': cryptoData.delta.day <= 1}">
+                                        {{ (cryptoData.delta.day - 1) * 100 | number: '1.2-2' }}%
+                                    </span>
+                                </p>
+                                <p class="text-sm">
+                                    1 Month: <span
+                                        [ngClass]="{'text-green-500': cryptoData.delta.month > 1, 'text-red-500': cryptoData.delta.month <= 1}">
+                                        {{ (cryptoData.delta.month - 1) * 100 | number: '1.2-2' }}%
+                                    </span>
+                                </p>
+                                <p class="text-sm">
+                                    1 Year: <span
+                                        [ngClass]="{'text-green-500': cryptoData.delta.year > 1, 'text-red-500': cryptoData.delta.year <= 1}">
+                                        {{ (cryptoData.delta.year - 1) * 100 | number: '1.2-2' }}%
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </swiper-slide>
                 </ng-container>
