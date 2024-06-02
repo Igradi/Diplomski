@@ -2,7 +2,7 @@
     <h2>Obavijesti</h2>
     <ul>
         <li *ngFor="let notification of notifications">
-            <span>{{ notification.message }}</span>
+            <span>{{ notification.message }} od {{ notification.fromUser.username }}</span>
             <button (click)="markAsRead(notification._id)">Označi kao pročitano</button>
         </li>
     </ul>

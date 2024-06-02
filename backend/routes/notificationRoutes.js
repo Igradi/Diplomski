@@ -7,13 +7,15 @@ const verifyToken = require('../middleware/verifyToken');
 async function getNotificationsForUser(req, res) {
     const { userId } = req.params;
     try {
-        const notifications = await Notification.find({ user: userId, read: false });
+        const notifications = await Notification.find({ user: userId, read: false })
+            .populate('fromUser', 'username');
         res.json(notifications);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 
 async function markAsRead(req, res) {

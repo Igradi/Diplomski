@@ -98,13 +98,16 @@ async function postComment(req, res) {
         post.comments.push(newComment._id);
         await post.save();
 
-        const notification = new notifications({
-            user: post.user,
-            type: 'comment',
-            message: 'Novi komentar na vaš post',
-            postId: postId
-        });
-        await notification.save();
+        if (post.user.toString() !== user) {
+            const notification = new notifications({
+                user: post.user,
+                fromUser: user,
+                type: 'comment',
+                message: `Novi komentar na vaš post`,
+                postId: postId
+            });
+            await notification.save();
+        }
 
         res.json({ msg: 'Komentar dodan uspješno', comment: newComment });
     } catch (err) {
@@ -112,6 +115,7 @@ async function postComment(req, res) {
         res.status(500).send('Greška na serveru');
     }
 }
+
 
 async function upvotePost(req, res) {
     const { postId } = req.params;
