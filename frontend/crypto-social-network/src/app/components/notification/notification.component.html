@@ -1,0 +1,9 @@
+<div class="notifications">
+    <h2>Obavijesti</h2>
+    <ul>
+        <li *ngFor="let notification of notifications">
+            <span>{{ notification.message }}</span>
+            <button (click)="markAsRead(notification._id)">Označi kao pročitano</button>
+        </li>
+    </ul>
+</div>

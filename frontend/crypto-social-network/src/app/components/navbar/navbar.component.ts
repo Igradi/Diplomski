@@ -1,26 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JwtDecodeService } from '../../services/jwt-decode.service';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
+import { Notification } from '../../models/notification.model';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificationComponent],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   username: string | undefined;
   userId: string | undefined;
   isAdmin = false;
+  notifications: Notification[] = [];
+  showNotifications = false;
 
   constructor(
     private jwtDecodeService: JwtDecodeService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
+
+  ngOnInit(): void {
+    if (this.isUserAuthenticated()) {
+      this.loadNotifications();
+    }
+  }
 
   isUserAuthenticated(): boolean {
     const token = this.authService.getToken();
@@ -48,5 +60,17 @@ export class NavbarComponent {
     if (this.userId) {
       this.router.navigate(['/user-profile', this.userId]);
     }
+  }
+
+  loadNotifications(): void {
+    if (this.userId) {
+      this.notificationService.getNotifications(this.userId).subscribe((data) => {
+        this.notifications = data;
+      });
+    }
+  }
+
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
   }
 }

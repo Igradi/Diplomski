@@ -3,8 +3,8 @@
                 <a href="home" class="text-white text-2xl font-semibold mb-4 md:mb-0">CryptoSocialNetwork</a>
                 <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                         <li *ngIf="isUserAuthenticated()" class="cursor-pointer">
-                                <a (click)="goToUserProfile()" class="nav-link text-white hover:text-gray-300 mr-10">
-                                        Hi, {{ username }}</a>
+                                <a (click)="goToUserProfile()" class="nav-link text-white hover:text-gray-300 mr-10">Hi,
+                                        {{ username }}</a>
                         </li>
                         <li *ngIf="isUserAuthenticated()" [routerLinkActive]="['active']">
                                 <a routerLink="/home" class="nav-link text-white hover:text-gray-300">Home <i
@@ -35,6 +35,16 @@
                                 <a routerLink="/login" (click)="logout()"
                                         class="nav-link text-white hover:text-gray-300">Logout <i
                                                 class="bi bi-box-arrow-right"></i></a>
+                        </li>
+                        <li *ngIf="isUserAuthenticated()" class="relative">
+                                <a (click)="toggleNotifications()" class="nav-link text-white hover:text-gray-300">
+                                        <i class="bi bi-bell"></i>
+                                        <span *ngIf="notifications.length > 0" class="badge">{{ notifications.length
+                                                }}</span>
+                                </a>
+                                <div *ngIf="showNotifications" class="notification-dropdown">
+                                        <app-notification></app-notification>
+                                </div>
                         </li>
                 </ul>
         </div>

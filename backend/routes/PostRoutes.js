@@ -3,6 +3,7 @@ const router = express.Router();
 const Post = require('../models/PostModel');
 const Comment = require('../models/CommentModel');
 const verifyToken = require('../middleware/verifyToken');
+const notifications = require('../models/NotificationModel');
 
 async function getAllPosts(req, res) {
     try {
@@ -96,13 +97,21 @@ async function postComment(req, res) {
         await newComment.save();
         post.comments.push(newComment._id);
         await post.save();
+
+        const notification = new notifications({
+            user: post.user,
+            type: 'comment',
+            message: 'Novi komentar na vaš post',
+            postId: postId
+        });
+        await notification.save();
+
         res.json({ msg: 'Komentar dodan uspješno', comment: newComment });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Greška na serveru');
     }
 }
-
 
 async function upvotePost(req, res) {
     const { postId } = req.params;
