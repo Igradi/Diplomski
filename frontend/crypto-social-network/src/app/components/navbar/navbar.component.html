@@ -36,15 +36,20 @@
                         </li>
                         <li *ngIf="!isUserAuthenticated()" [routerLinkActive]="['active']">
                                 <a routerLink="/register" class="nav-link text-white hover:text-gray-300">Register <i
-                                                class="bi bi-person-plus"></i></a>
+                                                class="bi bi-person-plus-fill"></i></a>
                         </li>
-                        <li *ngIf="isAdmin" [routerLinkActive]="['active']">
+                        <li *ngIf="!isUserAuthenticated()" [routerLinkActive]="['active']">
+                                <a routerLink="/welcome" class="nav-link text-white hover:text-gray-300">Welcome <i
+                                                class="bi bi-emoji-smile"></i></a>
+                        </li>
+                        <li *ngIf="isUserAuthenticated() && isAdmin" [routerLinkActive]="['active']">
                                 <a routerLink="/admin-dashboard" class="nav-link text-white hover:text-gray-300">Admin
-                                        <i class="bi bi-person"></i></a>
+                                        <i class="bi bi-people-fill"></i></a>
                         </li>
-                        <li *ngIf="isUserAuthenticated()" (click)="logout()" class="cursor-pointer">
-                                <a class="nav-link text-white hover:text-gray-300">Logout <i
-                                                class="bi bi-box-arrow-left"></i></a>
+                        <li *ngIf="isUserAuthenticated()" [routerLinkActive]="['active']">
+                                <a routerLink="/login" (click)="logout()"
+                                        class="nav-link text-white hover:text-gray-300">Logout <i
+                                                class="bi bi-box-arrow-right"></i></a>
                         </li>
                 </ul>
         </div>
