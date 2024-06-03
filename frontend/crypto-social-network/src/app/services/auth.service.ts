@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtDecodeService } from './jwt-decode.service';
 
@@ -8,6 +8,7 @@ import { JwtDecodeService } from './jwt-decode.service';
   providedIn: 'root'
 })
 export class AuthService {
+  private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router, private jwtDecodeService: JwtDecodeService) { }
 
@@ -21,13 +22,13 @@ export class AuthService {
 
   saveToken(token: string): void {
     localStorage.setItem('token', token);
+    this.authStatusListener.next(true);
   }
 
   getToken(): string | null {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken: any = this.jwtDecodeService.decodeToken(token);
-
       const tokenExpired = Date.now() >= decodedToken.exp * 1000;
       if (tokenExpired) {
         localStorage.removeItem('token');
@@ -39,6 +40,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.authStatusListener.next(false);
+    this.router.navigate(['/login']);
   }
 
   canActivate(): boolean {
@@ -57,5 +60,9 @@ export class AuthService {
       return decodedToken && decodedToken.role === 'admin';
     }
     return false;
+  }
+
+  getAuthStatusListener(): Observable<boolean> {
+    return this.authStatusListener.asObservable();
   }
 }
