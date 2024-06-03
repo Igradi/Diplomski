@@ -76,11 +76,11 @@ export class CreatePollComponent {
 
     this.pollService.createPoll(pollData).subscribe(
       response => {
-        this.toastr.success('Kviz je uspješno kreiran!', 'Uspjeh');
+        this.toastr.success('Quiz created successfully!', 'Success');
         this.router.navigate(['/admin-dashboard']);
       },
       error => {
-        this.toastr.error('Greška pri kreiranju kviza.', 'Greška');
+        this.toastr.error('Failed to create quiz.', 'Error');
       }
     );
   }
