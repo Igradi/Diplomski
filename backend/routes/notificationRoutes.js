@@ -12,7 +12,7 @@ async function getNotificationsForUser(req, res) {
         res.json(notifications);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -22,10 +22,10 @@ async function markAsRead(req, res) {
     const { notificationId } = req.params;
     try {
         await Notification.findByIdAndUpdate(notificationId, { read: true });
-        res.status(200).send('Obavijest označena kao pročitana');
+        res.status(200).send('Notification marked as read');
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 

@@ -9,7 +9,7 @@ async function getAllPolls(req, res) {
         res.json(polls);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -19,12 +19,12 @@ async function getPollById(req, res) {
     try {
         const poll = await Poll.findById(id).populate('topic');
         if (!poll) {
-            return res.status(404).json({ msg: 'Anketa nije pronađena' });
+            return res.status(404).json({ msg: 'Poll not found' });
         }
         res.json(poll);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -32,10 +32,10 @@ async function createPoll(req, res) {
     try {
         const newPoll = new Poll(req.body);
         await newPoll.save();
-        res.json({ msg: 'Novi kviz je uspješno kreiran', poll: newPoll });
+        res.json({ msg: 'New poll created', poll: newPoll });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -44,13 +44,13 @@ async function deletePoll(req, res) {
     try {
         const poll = await Poll.findById(id);
         if (!poll) {
-            return res.status(404).json({ msg: 'Anketa nije pronađena' });
+            return res.status(404).json({ msg: 'Poll not found' });
         }
         await Poll.deleteOne({ _id: id });
-        res.json({ msg: 'Anketa je uspješno obrisana' });
+        res.json({ msg: 'Poll deleted' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 

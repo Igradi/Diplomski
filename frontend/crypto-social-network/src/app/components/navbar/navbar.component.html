@@ -37,12 +37,14 @@
                                                 class="bi bi-box-arrow-right"></i></a>
                         </li>
                         <li *ngIf="isUserAuthenticated()" class="relative">
-                                <a (click)="toggleNotifications()" class="nav-link text-white hover:text-gray-300">
+                                <a (click)="toggleNotifications()"
+                                        class="nav-link text-white hover:text-gray-300 cursor-pointer">
                                         <i class="bi bi-bell"></i>
-                                        <span *ngIf="notifications.length > 0" class="badge">{{ notifications.length
-                                                }}</span>
+                                        <span *ngIf="notifications.length > 0"
+                                                class="bg-red-500 text-white rounded-full text-xs px-2 py-1">{{
+                                                notifications.length }}</span>
                                 </a>
-                                <div *ngIf="showNotifications" class="notification-dropdown">
+                                <div *ngIf="showNotifications" class="absolute right-0 mt-2">
                                         <app-notification></app-notification>
                                 </div>
                         </li>

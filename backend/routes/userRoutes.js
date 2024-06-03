@@ -10,10 +10,10 @@ async function register(req, res) {
 
         await newUser.save();
 
-        res.json({ msg: 'Korisnik je uspješno registriran' });
+        res.json({ msg: 'User created' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -25,13 +25,13 @@ async function login(req, res) {
         let user = await Users.findOne({ email });
 
         if (!user) {
-            return res.status(400).json({ msg: 'Korisnik ne postoji' });
+            return res.status(400).json({ msg: 'User does not exist' });
         }
 
         const isMatch = await user.matchPassword(password);
 
         if (!isMatch) {
-            return res.status(400).json({ msg: 'Pogrešna lozinka' });
+            return res.status(400).json({ msg: 'Wrong password' });
         }
 
         const tokenPayload = {
@@ -43,10 +43,10 @@ async function login(req, res) {
 
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.json({ msg: 'Korisnik je uspješno prijavljen', token });
+        res.json({ msg: 'User logged in successfully', token });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -58,7 +58,7 @@ async function updateUser(req, res) {
         let user = await Users.findById(id);
 
         if (!user) {
-            return res.status(400).json({ msg: 'Korisnik ne postoji' });
+            return res.status(400).json({ msg: 'User does not exist' });
         }
 
         user.username = username || user.username;
@@ -71,10 +71,10 @@ async function updateUser(req, res) {
 
         await user.save();
 
-        res.json({ msg: 'Korisnik je uspješno ažuriran' });
+        res.json({ msg: 'User updated', user });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -86,15 +86,15 @@ async function deleteUser(req, res) {
         let user = await Users.findById(id);
 
         if (!user) {
-            return res.status(400).json({ msg: 'Korisnik ne postoji' });
+            return res.status(400).json({ msg: 'User does not exist' });
         }
 
         await Users.deleteOne({ _id: id });
 
-        res.json({ msg: 'Korisnik je uspješno obrisan' });
+        res.json({ msg: 'User deleted', user });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -104,7 +104,7 @@ async function getAllUsers(req, res) {
         res.json(users);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -115,13 +115,13 @@ async function getUserById(req, res) {
         const user = await Users.findById(id);
 
         if (!user) {
-            return res.status(404).json({ msg: 'Korisnik nije pronađen' });
+            return res.status(404).json({ msg: 'User not found' });
         }
 
         res.json(user);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 

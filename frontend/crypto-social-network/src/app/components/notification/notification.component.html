@@ -1,9 +1,10 @@
-<div class="notifications">
-    <h2>Obavijesti</h2>
+<div class="notifications bg-white shadow-lg rounded-lg p-4 mt-2 w-80">
+    <h2 class="text-lg font-semibold mb-4">Obavijesti</h2>
     <ul>
-        <li *ngFor="let notification of notifications">
-            <span>{{ notification.message }} od {{ notification.fromUser.username }}</span>
-            <button (click)="markAsRead(notification._id)">Označi kao pročitano</button>
+        <li *ngFor="let notification of notifications" class="flex justify-between items-center mb-2">
+            <span class="text-sm">{{ notification.message }} from {{ notification.fromUser.username }}</span>
+            <button (click)="markAsRead(notification._id)" class="text-blue-500 text-sm hover:underline">Mark as
+                read.</button>
         </li>
     </ul>
 </div>

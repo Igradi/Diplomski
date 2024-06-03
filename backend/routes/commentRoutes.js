@@ -10,13 +10,13 @@ async function getCommentById(req, res) {
         const comment = await Comment.findById(id);
 
         if (!comment) {
-            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+            return res.status(404).json({ msg: 'Comment not found.' });
         }
 
         res.json(comment);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -28,16 +28,16 @@ async function updateComment(req, res) {
         let comment = await Comment.findById(id);
 
         if (!comment) {
-            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+            return res.status(404).json({ msg: 'Comment not found.' });
         }
 
         comment.content = content;
         await comment.save();
 
-        res.json({ msg: 'Komentar je uspješno ažuriran', comment });
+        res.json({ msg: 'Comment updated', comment });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -48,15 +48,15 @@ async function deleteComment(req, res) {
         let comment = await Comment.findById(id);
 
         if (!comment) {
-            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+            return res.status(404).json({ msg: 'Comment not found.' });
         }
 
         await Comment.deleteOne({ _id: id });
 
-        res.json({ msg: 'Komentar je uspješno obrisan' });
+        res.json({ msg: 'Comment deleted' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -67,11 +67,11 @@ async function upvoteComment(req, res) {
     try {
         const comment = await Comment.findById(commentId);
         if (!comment) {
-            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+            return res.status(404).json({ msg: 'Comment not found.' });
         }
 
         if (comment.upvotedBy.includes(userId)) {
-            return res.status(400).json({ msg: 'Već ste upvotali ovaj komentar' });
+            return res.status(400).json({ msg: 'Youve already upvoted this comment' });
         }
 
         if (comment.downvotedBy.includes(userId)) {
@@ -83,10 +83,10 @@ async function upvoteComment(req, res) {
         comment.upvotes += 1;
         comment.upvotedBy.push(userId);
         await comment.save();
-        res.json({ msg: 'Komentar upvoted successfully', comment });
+        res.json({ msg: 'Comment upvoted successfully', comment });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -97,11 +97,11 @@ async function downvoteComment(req, res) {
     try {
         const comment = await Comment.findById(commentId);
         if (!comment) {
-            return res.status(404).json({ msg: 'Komentar nije pronađen' });
+            return res.status(404).json({ msg: 'Comment not found' });
         }
 
         if (comment.downvotedBy.includes(userId)) {
-            return res.status(400).json({ msg: 'Već ste downvotali ovaj komentar' });
+            return res.status(400).json({ msg: 'Youve already downvoted this comment' });
         }
 
         if (comment.upvotedBy.includes(userId)) {
@@ -113,10 +113,10 @@ async function downvoteComment(req, res) {
         comment.downvotes += 1;
         comment.downvotedBy.push(userId);
         await comment.save();
-        res.json({ msg: 'Komentar downvoted successfully', comment });
+        res.json({ msg: 'Comment downvoted successfully', comment });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 

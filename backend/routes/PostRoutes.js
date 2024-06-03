@@ -11,7 +11,7 @@ async function getAllPosts(req, res) {
         res.json(posts);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -23,13 +23,13 @@ async function getPostById(req, res) {
         const post = await Post.findById(id).populate('user', 'username');
 
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
         res.json(post);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -38,10 +38,10 @@ async function createPost(req, res) {
         const newPostData = { ...req.body };
         const newPost = new Post(newPostData);
         await newPost.save();
-        res.json({ msg: 'Novi post je uspješno kreiran', post: newPost });
+        res.json({ msg: 'New post created', post: newPost });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -53,16 +53,16 @@ async function updatePost(req, res) {
         let post = await Post.findById(id);
 
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
         post.content = content;
         await post.save();
 
-        res.json({ msg: 'Post je uspješno ažuriran', post });
+        res.json({ msg: 'Post updated', post });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -73,15 +73,15 @@ async function deletePost(req, res) {
         let post = await Post.findById(id);
 
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
         await Post.deleteOne({ _id: id });
 
-        res.json({ msg: 'Post je uspješno obrisan' });
+        res.json({ msg: 'Post successfully deleted' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -90,7 +90,7 @@ async function postComment(req, res) {
     try {
         const post = await Post.findById(postId);
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
         const { content, user } = req.body;
         const newComment = new Comment({ content, user });
@@ -103,16 +103,16 @@ async function postComment(req, res) {
                 user: post.user,
                 fromUser: user,
                 type: 'comment',
-                message: `Novi komentar na vaš post`,
+                message: `New comment on your post`,
                 postId: postId
             });
             await notification.save();
         }
 
-        res.json({ msg: 'Komentar dodan uspješno', comment: newComment });
+        res.json({ msg: 'Comment posted', comment: newComment });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -124,7 +124,7 @@ async function upvotePost(req, res) {
     try {
         const post = await Post.findById(postId);
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
         if (post.upvotedBy.includes(userId)) {
@@ -145,7 +145,7 @@ async function upvotePost(req, res) {
         res.json({ msg: 'Post upvoted successfully', post });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -156,7 +156,7 @@ async function downvotePost(req, res) {
     try {
         const post = await Post.findById(postId);
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
         if (post.downvotedBy.includes(userId)) {
@@ -177,7 +177,7 @@ async function downvotePost(req, res) {
         res.json({ msg: 'Post downvoted successfully', post });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -191,13 +191,13 @@ async function getCommentsForPost(req, res) {
         });
 
         if (!post) {
-            return res.status(404).json({ msg: 'Post nije pronađen' });
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
         res.json(post.comments);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 

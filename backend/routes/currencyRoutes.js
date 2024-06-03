@@ -11,13 +11,13 @@ async function getCurrencyById(req, res) {
         const currency = await Currency.findById(id);
 
         if (!currency) {
-            return res.status(404).json({ msg: 'Currency nije pronađen' });
+            return res.status(404).json({ msg: 'Currency not found' });
         }
 
         res.json(currency);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -27,7 +27,7 @@ async function getAllCurrencies(req, res) {
         res.json(currencies);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -38,7 +38,7 @@ async function createCurrency(req, res) {
         const existingCurrency = await Currency.findOne({ abbreviation });
 
         if (existingCurrency) {
-            return res.status(400).json({ msg: 'Valuta s tom kraticom već postoji' });
+            return res.status(400).json({ msg: 'Currency already exists' });
         }
 
         const newCurrency = new Currency({
@@ -48,10 +48,10 @@ async function createCurrency(req, res) {
 
         await newCurrency.save();
 
-        res.json({ msg: 'Nova valuta je uspješno dodana', currency: newCurrency });
+        res.json({ msg: 'Currency created', currency: newCurrency });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
@@ -61,28 +61,28 @@ async function favoriteCurrency(req, res) {
     try {
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ msg: 'Korisnik nije pronađen' });
+            return res.status(404).json({ msg: 'User not found' });
         }
 
         const currency = await Currency.findById(currencyId);
         if (!currency) {
-            return res.status(404).json({ msg: 'Valuta nije pronađena' });
+            return res.status(404).json({ msg: 'Currency not found' });
         }
 
         const index = user.favorites.indexOf(currencyId);
         if (index !== -1) {
             user.favorites.splice(index, 1);
             await user.save();
-            return res.json({ msg: 'Valuta je uklonjena iz favorita korisnika', user });
+            return res.json({ msg: 'Currency removed from favorites', currency, user });
         }
 
         user.favorites.push(currencyId);
         await user.save();
 
-        res.json({ msg: 'Valuta je uspješno dodana u favorite korisnika', user });
+        res.json({ msg: 'Currency added to favorites', currency, user });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Greška na serveru');
+        res.status(500).send('Server error');
     }
 }
 
