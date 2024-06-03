@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JwtDecodeService } from '../../services/jwt-decode.service';
 import { AuthService } from '../../services/auth.service';
@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { Notification } from '../../models/notification.model';
 import { NotificationComponent } from '../notification/notification.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -14,12 +15,13 @@ import { NotificationComponent } from '../notification/notification.component';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   username: string | undefined;
   userId: string | undefined;
   isAdmin = false;
   notifications: Notification[] = [];
   showNotifications = false;
+  private authStatusSub?: Subscription;
 
   constructor(
     private jwtDecodeService: JwtDecodeService,
@@ -29,9 +31,24 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        this.isUserAuthenticated();
+        this.loadNotifications();
+      } else {
+        this.username = undefined;
+        this.userId = undefined;
+        this.notifications = [];
+      }
+    });
+
     if (this.isUserAuthenticated()) {
       this.loadNotifications();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.authStatusSub?.unsubscribe();
   }
 
   isUserAuthenticated(): boolean {
@@ -53,7 +70,6 @@ export class NavbarComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.isUserAuthenticated();
   }
 
   goToUserProfile(): void {
