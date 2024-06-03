@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { Notification } from '../../models/notification.model';
@@ -13,7 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent {
-  notifications: Notification[] = [];
+  @Input() notifications: Notification[] = [];
+  @Output() notificationRead = new EventEmitter<string>();
   userId: string | null;
 
   constructor(
@@ -40,9 +41,13 @@ export class NotificationComponent {
 
   markAsRead(event: Event, notificationId: string): void {
     event.stopPropagation();
-    this.notificationService.markAsRead(notificationId).subscribe(() => {
-      this.loadNotifications();
-    });
+    this.notificationService.markAsRead(notificationId).subscribe(
+      (response) => {
+        this.notificationRead.emit(notificationId);
+      },
+      (error) => {
+      }
+    );
   }
 
   navigateToPostDetails(postId?: string): void {

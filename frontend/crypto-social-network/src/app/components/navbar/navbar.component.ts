@@ -89,4 +89,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
   }
+
+  onNotificationRead(notificationId: string): void {
+    this.notifications = this.notifications.filter(notification => notification._id !== notificationId);
+  }
 }
