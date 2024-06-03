@@ -4,13 +4,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { fadeInOut } from '../../services/animations';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  animations: [fadeInOut]
 })
 export class LoginComponent {
   email: string = '';

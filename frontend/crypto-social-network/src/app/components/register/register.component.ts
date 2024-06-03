@@ -4,13 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { fadeInOut } from '../../services/animations';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, HttpClientModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  animations: [fadeInOut]
 })
 export class RegisterComponent {
   username: string = '';
