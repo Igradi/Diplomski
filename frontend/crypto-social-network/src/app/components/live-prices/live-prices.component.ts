@@ -202,4 +202,17 @@ export class LivePricesComponent {
   toggleFilterExpansion(): void {
     this.showFilters = !this.showFilters;
   }
+
+  clearFilters(): void {
+    this.minMarketCap = 0;
+    this.maxMarketCap = 1000000000;
+    this.minPrice = 0;
+    this.maxPrice = 100000;
+    this.minVolume = 0;
+    this.maxVolume = 100000000;
+
+    this.loaderService.show();
+    this.getAllCryptosData();
+  }
+
 }

@@ -17,9 +17,13 @@
             {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
             <i class="bi bi-funnel"></i>
         </button>
-        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-2 rounded">
+        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-2 rounded mr-2">
             {{ showCharts ? 'Hide Live Charts' : 'View Live Charts' }}
             <i class="bi bi-bar-chart-line"></i>
+        </button>
+        <button *ngIf="showFilters" (click)="clearFilters()" class="bg-red-400 text-white p-2 rounded">
+            Clear Filters
+            <i class="bi bi-x-circle"></i>
         </button>
     </div>
 
