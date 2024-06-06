@@ -19,15 +19,15 @@
         <h2 class="text-2xl font-bold mb-4">Posts</h2>
         <div class="mb-4 flex items-center">
             <label for="sort-by" class="mr-2 font-semibold">Sort by:</label>
-            <select id="sort-by" [(ngModel)]="sortBy" (change)="changeSort(sortBy)"
-                class="ml-2 border rounded-2xl p-2 shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="date">By date</option>
-                <option value="hot">Hot</option>
-            </select>
+            <p-dropdown [options]="[
+                    { label: 'By date', value: 'date' },
+                    { label: 'Hot', value: 'hot' }
+                ]" [(ngModel)]="sortBy" (onChange)="changeSort($event.value)" placeholder="Select sorting"
+                class="ml-2"></p-dropdown>
         </div>
     </div>
 
-    <div *ngFor="let post of posts | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"
+    <div *ngFor="let post of posts | slice: (p - 1) * itemsPerPage : p * itemsPerPage"
         class="p-6 border rounded-3xl mb-8 bg-white shadow-2xl m-4 relative">
         <div class="flex items-center mb-2 justify-between">
             <span class="font-bold text-xl">{{ post.user ? post.user.username : 'Deleted User' }}</span>
@@ -66,8 +66,10 @@
         </div>
         <app-comment-list [postId]="post._id"></app-comment-list>
     </div>
+</div>
 
-    <div class="pagination-container mt-4 max-w-screen-lg mx-auto">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
+<div class="pagination-container mt-4 max-w-screen-lg mx-auto">
+    <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)">
+    </p-paginator>
 </div>

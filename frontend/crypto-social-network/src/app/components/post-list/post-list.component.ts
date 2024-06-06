@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginatorModule } from 'primeng/paginator'; // Dodajte ovaj uvoz
 import { ToastrService } from 'ngx-toastr';
 import { fadeInOut } from '../../services/animations';
 import Swal from 'sweetalert2';
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, CommentListComponent, NgxPaginationModule],
+  imports: [CommonModule, FormsModule, CommentListComponent, PaginatorModule],
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss'],
   animations: [fadeInOut]
@@ -27,6 +27,7 @@ export class PostListComponent {
   sortBy: string = 'date';
   p: number = 1;
   itemsPerPage: number = 5;
+  totalRecords: number = 0;
 
   constructor(
     private postService: PostService,
@@ -49,6 +50,7 @@ export class PostListComponent {
         } else {
           this.posts = data;
         }
+        this.totalRecords = this.posts.length;
         this.posts.forEach(post => post.showOptions = false);
         this.sortPosts();
       },
@@ -148,5 +150,9 @@ export class PostListComponent {
   canEditPost(post: Post): boolean {
     return post.user && post.user._id === this.userService.getUserIdFromToken();
   }
-}
 
+  onPageChange(event: any): void {
+    this.p = event.page + 1;
+    this.itemsPerPage = event.rows;
+  }
+}

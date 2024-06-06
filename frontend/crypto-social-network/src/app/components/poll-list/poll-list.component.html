@@ -1,7 +1,7 @@
 <div
     class="container mx-auto p-4 border-b-2 border-gray-200 mt-4 lg:w-[1024px] border rounded-lg shadow-md overflow-hidden bg-green-50">
     <h1 class="text-4xl font-bold mb-4">Submit new Polls</h1>
-    <div *ngFor="let poll of polls | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"
+    <div *ngFor="let poll of polls | slice: (p - 1) * itemsPerPage : p * itemsPerPage"
         class="mb-4 p-4 border rounded-lg shadow-2xl bg-white transition-all duration-500 hover:shadow-xl" [@fadeInOut]>
         <div class="mb-2">
             <h3 class="text-xl font-semibold">{{ poll.title }}</h3>
@@ -84,8 +84,10 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="pagination-container mt-4 max-w-screen-lg mx-auto">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
+<div class="pagination-container mt-4 max-w-screen-lg mx-auto">
+    <p-paginator [rows]="itemsPerPage" [totalRecords]="totalRecords" [rowsPerPageOptions]="[5, 10, 20]"
+        (onPageChange)="onPageChange($event)">
+    </p-paginator>
 </div>

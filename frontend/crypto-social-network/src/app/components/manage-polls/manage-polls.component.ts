@@ -4,20 +4,21 @@ import { ToastrService } from 'ngx-toastr';
 import { PollService } from '../../services/poll.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-manage-polls',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxPaginationModule],
+  imports: [CommonModule, FormsModule, PaginatorModule],
   templateUrl: './manage-polls.component.html',
-  styleUrl: './manage-polls.component.scss'
+  styleUrls: ['./manage-polls.component.scss']
 })
 export class ManagePollsComponent {
 
   polls: any[] = [];
   p: number = 1;
   itemsPerPage: number = 10;
+  totalRecords: number = 0;
 
   constructor(private pollService: PollService, private toastr: ToastrService) { }
 
@@ -29,6 +30,7 @@ export class ManagePollsComponent {
     this.pollService.getAllPolls().subscribe(
       (polls) => {
         this.polls = polls;
+        this.totalRecords = polls.length;
       },
       (error) => {
         this.toastr.error('Failed to load polls. Please try again later.', 'Error');
@@ -50,6 +52,7 @@ export class ManagePollsComponent {
         this.pollService.deletePoll(pollId).subscribe(
           () => {
             this.polls = this.polls.filter(poll => poll._id !== pollId);
+            this.totalRecords = this.polls.length;
             this.toastr.success('Poll deleted successfully!', 'Success');
             Swal.fire('Deleted!', 'The poll has been deleted.', 'success');
           },
@@ -60,5 +63,10 @@ export class ManagePollsComponent {
         );
       }
     });
+  }
+
+  onPageChange(event: any): void {
+    this.p = event.page + 1;
+    this.itemsPerPage = event.rows;
   }
 }

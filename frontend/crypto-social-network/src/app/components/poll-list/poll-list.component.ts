@@ -7,13 +7,13 @@ import { CommonModule } from '@angular/common';
 import { PostService } from '../../services/post-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginatorModule } from 'primeng/paginator';
 import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
 
 @Component({
   selector: 'app-poll-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgxPaginationModule],
+  imports: [FormsModule, CommonModule, PaginatorModule],
   templateUrl: './poll-list.component.html',
   styleUrls: ['./poll-list.component.scss'],
   animations: [fadeInOut, fadeIn, fadeOut],
@@ -26,6 +26,7 @@ export class PollListComponent {
   userId: string | null = null;
   p: number = 1;
   itemsPerPage: number = 5;
+  totalRecords: number = 0;
 
   constructor(
     private pollService: PollService,
@@ -48,6 +49,7 @@ export class PollListComponent {
         } else {
           this.polls = data;
         }
+        this.totalRecords = this.polls.length;
 
         this.polls.forEach(poll => {
           this.selectedOptions[poll._id] = {};
@@ -105,5 +107,10 @@ export class PollListComponent {
 
   viewAnalytics(pollId: string): void {
     this.router.navigate(['/poll-analytics', pollId]);
+  }
+
+  onPageChange(event: any): void {
+    this.p = event.page + 1;
+    this.itemsPerPage = event.rows;
   }
 }
