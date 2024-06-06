@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { PollService } from '../../services/poll.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-create-poll',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, DropdownModule],
   templateUrl: './create-poll.component.html',
   styleUrls: ['./create-poll.component.scss']
 })
