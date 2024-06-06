@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { fadeInOut } from '../../services/animations';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, HttpClientModule],
+  imports: [FormsModule, HttpClientModule, TooltipModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   animations: [fadeInOut]
