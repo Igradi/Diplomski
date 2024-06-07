@@ -80,9 +80,8 @@
                     </th>
                 </tr>
             </thead>
-
             <tbody class="bg-white divide-y divide-gray-200">
-                <tr *ngFor="let user of users | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" [@fadeInOut]>
+                <tr *ngFor="let user of users.slice((p - 1) * itemsPerPage, p * itemsPerPage)" [@fadeInOut]>
                     <td class="px-6 py-4 whitespace-nowrap">{{ user.username }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ user.role }}</td>
@@ -99,8 +98,8 @@
                 </tr>
             </tbody>
         </table>
-        <div class="pagination-container mt-4 max-w-screen-lg mx-auto">
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        </div>
+        <p-paginator [rows]="itemsPerPage" [totalRecords]="totalItems" [rowsPerPageOptions]="[5, 10, 20]"
+            (onPageChange)="onPageChange($event)">
+        </p-paginator>
     </div>
 </div>

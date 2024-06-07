@@ -6,16 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginatorModule } from 'primeng/paginator';
 import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgxPaginationModule],
+  imports: [FormsModule, CommonModule, PaginatorModule],
   templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.scss',
+  styleUrls: ['./admin-dashboard.component.scss'],
   animations: [fadeInOut, fadeIn, fadeOut]
 })
 export class AdminDashboardComponent {
@@ -23,6 +23,7 @@ export class AdminDashboardComponent {
   newUser: User = { _id: '', username: '', password: '', email: '', role: '', favorites: [] };
   p: number = 1;
   itemsPerPage: number = 10;
+  totalItems: number = 0;
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router, private toastr: ToastrService) { }
 
@@ -34,6 +35,7 @@ export class AdminDashboardComponent {
     this.userService.getAllUsers().subscribe(
       (users: User[]) => {
         this.users = users;
+        this.totalItems = users.length;
       },
       (error) => {
         console.error('Error loading users:', error);
@@ -67,7 +69,6 @@ export class AdminDashboardComponent {
     });
   }
 
-
   editUser(userId: string): void {
     this.router.navigateByUrl(`/user-profile/${userId}`);
   }
@@ -88,5 +89,10 @@ export class AdminDashboardComponent {
     } else {
       this.toastr.error('Please provide all required user fields.', 'Error');
     }
+  }
+
+  onPageChange(event: any): void {
+    this.p = event.page + 1;
+    this.itemsPerPage = event.rows;
   }
 }
