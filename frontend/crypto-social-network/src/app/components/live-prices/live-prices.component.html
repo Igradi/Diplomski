@@ -5,23 +5,27 @@
         <h2 class="text-lg font-bold mb-2">Search any cryptocurrency by their abbreviation</h2>
         <div class="flex items-center justify-center">
             <input [(ngModel)]="searchQuery" type="text" placeholder="Enter currency abbreviation (e.g., BTC)"
-                class="search-input p-2 border rounded">
-            <button (click)="searchCurrency()" class="search-button bg-blue-500 text-white p-2 rounded ml-2">
+                class="search-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button (click)="searchCurrency()"
+                class="search-button bg-blue-500 text-white p-2 rounded ml-2 transition duration-300 transform hover:scale-105 hover:bg-blue-600">
                 <i class="bi bi-search"></i>
             </button>
         </div>
     </div>
 
     <div class="flex justify-center mb-4" [@fadeInOut]>
-        <button (click)="toggleFilterExpansion()" class="bg-blue-500 text-white p-2 rounded mr-2">
+        <button (click)="toggleFilterExpansion()"
+            class="bg-blue-500 text-white p-2 rounded mr-2 transition duration-300 transform hover:scale-105 hover:bg-blue-600">
             {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
             <i class="bi bi-funnel"></i>
         </button>
-        <button (click)="toggleChartsView()" class="bg-blue-500 text-white p-2 rounded mr-2">
+        <button (click)="toggleChartsView()"
+            class="bg-blue-500 text-white p-2 rounded mr-2 transition duration-300 transform hover:scale-105 hover:bg-blue-600">
             {{ showCharts ? 'Hide Live Charts' : 'View Live Charts' }}
             <i class="bi bi-bar-chart-line"></i>
         </button>
-        <button *ngIf="showFilters" (click)="clearFilters()" class="bg-red-400 text-white p-2 rounded">
+        <button *ngIf="showFilters" (click)="clearFilters()"
+            class="bg-red-400 text-white p-2 rounded transition duration-300 transform hover:scale-105 hover:bg-red-500">
             Clear Filters
             <i class="bi bi-x-circle"></i>
         </button>
@@ -30,42 +34,45 @@
     <div *ngIf="showFilters" class="filter-container mb-4 text-center" [@fadeInOut]>
         <h2 class="text-lg font-bold mb-4">Filter Cryptocurrencies</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="border rounded-lg p-4">
+            <div
+                class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
                 <h3 class="text-sm font-bold mb-2">Market Cap Range (USD)</h3>
                 <div class="flex justify-between items-center">
                     <input [(ngModel)]="minMarketCap" type="number" placeholder="Min"
-                        class="filter-input p-2 border rounded">
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     <span>-</span>
                     <input [(ngModel)]="maxMarketCap" type="number" placeholder="Max"
-                        class="filter-input p-2 border rounded">
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
             </div>
 
-            <div class="border rounded-lg p-4">
+            <div
+                class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
                 <h3 class="text-sm font-bold mb-2">Price Range (USD)</h3>
                 <div class="flex justify-between items-center">
                     <input [(ngModel)]="minPrice" type="number" placeholder="Min"
-                        class="filter-input p-2 border rounded">
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     <span>-</span>
                     <input [(ngModel)]="maxPrice" type="number" placeholder="Max"
-                        class="filter-input p-2 border rounded">
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
             </div>
 
-            <div class="border rounded-lg p-4">
+            <div
+                class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
                 <h3 class="text-sm font-bold mb-2">Volume Range (USD)</h3>
                 <div class="flex justify-between items-center">
                     <input [(ngModel)]="minVolume" type="number" placeholder="Min"
-                        class="filter-input p-2 border rounded">
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     <span>-</span>
                     <input [(ngModel)]="maxVolume" type="number" placeholder="Max"
-                        class="filter-input p-2 border rounded">
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
             </div>
         </div>
 
         <button (click)="filterCurrencies()"
-            class="filter-button bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-4">
+            class="filter-button bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-4 transition duration-300 transform hover:scale-105">
             Filter Currency
             <i class="bi bi-funnel"></i>
         </button>
@@ -74,19 +81,19 @@
     <div *ngIf="showCharts && favoriteCryptosData && favoriteCryptosData.length > 0" [@fadeInOut]>
         <div class="chart-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div
-                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col">
+                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col transition duration-300 transform hover:scale-105 hover:shadow-lg">
                 <h3 class="text-lg font-bold mb-4">Price Chart</h3>
                 <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
             </div>
 
             <div
-                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col">
+                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col transition duration-300 transform hover:scale-105 hover:shadow-lg">
                 <h3 class="text-lg font-bold mb-4">Market Cap Chart</h3>
                 <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
             </div>
 
             <div
-                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col">
+                class="chart-container p-4 border rounded-lg shadow bg-white text-center flex items-center justify-center flex-col transition duration-300 transform hover:scale-105 hover:shadow-lg">
                 <h3 class="text-lg font-bold mb-4">Volume Chart</h3>
                 <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
             </div>
@@ -97,7 +104,8 @@
             <swiper-container slides-per-view="3" space-between="30" pagination="true">
                 <ng-container *ngFor="let cryptoData of favoriteCryptosData">
                     <swiper-slide>
-                        <div class="p-4 border rounded-lg shadow-lg bg-white text-center mb-2">
+                        <div
+                            class="p-4 border rounded-lg shadow-lg bg-white text-center mb-2 transition duration-300 transform hover:scale-105 hover:shadow-xl">
                             <h3 class="text-lg font-bold mb-4">{{cryptoData.name}} Historical Price Chart</h3>
                             <canvas baseChart [data]="historyChartData[cryptoData.name]" [options]="historyChartOptions"
                                 [type]="'line'"></canvas>

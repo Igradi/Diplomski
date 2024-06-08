@@ -5,7 +5,9 @@
             placeholder="Add a comment..."></textarea>
         <div class="flex justify-end mt-2">
             <button (click)="addComment()"
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">Post Comment</button>
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300 transform hover:scale-105">
+                Post Comment <i class="bi bi-chat-dots"></i>
+            </button>
         </div>
     </div>
     <div class="comments-list space-y-4">
@@ -17,11 +19,11 @@
                     <div *ngIf="comment.showOptions"
                         class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-10">
                         <button *ngIf="canEditComment(comment)" (click)="editComment(comment._id)"
-                            class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between">
+                            class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between transition duration-300 transform hover:scale-105">
                             Edit Comment <i class="bi bi-pencil"></i>
                         </button>
                         <button *ngIf="canDeleteComment(comment)" (click)="deleteComment(comment._id)"
-                            class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between">
+                            class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between transition duration-300 transform hover:scale-105">
                             Delete Comment <i class="bi bi-trash"></i>
                         </button>
                     </div>

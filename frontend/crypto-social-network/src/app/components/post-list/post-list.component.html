@@ -1,5 +1,5 @@
 <div class="mx-auto mt-4 lg:w-[1024px] border rounded-lg shadow-md overflow-hidden bg-green-50" [@fadeInOut]>
-    <div class="container mx-auto p-4 border-b-2 border-gray-200 max-w-screen-lg">
+    <div class="container mx-auto p-4 border-b-2 border-gray-200 max-w-screen-lg hover:shadow-xl">
         <h2 class="text-2xl font-bold mb-4">Create a new post</h2>
         <textarea [(ngModel)]="newPostContent"
             class="w-full p-4 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"
@@ -28,7 +28,7 @@
     </div>
 
     <div *ngFor="let post of posts | slice: (p - 1) * itemsPerPage : p * itemsPerPage"
-        class="p-6 border rounded-3xl mb-8 bg-white shadow-2xl m-4 relative">
+        class="p-6 border rounded-3xl mb-8 bg-white shadow-lg m-4 relative hover:shadow-2xl">
         <div class="flex items-center mb-2 justify-between">
             <span class="font-bold text-xl">{{ post.user ? post.user.username : 'Deleted User' }}</span>
             <div class="relative" *ngIf="canEditPost(post) || canDeletePost(post)">
