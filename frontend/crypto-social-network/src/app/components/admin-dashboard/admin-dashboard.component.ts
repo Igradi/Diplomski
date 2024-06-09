@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PaginatorModule } from 'primeng/paginator';
-import { fadeInOut, fadeIn, fadeOut } from '../../services/animations';
+import { fadeInOut } from '../../services/animations';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
   imports: [FormsModule, CommonModule, PaginatorModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
-  animations: [fadeInOut, fadeIn, fadeOut]
+  animations: [fadeInOut]
 })
 export class AdminDashboardComponent {
   users: User[] = [];

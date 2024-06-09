@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { fadeInOut } from '../../services/animations';
 
 @Component({
   selector: 'app-cryptocurrency-list',
@@ -14,6 +15,7 @@ import { User } from '../../models/user.model';
   imports: [CommonModule],
   templateUrl: './cryptocurrency-list.component.html',
   styleUrl: './cryptocurrency-list.component.scss',
+  animations: [fadeInOut],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CryptocurrencyListComponent {

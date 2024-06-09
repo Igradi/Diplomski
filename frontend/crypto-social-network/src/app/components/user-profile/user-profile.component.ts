@@ -6,13 +6,15 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { fadeInOut } from '../../services/animations';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss'
+  styleUrl: './user-profile.component.scss',
+  animations: [fadeInOut]
 })
 export class UserProfileComponent {
   user?: User;

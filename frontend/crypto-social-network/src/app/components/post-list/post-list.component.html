@@ -5,11 +5,12 @@
             class="w-full p-4 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"
             placeholder="What's on your mind?"></textarea>
         <div class="flex justify-end mt-2">
-            <button (click)="createPost()" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
+            <button (click)="createPost()"
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300 transform hover:scale-105">
                 Publish Post <i class="bi bi-arrow-right"></i>
             </button>
             <button (click)="newPostContent = ''"
-                class="ml-2 px-4 py-2 bg-gray-300 text-black rounded-lg shadow hover:bg-gray-400">
+                class="ml-2 px-4 py-2 bg-gray-300 text-black rounded-lg shadow hover:bg-gray-400 transition duration-300 transform hover:scale-105">
                 Cancel <i class="bi bi-x"></i>
             </button>
         </div>
@@ -36,11 +37,11 @@
                 <div *ngIf="post.showOptions"
                     class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-10">
                     <button *ngIf="canEditPost(post)" (click)="editPost(post._id)"
-                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between">
+                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between transition duration-300 transform hover:scale-105">
                         Edit Post <i class="bi bi-pencil"></i>
                     </button>
                     <button *ngIf="canDeletePost(post)" (click)="deletePost(post._id)"
-                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between">
+                        class="flex items-center px-4 py-2 hover:bg-gray-100 w-full justify-between transition duration-300 transform hover:scale-105">
                         Delete Post <i class="bi bi-trash"></i>
                     </button>
                 </div>
