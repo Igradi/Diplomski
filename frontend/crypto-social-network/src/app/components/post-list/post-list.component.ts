@@ -28,6 +28,7 @@ export class PostListComponent {
   p: number = 1;
   itemsPerPage: number = 5;
   totalRecords: number = 0;
+  showNewPostForm: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -102,6 +103,7 @@ export class PostListComponent {
         (data) => {
           this.toastr.success('Post created successfully!');
           this.newPostContent = '';
+          this.showNewPostForm = false;
           this.getAllPosts();
         },
         (error) => {
@@ -154,5 +156,14 @@ export class PostListComponent {
   onPageChange(event: any): void {
     this.p = event.page + 1;
     this.itemsPerPage = event.rows;
+  }
+
+  toggleNewPostForm(): void {
+    this.showNewPostForm = !this.showNewPostForm;
+  }
+
+  cancelNewPost(): void {
+    this.newPostContent = '';
+    this.showNewPostForm = false;
   }
 }

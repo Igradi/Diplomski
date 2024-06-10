@@ -1,5 +1,13 @@
 <div class="mx-auto mt-4 lg:w-[1024px] border rounded-lg shadow-md overflow-hidden bg-green-50" [@fadeInOut]>
-    <div class="container mx-auto p-4 border-b-2 border-gray-200 max-w-screen-lg hover:shadow-xl">
+    <div *ngIf="!showNewPostForm" class="container mx-auto p-4 border-b-2 border-gray-200 max-w-screen-lg">
+        <button (click)="toggleNewPostForm()"
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300 transform hover:scale-105">
+            Create a Post <i class="bi bi-pencil-square"></i>
+        </button>
+    </div>
+
+    <div *ngIf="showNewPostForm"
+        class="container mx-auto p-4 border-b-2 border-gray-200 max-w-screen-lg hover:shadow-xl">
         <h2 class="text-2xl font-bold mb-4">Create a new post</h2>
         <textarea [(ngModel)]="newPostContent"
             class="w-full p-4 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"
@@ -9,7 +17,7 @@
                 class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300 transform hover:scale-105">
                 Publish Post <i class="bi bi-arrow-right"></i>
             </button>
-            <button (click)="newPostContent = ''"
+            <button (click)="cancelNewPost()"
                 class="ml-2 px-4 py-2 bg-gray-300 text-black rounded-lg shadow hover:bg-gray-400 transition duration-300 transform hover:scale-105">
                 Cancel <i class="bi bi-x"></i>
             </button>
