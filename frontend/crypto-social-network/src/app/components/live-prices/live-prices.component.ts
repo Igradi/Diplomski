@@ -63,27 +63,31 @@ export class LivePricesComponent {
   ngOnInit(): void {
     this.loaderService.show();
     if (this.authService.getToken()) {
-      this.livePricesService.getFavoriteCryptosData().pipe(
-        finalize(() => this.loaderService.hide())
-      ).subscribe(
-        data => {
-          this.favoriteCryptosData = data.map(item => {
-            const crypto = item.data;
-            return crypto;
-          });
-          this.favoriteCryptosHistory = data.reduce((acc, item) => {
-            acc[item.data.name] = item.history.history;
-            return acc;
-          }, {});
-          this.updateChartData();
-        },
-        error => {
-          console.error('Error fetching data:', error);
-        }
-      );
+      this.loadFavoriteCryptos();
     } else {
       this.getAllCryptosData();
     }
+  }
+
+  loadFavoriteCryptos(): void {
+    this.livePricesService.getFavoriteCryptosData().pipe(
+      finalize(() => this.loaderService.hide())
+    ).subscribe(
+      data => {
+        this.favoriteCryptosData = data.map(item => {
+          const crypto = item.data;
+          return crypto;
+        });
+        this.favoriteCryptosHistory = data.reduce((acc, item) => {
+          acc[item.data.name] = item.history.history;
+          return acc;
+        }, {});
+        this.updateChartData();
+      },
+      error => {
+        console.error('Error fetching data:', error);
+      }
+    );
   }
 
   getAllCryptosData(): void {
@@ -212,7 +216,10 @@ export class LivePricesComponent {
     this.maxVolume = 100000000;
 
     this.loaderService.show();
-    this.getAllCryptosData();
+    if (this.authService.getToken()) {
+      this.loadFavoriteCryptos();
+    } else {
+      this.getAllCryptosData();
+    }
   }
-
 }
