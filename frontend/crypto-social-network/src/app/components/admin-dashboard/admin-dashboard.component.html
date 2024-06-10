@@ -2,24 +2,24 @@
     <h2 class="text-3xl font-semibold mb-6">Admin Dashboard</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <div class="p-6 bg-white rounded-lg shadow-md">
+        <div class="p-6 bg-white rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300">
             <p class="text-lg font-medium mb-4">Do you want to create a poll?</p>
             <a href="/admin-dashboard/create-poll" class="text-indigo-600 hover:underline">Create poll Here! <i
                     class="bi bi-plus-circle-fill"></i></a>
         </div>
-        <div class="p-6 bg-white rounded-lg shadow-md">
+        <div class="p-6 bg-white rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300">
             <p class="text-lg font-medium mb-4">Do you want to delete a poll?</p>
             <a href="/admin-dashboard/manage-polls" class="text-indigo-600 hover:underline">Manage polls here! <i
                     class="bi bi-trash"></i></a>
         </div>
-        <div class="p-6 bg-white rounded-lg shadow-md">
+        <div class="p-6 bg-white rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300">
             <p class="text-lg font-medium mb-4">Do you want to manage cryptocurrencies?</p>
             <a href="/admin-dashboard/add-cryptocurrency" class="text-indigo-600 hover:underline">Add Cryptocurrency
                 Here! <i class="bi bi-graph-up"></i></a>
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8 transition-all duration-500 hover:shadow-lg">
         <h3 class="text-2xl font-semibold mb-4">Add New User</h3>
         <form class="space-y-4" (ngSubmit)="addUser()" #userForm="ngForm">
             <div>
@@ -50,14 +50,14 @@
                 </select>
             </div>
             <button type="submit"
-                class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
+                class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer transition-transform transform hover:scale-105 duration-300"
                 [disabled]="!userForm.form.valid">
                 <i class="bi bi-person-plus"></i> Add User
             </button>
         </form>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md pb-6">
+    <div class="bg-white rounded-lg shadow-md pb-6 transition-all duration-500 hover:shadow-lg">
         <h3 class="text-2xl font-semibold mb-4 px-8 py-6 bg-indigo-600 text-white">Manage Users</h3>
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -86,11 +86,13 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ user.role }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <button (click)="deleteUser(user._id)" class="text-red-600 hover:text-red-900 mr-2"
+                        <button (click)="deleteUser(user._id)"
+                            class="text-red-600 hover:text-red-900 mr-2 transition-transform transform hover:scale-110 duration-300"
                             title="Delete">
                             <i class="bi bi-trash"></i>
                         </button>
-                        <button (click)="editUser(user._id)" class="text-indigo-600 hover:text-indigo-900 mr-2"
+                        <button (click)="editUser(user._id)"
+                            class="text-indigo-600 hover:text-indigo-900 mr-2 transition-transform transform hover:scale-110 duration-300"
                             title="Edit">
                             <i class="bi bi-pencil"></i>
                         </button>
