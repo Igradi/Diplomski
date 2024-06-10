@@ -8,13 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { fadeInOut } from '../../services/animations';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-cryptocurrency-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CardModule],
   templateUrl: './cryptocurrency-list.component.html',
-  styleUrl: './cryptocurrency-list.component.scss',
+  styleUrls: ['./cryptocurrency-list.component.scss'],
   animations: [fadeInOut],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

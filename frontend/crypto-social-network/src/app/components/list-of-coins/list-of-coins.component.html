@@ -3,7 +3,8 @@
     <swiper-container slides-per-view="3" space-between="20" pagination="true">
         <ng-container *ngFor="let coin of cryptocurrencies">
             <swiper-slide>
-                <div class="p-4 border rounded-lg shadow-lg bg-white text-center mb-2">
+                <div
+                    class="p-4 border rounded-lg shadow-lg bg-white text-center mb-2 transition-transform duration-300 ease-in-out transform hover:scale-105">
                     <h3 class="text-lg font-semibold">{{ coin.name }}</h3>
                     <p class="text-sm text-gray-500">{{ coin.abbreviation }}</p>
                 </div>
