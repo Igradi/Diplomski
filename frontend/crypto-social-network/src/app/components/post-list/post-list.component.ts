@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
-import { PaginatorModule } from 'primeng/paginator'; // Dodajte ovaj uvoz
+import { PaginatorModule } from 'primeng/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { fadeInOut } from '../../services/animations';
 import Swal from 'sweetalert2';
@@ -29,6 +29,7 @@ export class PostListComponent {
   itemsPerPage: number = 5;
   totalRecords: number = 0;
   showNewPostForm: boolean = false;
+  topicName: string = '';
 
   constructor(
     private postService: PostService,
@@ -37,10 +38,17 @@ export class PostListComponent {
     public userService: UserService,
     public authService: AuthService,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.topicName = this.getTopicNameFromUrl();
+  }
 
   ngOnInit(): void {
     this.getAllPosts();
+  }
+
+  getTopicNameFromUrl(): string {
+    const urlSegments = this.router.url.split('/');
+    return urlSegments[urlSegments.length - 1];
   }
 
   getAllPosts(): void {

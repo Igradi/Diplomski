@@ -13,7 +13,7 @@
     <div class="comments-list space-y-4">
         <div *ngFor="let comment of limitedComments" class="comment px-4 py-2 border rounded-lg bg-gray-100 shadow-md">
             <div class="flex items-center justify-between mb-2">
-                <span class="font-bold">{{ comment.user ? comment.user.username : 'Deleted User' }}</span>
+                <span class="font-bold text-base">{{ comment.user ? comment.user.username : 'Deleted User' }}</span>
                 <div class="relative" *ngIf="canEditComment(comment) || canDeleteComment(comment)">
                     <i class="bi bi-three-dots cursor-pointer" (click)="toggleCommentOptions(comment._id)"></i>
                     <div *ngIf="comment.showOptions"

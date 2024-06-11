@@ -27,13 +27,13 @@
 
     <div
         class="container mx-auto p-4 border-b-2 border-gray-200 max-w-screen-lg transition-all duration-500 hover:shadow-lg">
-        <h2 class="text-2xl font-bold mb-4">Posts</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ topicName | titlecase }} Posts</h2>
         <div class="mb-4 flex items-center">
             <label for="sort-by" class="mr-2 font-semibold">Sort by:</label>
             <p-dropdown [options]="[
-                    { label: 'By date', value: 'date' },
-                    { label: 'Hot', value: 'hot' }
-                ]" [(ngModel)]="sortBy" (onChange)="changeSort($event.value)" placeholder="Select sorting"
+                        { label: 'By date', value: 'date' },
+                        { label: 'Hot', value: 'hot' }
+                    ]" [(ngModel)]="sortBy" (onChange)="changeSort($event.value)" placeholder="Select sorting"
                 class="ml-2"></p-dropdown>
         </div>
     </div>
@@ -41,7 +41,7 @@
     <div *ngFor="let post of posts | slice: (p - 1) * itemsPerPage : p * itemsPerPage"
         class="p-6 border rounded-3xl mb-8 bg-white shadow-lg m-4 relative transition-all duration-500 hover:shadow-2xl">
         <div class="flex items-center mb-2 justify-between">
-            <span class="font-bold text-xl">{{ post.user ? post.user.username : 'Deleted User' }}</span>
+            <span class="font-bold text-base">{{ post.user ? post.user.username : 'Deleted User' }}</span>
             <div class="relative" *ngIf="canEditPost(post) || canDeletePost(post)">
                 <i class="bi bi-three-dots cursor-pointer" (click)="toggleOptions(post._id)"></i>
                 <div *ngIf="post.showOptions"

@@ -27,6 +27,7 @@ export class PollListComponent {
   p: number = 1;
   itemsPerPage: number = 5;
   totalRecords: number = 0;
+  topicName: string = '';
 
   constructor(
     private pollService: PollService,
@@ -34,11 +35,18 @@ export class PollListComponent {
     private postService: PostService,
     private toastr: ToastrService,
     private router: Router
-  ) { }
+  ) {
+    this.topicName = this.getTopicNameFromUrl();
+  }
 
   ngOnInit(): void {
     this.userId = this.userService.getUserIdFromToken();
     this.getAllPolls();
+  }
+
+  getTopicNameFromUrl(): string {
+    const urlSegments = this.router.url.split('/');
+    return urlSegments[urlSegments.length - 1];
   }
 
   getAllPolls(): void {
