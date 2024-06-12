@@ -24,6 +24,11 @@
             {{ showCharts ? 'Hide Live Charts' : 'View Live Charts' }}
             <i class="bi bi-bar-chart-line"></i>
         </button>
+        <button (click)="clearFilters()"
+            class="bg-yellow-500 text-white p-2 rounded mr-2 transition duration-300 transform hover:scale-105 hover:bg-yellow-600">
+            Reset to Default Charts
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
         <button *ngIf="showFilters" (click)="clearFilters()"
             class="bg-red-400 text-white p-2 rounded transition duration-300 transform hover:scale-105 hover:bg-red-500">
             Clear Filters
@@ -32,7 +37,7 @@
     </div>
 
     <div *ngIf="showFilters" class="filter-container mb-4 text-center" [@fadeInOut]>
-        <h2 class="text-lg font-bold mb-4">Filter Cryptocurrencies</h2>
+        <h2 class="text-lg font-bold mb-4">Filter displayed cryptocurrencies</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div
                 class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
