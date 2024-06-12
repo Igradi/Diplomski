@@ -28,6 +28,7 @@ export class LivePricesComponent {
   favoriteCryptosData: any[] = [];
   favoriteCryptosHistory: { [key: string]: HistoricalDataPoint[] } = {};
   searchQuery: string = '';
+  searchErrorMessage: string = '';
 
   minMarketCap: number = 0;
   maxMarketCap: number = 1000000000;
@@ -122,11 +123,15 @@ export class LivePricesComponent {
           this.favoriteCryptosHistory = {
             [data.data.name]: data.history.history
           };
+          this.searchErrorMessage = '';
           this.showCharts = true;
           this.updateChartData();
         },
         error => {
           console.error('Error fetching data:', error);
+          this.favoriteCryptosData = [];
+          this.searchErrorMessage = 'Sorry, we do not have information about the abbreviation you have searched.';
+          this.showCharts = false;
         }
       );
     }

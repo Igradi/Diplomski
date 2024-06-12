@@ -11,6 +11,7 @@
                 <i class="bi bi-search"></i>
             </button>
         </div>
+        <p *ngIf="searchErrorMessage" class="error-message mt-2 text-red-500">{{ searchErrorMessage }}</p>
     </div>
 
     <div class="flex justify-center mb-4" [@fadeInOut]>
