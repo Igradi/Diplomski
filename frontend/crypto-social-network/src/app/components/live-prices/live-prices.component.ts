@@ -168,7 +168,7 @@ export class LivePricesComponent {
     this.lineChartData = {
       labels: labels,
       datasets: [
-        { data: prices, label: 'Price (USD)', borderColor: '#3e95cd', fill: false }
+        { data: prices, label: 'Price (USD)', backgroundColor: '#3e95cd' }
       ]
     };
 
