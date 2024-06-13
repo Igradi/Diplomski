@@ -7,7 +7,7 @@ const notifications = require('../models/NotificationModel');
 
 async function getAllPosts(req, res) {
     try {
-        const posts = await Post.find({}).populate('user', 'username');
+        const posts = await Post.find({}).populate('user', 'username').populate('topic', 'name');
         res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -15,12 +15,11 @@ async function getAllPosts(req, res) {
     }
 }
 
-
 async function getPostById(req, res) {
     const { id } = req.params;
 
     try {
-        const post = await Post.findById(id).populate('user', 'username');
+        const post = await Post.findById(id).populate('user', 'username').populate('topic', 'name');
 
         if (!post) {
             return res.status(404).json({ msg: 'Post not found' });

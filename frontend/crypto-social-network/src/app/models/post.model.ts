@@ -2,7 +2,7 @@ export interface Post {
     _id: string;
     content: string;
     user: { _id: string; username: string };
-    topic: string;
+    topic: { _id: string; name: string };
     upvotes: number;
     downvotes: number;
     comments: string[];

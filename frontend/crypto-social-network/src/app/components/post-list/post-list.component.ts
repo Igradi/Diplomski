@@ -55,7 +55,7 @@ export class PostListComponent {
     this.postService.getAllPosts().subscribe(
       (data: Post[]) => {
         if (this.postService.selectedTopic) {
-          this.posts = data.filter(post => post.topic === this.postService.selectedTopic);
+          this.posts = data.filter(post => post.topic._id === this.postService.selectedTopic);
         } else {
           this.posts = data;
         }
@@ -68,6 +68,7 @@ export class PostListComponent {
       }
     );
   }
+
 
   sortPosts(): void {
     if (this.sortBy === 'date') {

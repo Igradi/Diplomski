@@ -40,5 +40,4 @@ export class PostService {
     deletePost(postId: string): Observable<any> {
         return this.http.delete<any>(`http://localhost:4000/api/posts/deletePost/${postId}`, { headers: this.userService.generateHeaders() });
     }
-
 }
