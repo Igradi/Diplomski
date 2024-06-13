@@ -26,6 +26,33 @@
                             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 h-10">
                     </dd>
                 </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 flex items-center">
+                        <i class="bi bi-lock mr-2"></i> Current Password
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        <input type="password" [(ngModel)]="currentPassword"
+                            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 h-10">
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 flex items-center">
+                        <i class="bi bi-lock mr-2"></i> New Password
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        <input type="password" [(ngModel)]="newPassword"
+                            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 h-10">
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 flex items-center">
+                        <i class="bi bi-lock mr-2"></i> Confirm New Password
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        <input type="password" [(ngModel)]="confirmNewPassword"
+                            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 h-10">
+                    </dd>
+                </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" *ngIf="isUserAdmin()">
                     <dt class="text-sm font-medium text-gray-500 flex items-center">
                         <i class="bi bi-shield-lock mr-2"></i> Role

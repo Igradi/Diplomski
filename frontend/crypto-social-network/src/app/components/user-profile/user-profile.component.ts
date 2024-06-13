@@ -13,11 +13,14 @@ import { fadeInOut } from '../../services/animations';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss',
+  styleUrls: ['./user-profile.component.scss'],
   animations: [fadeInOut]
 })
 export class UserProfileComponent {
   user?: User;
+  currentPassword: string = '';
+  newPassword: string = '';
+  confirmNewPassword: string = '';
 
   constructor(private route: ActivatedRoute, private userService: UserService, private toastr: ToastrService, private authService: AuthService) { }
 
@@ -43,11 +46,23 @@ export class UserProfileComponent {
 
   updateUser(): void {
     if (this.user) {
-      this.userService.updateUser(this.user._id, {
+      if (this.newPassword !== this.confirmNewPassword) {
+        this.toastr.error('New passwords do not match', 'Error');
+        return;
+      }
+
+      const updateData: any = {
         username: this.user.username,
         email: this.user.email,
         role: this.user.role
-      }).subscribe(
+      };
+
+      if (this.currentPassword && this.newPassword) {
+        updateData.currentPassword = this.currentPassword;
+        updateData.newPassword = this.newPassword;
+      }
+
+      this.userService.updateUser(this.user._id, updateData).subscribe(
         () => {
           this.toastr.success('User updated successfully!', 'Success');
         },

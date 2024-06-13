@@ -17,7 +17,6 @@ async function register(req, res) {
     }
 }
 
-
 async function login(req, res) {
     const { email, password } = req.body;
 
@@ -38,7 +37,7 @@ async function login(req, res) {
             id: user._id,
             username: user.username,
             email: user.email,
-            role: user.role
+            role: user.role,
         };
 
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -52,7 +51,7 @@ async function login(req, res) {
 
 async function updateUser(req, res) {
     const { id } = req.params;
-    const { username, email, password, role } = req.body;
+    const { username, email, currentPassword, newPassword, role } = req.body;
 
     try {
         let user = await Users.findById(id);
@@ -65,8 +64,12 @@ async function updateUser(req, res) {
         user.email = email || user.email;
         user.role = role || user.role;
 
-        if (password) {
-            user.password = password;
+        if (currentPassword && newPassword) {
+            const isMatch = await user.matchPassword(currentPassword);
+            if (!isMatch) {
+                return res.status(400).json({ msg: 'Current password is incorrect' });
+            }
+            user.password = newPassword;
         }
 
         await user.save();
@@ -77,7 +80,6 @@ async function updateUser(req, res) {
         res.status(500).send('Server error');
     }
 }
-
 
 async function deleteUser(req, res) {
     const { id } = req.params;
@@ -125,11 +127,11 @@ async function getUserById(req, res) {
     }
 }
 
-
 router.post('/register', register);
 router.post('/login', login);
 router.put('/update/:id', verifyToken, updateUser);
 router.delete('/delete/:id', verifyToken, deleteUser);
 router.get('/getAllUsers', verifyToken, getAllUsers);
 router.get('/getUserById/:id', verifyToken, getUserById);
+
 module.exports = router;
