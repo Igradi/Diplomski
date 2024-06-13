@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { User } from '../models/user.model';
@@ -17,6 +17,9 @@ export class LivePricesService {
         'content-type': 'application/json',
         'x-api-key': this.apiKey
     };
+
+    private selectedCoinSubject = new Subject<string>();
+    selectedCoin$ = this.selectedCoinSubject.asObservable();
 
     constructor(private http: HttpClient, private userService: UserService) { }
 
@@ -75,5 +78,9 @@ export class LivePricesService {
             data: this.getCryptoData(abbreviation),
             history: this.getCryptoHistory(abbreviation)
         });
+    }
+
+    selectCoin(abbreviation: string) {
+        this.selectedCoinSubject.next(abbreviation);
     }
 }

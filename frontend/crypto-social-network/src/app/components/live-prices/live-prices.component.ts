@@ -10,6 +10,7 @@ import { LoaderService } from '../../services/loader.service';
 import { finalize } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 import { fadeInOut } from '../../services/animations';
+import { Subscription } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -23,6 +24,8 @@ Chart.register(...registerables);
   animations: [fadeInOut]
 })
 export class LivePricesComponent {
+  private coinSubscription!: Subscription;
+
   showCharts: boolean = false;
   showFilters: boolean = false;
   favoriteCryptosData: any[] = [];
@@ -68,6 +71,14 @@ export class LivePricesComponent {
     } else {
       this.getAllCryptosData();
     }
+
+    this.coinSubscription = this.livePricesService.selectedCoin$.subscribe(abbreviation => {
+      this.getCryptoData(abbreviation);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.coinSubscription.unsubscribe();
   }
 
   loadFavoriteCryptos(): void {
@@ -149,11 +160,6 @@ export class LivePricesComponent {
   }
 
   updateChartData(): void {
-    if (this.favoriteCryptosData.length === 0) {
-      console.warn('No favorite cryptocurrencies data available to update charts.');
-      return;
-    }
-
     const prices = this.favoriteCryptosData.map(crypto => crypto.rate);
     const marketCaps = this.favoriteCryptosData.map(crypto => crypto.cap);
     const volumes = this.favoriteCryptosData.map(crypto => crypto.volume);
@@ -226,5 +232,27 @@ export class LivePricesComponent {
     } else {
       this.getAllCryptosData();
     }
+  }
+
+  getCryptoData(abbreviation: string): void {
+    this.loaderService.show();
+    this.livePricesService.getCryptoByAbbreviation(abbreviation).pipe(
+      finalize(() => this.loaderService.hide())
+    ).subscribe(
+      ({ data, history }) => {
+        this.favoriteCryptosData = [data];
+        this.favoriteCryptosHistory = {
+          [data.name]: history.history
+        };
+        this.searchErrorMessage = '';
+        this.showCharts = true;
+        this.updateChartData();
+      },
+      (error) => {
+        this.favoriteCryptosData = [];
+        this.searchErrorMessage = 'Sorry, we do not have information about the abbreviation you have searched.';
+        this.showCharts = false;
+      }
+    );
   }
 }

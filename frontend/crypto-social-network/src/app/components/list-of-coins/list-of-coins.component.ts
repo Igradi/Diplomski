@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CryptocurrencyListService } from '../../services/cryptocurrency-list.service';
 import { Cryptocurrency } from '../../models/cryptocurrency.model';
+import { LivePricesService } from '../../services/live-prices.service';
 
 @Component({
   selector: 'app-list-of-coins',
@@ -15,7 +16,10 @@ import { Cryptocurrency } from '../../models/cryptocurrency.model';
 export class ListOfCoinsComponent {
   cryptocurrencies: Cryptocurrency[] = [];
 
-  constructor(private cryptocurrencyListService: CryptocurrencyListService) { }
+  constructor(
+    private cryptocurrencyListService: CryptocurrencyListService,
+    private livePricesService: LivePricesService
+  ) { }
 
   ngOnInit(): void {
     this.cryptocurrencyListService.getAllCryptocurrencies().subscribe(
@@ -26,5 +30,9 @@ export class ListOfCoinsComponent {
         console.error('Error fetching cryptocurrencies:', error);
       }
     );
+  }
+
+  onCoinClick(abbreviation: string): void {
+    this.livePricesService.selectCoin(abbreviation);
   }
 }
