@@ -14,7 +14,7 @@
         <p *ngIf="searchErrorMessage" class="error-message mt-2 text-red-500">{{ searchErrorMessage }}</p>
     </div>
 
-    <div class="flex justify-center mb-4" [@fadeInOut]>
+    <div class="flex justify-center mb-4" [@fadeInOut] *ngIf="!(loaderService.isLoading$ | async)">
         <button (click)="toggleFilterExpansion()"
             class="bg-blue-500 text-white p-2 rounded mr-2 transition duration-300 transform hover:scale-105 hover:bg-blue-600">
             {{ showFilters ? 'Collapse Filters' : 'Expand Filters' }}
@@ -150,6 +150,6 @@
     </div>
 
     <div *ngIf="!favoriteCryptosData || favoriteCryptosData.length === 0">
-        <h2 class="text-2xl font-bold mb-4">Add some favorite cryptocurrencies to get more data...</h2>
+        <h2 class="text-2xl font-bold mb-4">Add some favorite cryptocurrencies to get live data...</h2>
     </div>
 </div>
