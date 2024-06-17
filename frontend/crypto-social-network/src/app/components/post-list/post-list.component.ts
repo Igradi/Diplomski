@@ -75,8 +75,15 @@ export class PostListComponent {
       this.posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     } else if (this.sortBy === 'hot') {
       this.posts.sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
+    } else if (this.sortBy === 'most_commented') {
+      this.posts.sort((a, b) => b.comments.length - a.comments.length);
+    } else if (this.sortBy === 'most_popular') {
+      this.posts.sort((a, b) => ((b.upvotes - b.downvotes) + b.comments.length) - ((a.upvotes - a.downvotes) + a.comments.length));
+    } else if (this.sortBy === 'recently_updated') {
+      this.posts.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
     }
   }
+
 
   changeSort(sortBy: string): void {
     this.sortBy = sortBy;

@@ -32,9 +32,13 @@
             <label for="sort-by" class="mr-2 font-semibold">Sort by:</label>
             <p-dropdown [options]="[
                         { label: 'By date', value: 'date' },
-                        { label: 'Hot', value: 'hot' }
+                        { label: 'Most upvoted', value: 'hot' },
+                        { label: 'Most commented', value: 'most_commented' },
+                        { label: 'Most popular', value: 'most_popular' },
+                        { label: 'Recently updated', value: 'recently_updated' }
                     ]" [(ngModel)]="sortBy" (onChange)="changeSort($event.value)" placeholder="Select sorting"
                 class="ml-2"></p-dropdown>
+
         </div>
     </div>
 
@@ -59,7 +63,7 @@
         </div>
         <p class="text-gray-800 break-words mb-2">{{ post.content }}</p>
         <p class="text-gray-600 text-sm mb-2">Created at: {{ post.createdAt | date:'short' }}</p>
-        <p class="text-gray-600 text-sm mb-2" *ngIf="post.createdAt !== post.updatedAt">Last updated at: {{
+        <p class="text-gray-600 text-sm mb-2" *ngIf="post.createdAt !== post.updatedAt">Last activity at: {{
             post.updatedAt | date:'short' }}</p>
         <div class="mt-2 flex items-center">
             <button (click)="upvotePost(post._id)"
