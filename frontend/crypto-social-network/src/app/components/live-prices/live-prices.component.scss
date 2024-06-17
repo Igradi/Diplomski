@@ -18,3 +18,20 @@
 .crypto-info {
     margin-bottom: 20px;
 }
+
+.filter-container .filter-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-container .filter-box input {
+    width: 100%;
+    max-width: 420px;
+}
+
+.flex.items-center.space-x-1 span {
+    margin-left: 4px;
+    margin-right: 4px;
+}

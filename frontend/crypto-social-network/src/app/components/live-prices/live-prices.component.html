@@ -41,38 +41,38 @@
         <h2 class="text-lg font-bold mb-4">Filter displayed cryptocurrencies</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div
-                class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
+                class="filter-box border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
                 <h3 class="text-sm font-bold mb-2">Market Cap Range (USD)</h3>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center space-x-1">
                     <input [(ngModel)]="minMarketCap" type="number" placeholder="Min"
-                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    <span>-</span>
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+                    <span class="mx-1">-</span>
                     <input [(ngModel)]="maxMarketCap" type="number" placeholder="Max"
-                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
                 </div>
             </div>
 
             <div
-                class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
+                class="filter-box border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
                 <h3 class="text-sm font-bold mb-2">Price Range (USD)</h3>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center space-x-1">
                     <input [(ngModel)]="minPrice" type="number" placeholder="Min"
-                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    <span>-</span>
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+                    <span class="mx-1">-</span>
                     <input [(ngModel)]="maxPrice" type="number" placeholder="Max"
-                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
                 </div>
             </div>
 
             <div
-                class="border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
+                class="filter-box border rounded-lg p-4 transition duration-300 transform hover:scale-105 hover:shadow-lg bg-slate-300">
                 <h3 class="text-sm font-bold mb-2">Volume Range (USD)</h3>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center space-x-1">
                     <input [(ngModel)]="minVolume" type="number" placeholder="Min"
-                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    <span>-</span>
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+                    <span class="mx-1">-</span>
                     <input [(ngModel)]="maxVolume" type="number" placeholder="Max"
-                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        class="filter-input p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
                 </div>
             </div>
         </div>
