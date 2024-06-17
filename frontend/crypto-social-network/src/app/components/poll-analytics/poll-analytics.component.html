@@ -9,7 +9,7 @@
     <swiper-container [navigation]="true" [pagination]="{ clickable: true }" slides-per-view="1" space-between="10">
         <ng-container *ngFor="let question of pollData.questions; let qIndex = index">
             <swiper-slide>
-                <div class="question-container p-4 border rounded-lg shadow-lg bg-white mb-8">
+                <div class="question-container p-4 border rounded-lg shadow-lg bg-white mb-8 max-w-96">
                     <h3 class="text-xl font-bold mb-4">Question {{ qIndex + 1 }}: {{ question.question }}</h3>
                     <div class="chart-container mb-4">
                         <canvas baseChart [data]="questionChartData[question.question]" [options]="chartOptions"
