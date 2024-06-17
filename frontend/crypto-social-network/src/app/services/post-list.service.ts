@@ -25,11 +25,13 @@ export class PostService {
     }
 
     upvotePost(postId: string): Observable<any> {
-        return this.http.put<any>(`http://localhost:4000/api/posts/${postId}/upvote`, {}, { headers: this.userService.generateHeaders() });
+        const userId = this.userService.getUserIdFromToken();
+        return this.http.put<any>(`http://localhost:4000/api/posts/${postId}/upvote`, { userId }, { headers: this.userService.generateHeaders() });
     }
 
     downvotePost(postId: string): Observable<any> {
-        return this.http.put<any>(`http://localhost:4000/api/posts/${postId}/downvote`, {}, { headers: this.userService.generateHeaders() });
+        const userId = this.userService.getUserIdFromToken();
+        return this.http.put<any>(`http://localhost:4000/api/posts/${postId}/downvote`, { userId }, { headers: this.userService.generateHeaders() });
     }
 
     createPost(content: string, topic: string): Observable<any> {
