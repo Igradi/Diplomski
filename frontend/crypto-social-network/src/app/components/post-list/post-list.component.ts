@@ -30,6 +30,7 @@ export class PostListComponent {
   totalRecords: number = 0;
   showNewPostForm: boolean = false;
   topicName: string = '';
+  previewLength: number = 500;
 
   constructor(
     private postService: PostService,
@@ -60,7 +61,10 @@ export class PostListComponent {
           this.posts = data;
         }
         this.totalRecords = this.posts.length;
-        this.posts.forEach(post => post.showOptions = false);
+        this.posts.forEach(post => {
+          post.showOptions = false;
+          post.isExpanded = false;
+        });
         this.sortPosts();
       },
       (error) => {
@@ -68,7 +72,6 @@ export class PostListComponent {
       }
     );
   }
-
 
   sortPosts(): void {
     if (this.sortBy === 'date') {
@@ -81,7 +84,6 @@ export class PostListComponent {
       this.posts.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
     }
   }
-
 
   changeSort(sortBy: string): void {
     this.sortBy = sortBy;
@@ -179,5 +181,9 @@ export class PostListComponent {
   cancelNewPost(): void {
     this.newPostContent = '';
     this.showNewPostForm = false;
+  }
+
+  toggleReadMore(post: Post): void {
+    post.isExpanded = !post.isExpanded;
   }
 }

@@ -60,7 +60,16 @@
                 </div>
             </div>
         </div>
-        <p class="text-gray-800 break-words mb-2">{{ post.content }}</p>
+        <p class="text-gray-800 break-words mb-2">
+            <span *ngIf="!post.isExpanded">{{ post.content | slice:0:previewLength }}{{ post.content.length >
+                previewLength ? '...' : ''
+                }}</span>
+            <span *ngIf="post.isExpanded">{{ post.content }}</span>
+        </p>
+        <button *ngIf="post.content.length > previewLength" (click)="toggleReadMore(post)"
+            class="text-blue-500 hover:underline focus:outline-none mb-2">
+            {{ post.isExpanded ? 'Read less...' : 'Read more...' }}
+        </button>
         <p class="text-gray-600 text-sm mb-2">Created at: {{ post.createdAt | date:'short' }}</p>
         <p class="text-gray-600 text-sm mb-2" *ngIf="post.createdAt !== post.updatedAt">Last activity at: {{
             post.updatedAt | date:'short' }}</p>
@@ -80,6 +89,7 @@
         </div>
         <app-comment-list [postId]="post._id"></app-comment-list>
     </div>
+
 </div>
 
 <div class="pagination-container mt-4 max-w-screen-lg mx-auto">

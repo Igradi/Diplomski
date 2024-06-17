@@ -11,4 +11,5 @@ export interface Post {
     upvotedBy?: string[];
     downvotedBy?: string[];
     showOptions?: boolean;
+    isExpanded?: boolean;
 }
