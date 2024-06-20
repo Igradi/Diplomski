@@ -1,4 +1,4 @@
-<div class="notifications bg-white shadow-lg rounded-lg p-4 mt-2 w-96">
+<div class="notifications bg-white shadow-lg rounded-lg p-4 mt-2 w-96 z-50 relative">
     <h2 class="text-lg font-semibold mb-4">Notifications</h2>
     <ul *ngIf="notifications.length > 0; else noNotifications">
         <li *ngFor="let notification of notifications" class="flex justify-between items-center mb-2 cursor-pointer"

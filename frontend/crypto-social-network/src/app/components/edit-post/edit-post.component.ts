@@ -47,7 +47,7 @@ export class EditPostComponent {
       this.postService.updatePost(this.postId, this.newPostContent).subscribe(
         (data) => {
           this.toastr.success('Post updated successfully!');
-          this.router.navigate(['/posts', this.post?.topic]);
+          this.router.navigate(['/posts', this.post?.topic.name]);
         },
         (error) => {
           this.toastr.error('Error updating post!');
@@ -57,6 +57,6 @@ export class EditPostComponent {
   }
 
   cancelEdit(): void {
-    this.router.navigate(['/posts', this.post?.topic]);
+    this.router.navigate(['/posts', this.post?.topic.name]);
   }
 }
