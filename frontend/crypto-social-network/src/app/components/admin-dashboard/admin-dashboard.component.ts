@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
 })
 export class AdminDashboardComponent {
   users: User[] = [];
-  newUser: User = { _id: '', username: '', password: '', email: '', role: '', favorites: [] };
+  newUser: Partial<User> = {};
   p: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 0;
@@ -79,7 +79,7 @@ export class AdminDashboardComponent {
       this.userService.addUser(username, email, password, role).subscribe(
         () => {
           this.loadUsers();
-          this.newUser = { _id: '', username: '', email: '', password: '', role: '', favorites: [] };
+          this.newUser = {};
           this.toastr.success('User added successfully!', 'Success');
         },
         (error) => {

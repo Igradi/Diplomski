@@ -33,6 +33,9 @@ async function login(req, res) {
             return res.status(400).json({ msg: 'Wrong password' });
         }
 
+        user.lastLogin = new Date();
+        await user.save();
+
         const tokenPayload = {
             id: user._id,
             username: user.username,

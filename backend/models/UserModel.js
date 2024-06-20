@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Currencys' }],
+    lastLogin: { type: Date }
 });
 
 userSchema.pre('save', hashPassword);

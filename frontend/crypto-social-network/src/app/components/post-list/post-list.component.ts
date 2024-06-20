@@ -82,7 +82,25 @@ export class PostListComponent {
       this.posts.sort((a, b) => b.comments.length - a.comments.length);
     } else if (this.sortBy === 'recently_updated') {
       this.posts.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    } else if (this.sortBy === 'most_popular') {
+      this.posts.sort((a, b) => this.calculatePopularity(b) - this.calculatePopularity(a));
     }
+  }
+
+  calculatePopularity(post: Post): number {
+    const now = new Date().getTime();
+    const createdAt = new Date(post.createdAt).getTime();
+    const updatedAt = new Date(post.updatedAt).getTime();
+    const ageInMilliseconds = now - createdAt;
+    const lastUpdatedInMilliseconds = now - updatedAt;
+
+    const ageFactor = Math.log(1 + (1000 * 60 * 60 * 24 * 365) / ageInMilliseconds);
+    const lastUpdatedFactor = Math.log(1 + (1000 * 60 * 60 * 24) / lastUpdatedInMilliseconds);
+    const commentFactor = Math.log(1 + post.comments.length);
+    const voteFactor = post.upvotes - post.downvotes;
+
+
+    return ageFactor + lastUpdatedFactor + commentFactor + voteFactor;
   }
 
   changeSort(sortBy: string): void {

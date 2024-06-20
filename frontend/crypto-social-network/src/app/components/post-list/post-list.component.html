@@ -34,7 +34,8 @@
                         { label: 'By date', value: 'date' },
                         { label: 'Most upvoted', value: 'hot' },
                         { label: 'Most commented', value: 'most_commented' },
-                        { label: 'Recently updated', value: 'recently_updated' }
+                        { label: 'Recently updated', value: 'recently_updated' },
+                        { label: 'Most popular', value: 'most_popular' }
                     ]" [(ngModel)]="sortBy" (onChange)="changeSort($event.value)" placeholder="Select sorting"
                 class="ml-2"></p-dropdown>
 
