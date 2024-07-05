@@ -94,13 +94,23 @@ export class PostListComponent {
     const ageInMilliseconds = now - createdAt;
     const lastUpdatedInMilliseconds = now - updatedAt;
 
-    const ageFactor = Math.log(1 + (1000 * 60 * 60 * 24 * 365) / ageInMilliseconds);
-    const lastUpdatedFactor = Math.log(1 + (1000 * 60 * 60 * 24) / lastUpdatedInMilliseconds);
+    const YEAR_IN_MS = 1000 * 60 * 60 * 24 * 365;
+    const DAY_IN_MS = 1000 * 60 * 60 * 24;
+
+    const ageFactor = Math.log(1 + (YEAR_IN_MS / ageInMilliseconds));
+    const lastUpdatedFactor = Math.log(1 + (DAY_IN_MS / lastUpdatedInMilliseconds));
     const commentFactor = Math.log(1 + post.comments.length);
     const voteFactor = post.upvotes - post.downvotes;
 
+    const AGE_WEIGHT = 1.0;
+    const UPDATED_WEIGHT = 0.5;
+    const COMMENT_WEIGHT = 2.0;
+    const VOTE_WEIGHT = 1.5;
 
-    return ageFactor + lastUpdatedFactor + commentFactor + voteFactor;
+    return (AGE_WEIGHT * ageFactor) +
+      (UPDATED_WEIGHT * lastUpdatedFactor) +
+      (COMMENT_WEIGHT * commentFactor) +
+      (VOTE_WEIGHT * voteFactor);
   }
 
   changeSort(sortBy: string): void {
