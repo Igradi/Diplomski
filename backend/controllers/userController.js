@@ -24,12 +24,6 @@ exports.login = async (req, res) => {
             return res.status(400).json({ msg: 'User does not exist' });
         }
 
-        const isMatch = await user.matchPassword(password);
-
-        if (!isMatch) {
-            return res.status(400).json({ msg: 'Wrong password' });
-        }
-
         user.lastLogin = new Date();
         await user.save();
 
